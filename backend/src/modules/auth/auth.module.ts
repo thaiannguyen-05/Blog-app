@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CustomCacheModule } from '../custom-cache/customCache.module';
@@ -7,10 +7,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthCookieStrategy } from 'src/common/strategy/auth-cookie.strategy';
 import { TokenService } from './token.service';
+import { PresenceModule } from '../presence/presence.module';
 
 @Module({
     imports: [
-        CustomCacheModule, EmailModule,
+        CustomCacheModule, EmailModule, forwardRef(() => PresenceModule),
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

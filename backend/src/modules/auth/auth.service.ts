@@ -1,5 +1,5 @@
 import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
-import { BadRequestException, ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ConflictException, ForbiddenException, forwardRef, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { hash, verify } from "argon2";
@@ -10,6 +10,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { ChangePasswordDto } from "./dto/changePassword.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { TokenService } from "./token.service";
+import { PresenceService } from "../presence/presence.service";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 const TIME_LIFE_SESSION = 10 * 365 * 24 * 60 * 60 * 1000
@@ -24,7 +25,8 @@ export class AuthService {
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
         private readonly tokenService: TokenService,
-        private readonly emailProducer: ExmailProducerService
+        private readonly emailProducer: ExmailProducerService,
+        private readonly presenceService: PresenceService
     ) { }
 
     // hashing password
@@ -212,6 +214,9 @@ export class AuthService {
         const session = await this.createSession(exitingAccount, res.req.cookies?.session_id, res)
 
         const accessToken = session.tokens.accessToken
+        
+        // set user online
+        await this.presenceService.setUserOnline(exitingAccount.id)
 
         return {
             user: exitingAccount,
@@ -238,6 +243,11 @@ export class AuthService {
                 hashingRefreshToken: null
             }
         })
+
+        const user = await this.validate(res.req.cookies?.access_token)
+
+        // set user offline
+        await this.presenceService.setUserOffline(user.id)
 
         return {
             message: "Done"

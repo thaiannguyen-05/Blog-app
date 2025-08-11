@@ -145,7 +145,7 @@ export class PostService {
     }
 
     // get detail post
-    async getDetailPost(req: Request, postId: string) {
+    async getDetailPost(postId: string) {
 
         const exitingPost = await this.getPost(postId)
 

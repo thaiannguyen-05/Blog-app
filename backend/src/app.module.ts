@@ -13,9 +13,11 @@ import { CommentModule } from './modules/comment/comment.module';
 import { CustomCacheModule } from './modules/custom-cache/customCache.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ChatModule } from './modules/chat/chat.module';
+import { TicketModule } from './modules/ticket/ticket.module';
 
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule,
+  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, ChatModule,
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -28,6 +30,7 @@ import { PrismaModule } from './prisma/prisma.module';
       context: ({ req }) => ({ req })
     }),
     CommentModule,
+    TicketModule,
   ],
   controllers: [AppController],
   providers: [

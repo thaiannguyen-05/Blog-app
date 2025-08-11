@@ -139,6 +139,7 @@ exports.Prisma.MessageScalarFieldEnum = {
   content: 'content',
   senderID: 'senderID',
   receiverID: 'receiverID',
+  roomId: 'roomId',
   createAt: 'createAt',
   updateAt: 'updateAt',
   deleteAt: 'deleteAt'
@@ -146,7 +147,41 @@ exports.Prisma.MessageScalarFieldEnum = {
 
 exports.Prisma.ReadProgressScalarFieldEnum = {
   id: 'id',
-  messageId: 'messageId'
+  messageId: 'messageId',
+  roomId: 'roomId',
+  userId: 'userId'
+};
+
+exports.Prisma.RoomScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  nameRoom: 'nameRoom'
+};
+
+exports.Prisma.MemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roomId: 'roomId'
+};
+
+exports.Prisma.RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.UserRoleScalarFieldEnum = {
+  userId: 'userId',
+  roleId: 'roleId'
+};
+
+exports.Prisma.PermissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId'
 };
 
 exports.Prisma.PostScalarFieldEnum = {
@@ -229,6 +264,12 @@ exports.Prisma.ModelName = {
   Code: 'Code',
   Message: 'Message',
   ReadProgress: 'ReadProgress',
+  Room: 'Room',
+  Member: 'Member',
+  Role: 'Role',
+  UserRole: 'UserRole',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
   Post: 'Post',
   Comment: 'Comment',
   RepComment: 'RepComment',

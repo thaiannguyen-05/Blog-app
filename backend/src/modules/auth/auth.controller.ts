@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Patch, Post, Query, Req, Res, UseInterceptors } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { RegisterDto } from "./dto/register.dto";
-import { Request, Response } from 'express'
-import { Public } from "src/common/decorator/public.decorator";
+import { Body, Controller, Delete, Get, Post, Query, Req, Res } from "@nestjs/common";
+import { Request, Response } from 'express';
 import { Cookies } from "src/common/decorator/cookie.decorator";
+import { Public } from "src/common/decorator/public.decorator";
+import { AuthService } from "./auth.service";
 import { ChangePasswordDto } from "./dto/changePassword.dto";
+import { RegisterDto } from "./dto/register.dto";
 
 @Controller('auth')
 export class AuthController {

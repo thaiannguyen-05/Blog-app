@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import * as cookieParser from 'cookie-parser';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import helmet from 'helmet';
+import * as cookieParser from 'cookie-parser';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -19,8 +18,6 @@ async function bootstrap() {
       },
     },
   })
-
-  //app.use(helmet())
 
   await app.startAllMicroservices();
   await app.listen(4000);

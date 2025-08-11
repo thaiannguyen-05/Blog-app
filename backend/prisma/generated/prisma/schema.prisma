@@ -35,6 +35,9 @@ model Message {
   receiverID String? @db.Uuid
   receiver   User?   @relation(fields: [receiverID], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "MessageReceiver")
 
+  roomId String @db.Uuid
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
@@ -44,7 +47,65 @@ model ReadProgress {
   id        String @id @default(uuid()) @db.Uuid
   messageId Int    @default(0)
 
-  user User? @relation
+  roomId String @db.Uuid
+
+  userId String @db.Uuid
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Room {
+  id     String @id @default(uuid()) @db.Uuid
+  roomId String @db.Uuid
+
+  nameRoom String
+
+  members  Member[]
+  messages Message[]
+}
+
+model Member {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  roomId String @db.Uuid
+  room   Room   @relation(fields: [roomId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model Role {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @unique
+
+  userRoles      UserRole[]
+  RolePermission RolePermission[]
+}
+
+// m to m user-role
+model UserRole {
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  roleId String @db.Uuid
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model Permission {
+  id        String           @id @default(uuid()) @db.Uuid
+  name      String           @unique
+  rolePerms RolePermission[]
+}
+
+model RolePermission {
+  roleId       String @db.Uuid
+  permissionId String @db.Uuid
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
 }
 
 // This is your Prisma schema file,
@@ -137,10 +198,12 @@ model User {
   posts            Post[]
   comments         Comment[]
   repComments      RepComment[]
-  messages         Message[]     @relation("MessageSender")
-  receivedMessages Message[]     @relation("MessageReceiver")
-  readProgress     ReadProgress? @relation(fields: [readProgressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  readProgressId   String?       @unique @db.Uuid
+  userRoles        UserRole[]
+  member           Member[]
+  messages         Message[]      @relation("MessageSender")
+  receivedMessages Message[]      @relation("MessageReceiver")
+  readProgress     ReadProgress[]
+  readProgressId   String?        @unique @db.Uuid
 }
 
 enum Gender {

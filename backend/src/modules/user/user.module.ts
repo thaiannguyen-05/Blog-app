@@ -17,6 +17,7 @@ import { CommentModule } from '../comment/comment.module';
         }),
     ],
     controllers: [UserController],
-    providers: [UserService, UserResolver]
+    providers: [UserService, UserResolver],
+    exports: [UserService]
 })
 export class UserModule { }

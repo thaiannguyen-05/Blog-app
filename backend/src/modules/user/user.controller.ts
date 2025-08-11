@@ -8,6 +8,8 @@ import { UserService } from "./user.service";
 import { PostService } from "../post/post.service";
 import { FileArrayValidationPipe } from "src/common/pipe/file-array.pipe";
 import { CommentService } from "../comment/comment.service";
+import { Roles } from "src/common/decorator/role.decorator";
+import { Public } from "src/common/decorator/public.decorator";
 @Controller('user')
 export class UserController {
 
@@ -49,7 +51,7 @@ export class UserController {
     async createPost(@Req() req: Request, @Body('content') content: string, @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>) {
         return this.postService.createPost(req, content, files)
     }
-
+    
     @Put('edit-post')
     @UseInterceptors(AnyFilesInterceptor({
         storage: diskStorage({
@@ -74,9 +76,10 @@ export class UserController {
         return this.userService.loadAllAuthorPost(req)
     }
 
+    @Public()
     @Get('post')
-    async getDetailPost(@Req() req: Request, @Query('postId') postId: string) {
-        return this.postService.getDetailPost(req, postId)
+    async getDetailPost(@Query('postId') postId: string) {
+        return this.postService.getDetailPost(postId)
     }
 
     @Post('comment')

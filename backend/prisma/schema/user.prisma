@@ -18,9 +18,11 @@ model User {
     posts            Post[]
     comments         Comment[]
     repComments      RepComment[]
+    userRoles        UserRole[]
+    member           Member[]
     messages         Message[]     @relation("MessageSender")
     receivedMessages Message[]     @relation("MessageReceiver")
-    readProgress     ReadProgress? @relation(fields: [readProgressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    readProgress     ReadProgress[]
     readProgressId   String?       @unique @db.Uuid
 }
 

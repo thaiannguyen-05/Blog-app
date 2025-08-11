@@ -140,4 +140,15 @@ export class UserService {
 
         return exitingUser
     }
+
+    // get permission
+    async getPermisson(userId: string) {
+        // get user
+        const exitingUser = await this.prismaService.user.findUnique({
+            where: { id: userId },
+            include: { userRoles: { select: { role: true }} }
+        })
+
+        return exitingUser
+    }
 }
