@@ -5,7 +5,7 @@ import { Server, Socket } from 'socket.io'
 @WebSocketGateway(4001, {
     cors: { origin: '*' }
 })
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect{
+export class ChatGatewayExample implements OnGatewayConnection, OnGatewayDisconnect{
 
     handleConnection(client: Socket) {
         console.log("Connect")

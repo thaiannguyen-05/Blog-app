@@ -1,12 +1,13 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD, Reflector } from '@nestjs/core';
+import { APP_GUARD, Reflector, APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'node:path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthCookieGuard } from './common/guard/auth-cookie.guard';
+import { CorsInterceptor } from './common/interceptor/cors.interceptor';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CommentModule } from './modules/comment/comment.module';
@@ -14,10 +15,9 @@ import { CustomCacheModule } from './modules/custom-cache/customCache.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ChatModule } from './modules/chat/chat.module';
-import { TicketModule } from './modules/ticket/ticket.module';
 
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, ChatModule,
+  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, ChatModule, CommentModule,
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -29,8 +29,6 @@ import { TicketModule } from './modules/ticket/ticket.module';
       installSubscriptionHandlers: true,// ho tro realtime socket
       context: ({ req }) => ({ req })
     }),
-    CommentModule,
-    TicketModule,
   ],
   controllers: [AppController],
   providers: [
@@ -39,6 +37,10 @@ import { TicketModule } from './modules/ticket/ticket.module';
       provide: APP_GUARD,
       inject: [Reflector],
       useFactory: (reflector: Reflector) => new AuthCookieGuard(reflector),
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CorsInterceptor,
     },
   ],
 })

@@ -100,13 +100,12 @@ export class AuthService {
     }
 
     // verify account
-    async verifyAccount(email: string) {
+    async verifyAccount(email: string, res: Response) {
         // get account from cache
         const key = `account:${email}`
         const exitingAccount = await this.cacheManager.get(key)
 
         if (!exitingAccount) throw new NotFoundException("Account is not exiting")
-
 
         // update account
         const newAccount = await this.prismaService.user.update({
@@ -119,7 +118,15 @@ export class AuthService {
         await this.cacheManager.del(key)
         const newCache = await this.cacheManager.set(key, newAccount, TIME_LIFE_CACHE)
 
-        return newAccount
+        return res.send(`
+            <html>
+              <head><title>Verify Success</title></head>
+              <body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
+                <h2 style="color: green">Email verified successfully!</h2>
+                <p>You can now login to your account.</p>
+              </body>
+            </html>
+          `)
     }
 
     // delete account by email
@@ -189,39 +196,45 @@ export class AuthService {
         })
 
         if (!exitingAccount) {
-            throw new NotFoundException('User not found', '404')
+            throw new NotFoundException('User not found')
         }
 
         // verify password
         const isMatch = await verify(exitingAccount.hashingPassword, data.password)
 
         if (!isMatch) {
-            throw new UnauthorizedException('Username or password is not correct')
+            throw new UnauthorizedException('Password is not match')
         }
 
         if (!exitingAccount.isActive) {
-
             const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
 
             await this.emailProducer.sendNotificationRegister({
                 to: exitingAccount.email,
                 verifyLink
             })
-            throw new ForbiddenException("Request active account")
+            throw new ForbiddenException("Account is not verified. Please check your email to verify your account.")
         }
 
         // create session
         const session = await this.createSession(exitingAccount, res.req.cookies?.session_id, res)
 
         const accessToken = session.tokens.accessToken
-        
+
         // set user online
         await this.presenceService.setUserOnline(exitingAccount.id)
 
         return {
-            user: exitingAccount,
+            user: {
+                id: exitingAccount.id,
+                name: exitingAccount.name,
+                email: exitingAccount.email,
+                avatar: exitingAccount.avtUrl,
+                isActive: exitingAccount.isActive
+            },
             token: accessToken,
-            success: true
+            success: true,
+            message: "Login successful"
         }
     }
 

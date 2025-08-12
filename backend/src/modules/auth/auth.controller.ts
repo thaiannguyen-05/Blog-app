@@ -14,8 +14,8 @@ export class AuthController {
 
     @Public()
     @Get('verify-account')
-    async verifyAccount(@Query('email') email: string) {
-        return this.authService.verifyAccount(email)
+    async verifyAccount(@Query('email') email: string, @Res() res: Response) {
+        return this.authService.verifyAccount(email, res)
     }
 
     @Delete('delete-account')

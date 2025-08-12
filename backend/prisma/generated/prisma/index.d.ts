@@ -18226,14 +18226,14 @@ export namespace Prisma {
 
   export type ReadProgressWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    roomId?: string
     AND?: ReadProgressWhereInput | ReadProgressWhereInput[]
     OR?: ReadProgressWhereInput[]
     NOT?: ReadProgressWhereInput | ReadProgressWhereInput[]
     messageId?: IntFilter<"ReadProgress"> | number
-    roomId?: UuidFilter<"ReadProgress"> | string
     userId?: UuidFilter<"ReadProgress"> | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "roomId">
 
   export type ReadProgressOrderByWithAggregationInput = {
     id?: SortOrder
