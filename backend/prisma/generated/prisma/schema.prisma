@@ -151,6 +151,12 @@ model Post {
   deleteAt DateTime?
 
   comments Comment[]
+
+  // Add indexes for better performance
+  @@index([userId])
+  @@index([createAt])
+  @@index([status])
+  @@index([userId, createAt])
 }
 
 model Comment {
@@ -167,6 +173,11 @@ model Comment {
   updateAt DateTime @updatedAt
 
   repComments RepComment[]
+
+  // Add indexes
+  @@index([postId])
+  @@index([userId])
+  @@index([createAt])
 }
 
 model RepComment {

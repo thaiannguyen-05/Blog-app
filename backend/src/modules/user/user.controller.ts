@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put, Query, Req, UploadedFile, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Patch, Post, Put, Query, Req, UploadedFile, UploadedFiles, UseInterceptors, ParseUUIDPipe } from "@nestjs/common";
 import { AnyFilesInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { Request } from 'express';
 import { diskStorage } from "multer";
@@ -10,6 +10,7 @@ import { FileArrayValidationPipe } from "src/common/pipe/file-array.pipe";
 import { CommentService } from "../comment/comment.service";
 import { Roles } from "src/common/decorator/role.decorator";
 import { Public } from "src/common/decorator/public.decorator";
+
 @Controller('user')
 export class UserController {
 
@@ -49,9 +50,10 @@ export class UserController {
         })
     }))
     async createPost(@Req() req: Request, @Body('content') content: string, @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>) {
-        return this.postService.createPost(req, content, files)
+        // Match service signature: createPost(req: Request, content: string, files: Array<Express.Multer.File>)
+        return this.postService.createPost(req, content, files || [])
     }
-    
+
     @Put('edit-post')
     @UseInterceptors(AnyFilesInterceptor({
         storage: diskStorage({
@@ -63,11 +65,13 @@ export class UserController {
         })
     }))
     async editPost(@Query('idPost') idPost: string, @Body('newContent') newContent: string, @Req() req: Request, @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>) {
-        return this.postService.editPost(req, files, newContent, idPost)
+        // Match service signature: editPost(req: Request, files: Array<Express.Multer.File>, newContent: string, postId: string)
+        return this.postService.editPost(req, files || [], newContent, idPost)
     }
 
     @Delete('delete-post')
     async deletePost(@Req() req: Request, @Query('postId') postId: string) {
+        // Match service signature: deletePost(postId: string, req: Request)
         return this.postService.deletePost(postId, req)
     }
 
@@ -78,17 +82,54 @@ export class UserController {
 
     @Public()
     @Get('post')
-    async getDetailPost(@Query('postId') postId: string) {
-        return this.postService.getDetailPost(postId)
+    async getDetailPost(@Query('postId') postId: string, @Query('page') page?: number, @Query('limit') limit?: number) {
+        // Match service signature: getPost(postId: string, page: number, limit: number)
+        const pageNum = page ? Number(page) : 1
+        const limitNum = limit ? Number(limit) : 10
+
+        if (isNaN(pageNum) || isNaN(limitNum) || pageNum < 1 || limitNum < 1) {
+            throw new BadRequestException("Page and limit must be positive numbers")
+        }
+
+        return this.postService.getPost(postId, pageNum, limitNum)
+    }
+
+    // Add search endpoint to match findPostByName service method
+    @Public()
+    @Get('search')
+    async searchPosts(
+        @Query('content') content: string,
+        @Query('page') page: number = 1,
+        @Query('limit') limit: number = 10
+    ) {
+        if (!content?.trim()) {
+            throw new BadRequestException("Search content cannot be empty")
+        }
+
+        const pageNum = Number(page)
+        const limitNum = Number(limit)
+
+        if (isNaN(pageNum) || isNaN(limitNum) || pageNum < 1 || limitNum < 1) {
+            throw new BadRequestException("Page and limit must be positive numbers")
+        }
+
+        // Match service signature: findPostByName(content: string, page: number, limit: number)
+        return this.postService.findPostByName(content, pageNum, limitNum)
     }
 
     @Post('comment')
     async comment(@Req() req: Request, @Query('postId') postId: string, @Body('content') content: string) {
+        if (!content?.trim()) {
+            throw new BadRequestException("Comment content cannot be empty")
+        }
         return this.commentService.comment(req, postId, content)
     }
 
     @Patch('edit-comment')
     async editComment(@Req() req: Request, @Query('commentId') commentId: string, @Body('newContent') newContent: string) {
+        if (!newContent?.trim()) {
+            throw new BadRequestException("Comment content cannot be empty")
+        }
         return this.commentService.editComment(req, commentId, newContent)
     }
 
@@ -99,6 +140,9 @@ export class UserController {
 
     @Post('rep-comment')
     async repComment(@Req() req: Request, @Query('commentId') commentId: string, @Body('content') content: string) {
+        if (!content?.trim()) {
+            throw new BadRequestException("Reply content cannot be empty")
+        }
         return this.commentService.repComment(req, commentId, content)
     }
 }

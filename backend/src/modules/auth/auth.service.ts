@@ -103,7 +103,7 @@ export class AuthService {
         })
 
         // cache account
-        await this.customCacheService.fallBackCacheTemporaryUser(data.email)
+        await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`)
 
         const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
         // send email nofification verify account
@@ -214,7 +214,7 @@ export class AuthService {
         const availableAccount = await this.customCacheService.getUserInCache(data.email)
 
         if (!availableAccount) {
-            await this.customCacheService.fallBackCacheTemporaryUser(data.email)
+            await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`)
             throw new NotFoundException('User not found')
         }
 

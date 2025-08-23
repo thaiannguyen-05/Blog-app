@@ -4,6 +4,7 @@ import { UserWithPasswordExplicit } from "../auth/auth.interface";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AUTH_CONSTANTS } from "../auth/auth.constant";
 import { isUUID } from "class-validator";
+import { Post } from "prisma/generated/prisma";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -62,8 +63,7 @@ export class CustomCacheService {
     }
 
     // cache temporary
-    async fallBackCacheTemporaryUser(mainkey: string) {
-        const key = `account:${mainkey}`
+    async fallBackCacheTemporaryObject(key: string) {
         await this.cacheManager.set(key, null, AUTH_CONSTANTS.MAX_AGE_CACHE_TEMPORARY)
     }
 
@@ -71,5 +71,81 @@ export class CustomCacheService {
     async updateCache(mainkey: string, object: any) {
         const key = `account:${mainkey}`
         await this.cacheManager.set(key, object, AUTH_CONSTANTS.MAX_AGE_CACHE)
+    }
+
+    // get post
+    async getPostInCache(postId: string) {
+        const key = `post:${postId}`
+        const cache = await this.cacheManager.get(key) as Post
+
+        if (cache) return cache
+
+        // Fallback to database
+        const existingPost = await this.prismaService.post.findUnique({
+            where: {
+                id: postId,
+                deleteAt: null // Don't return soft-deleted posts
+            },
+            include: {
+                user: {
+                    select: { id: true, name: true, email: true }
+                },
+                comments: {
+                    take: 10, // Limit initial comments
+                    orderBy: { createAt: 'desc' },
+                    include: {
+                        user: { select: { id: true, name: true } }
+                    }
+                }
+            },
+        })
+
+        // Cache the result if found
+        if (existingPost) {
+            await this.cacheManager.set(key, existingPost, TIME_LIFE_CACHE)
+        }
+
+        return existingPost
+    }
+
+    // get many posts in cache
+    async getManyPostInCache(mainkey: string, page: number, limit: number) {
+        const key = `posts:${mainkey}:${page}:${limit}`
+        const cache = await this.cacheManager.get(key) as Post[]
+
+        if (cache) return cache
+
+        const skip = (page - 1) * limit
+
+        const where: any = {
+            status: 'PUBLIC',
+            content: {
+                contains: mainkey,
+                mode: 'insensitive'
+            },
+            deleteAt: null
+        }
+
+        const [posts, total] = await Promise.all([
+            this.prismaService.post.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy: { createAt: 'desc' },
+                include: {
+                    user: { select: { id: true, name: true } }
+                }
+            }),
+            this.prismaService.post.count({ where })
+        ])
+
+        if (posts.length > 0) {
+            await this.cacheManager.set(key, posts, AUTH_CONSTANTS.TIME_LIFE_CACHE)
+        }
+
+        return {
+            posts,
+            total
+        }
     }
 }
