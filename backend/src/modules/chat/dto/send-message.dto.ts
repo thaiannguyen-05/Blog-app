@@ -1,5 +1,19 @@
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+
 export class SendMessageDto {
-    content: string
-    receiverId: string
-    roomId: string
+    @IsString()
+    @IsNotEmpty()
+    content: string;
+
+    @IsString()
+    @IsNotEmpty()
+    receiverId: string;
+
+    @IsString()
+    @IsNotEmpty()
+    roomId: string;
+
+    @IsString()
+    @IsOptional()
+    messageType?: 'text' | 'image' | 'file' = 'text';
 }

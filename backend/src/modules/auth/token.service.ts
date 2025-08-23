@@ -1,7 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "src/prisma/prisma.service";
+import { PayLoad } from "./auth.interface";
+import { randomUUID } from "node:crypto";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class TokenService {
@@ -9,14 +12,19 @@ export class TokenService {
     constructor(
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService,
-        private readonly prismaService: PrismaService
+        private readonly prismaService: PrismaService,
+        @Inject(forwardRef(() => AuthService))
+        private readonly authService: AuthService
     ) { }
 
     // generate tokens
     async generateTokens(userId: string, email: string) {
-
         // create payload
-        const payload = { sub: userId, email: email }
+        const payload: PayLoad = {
+            sub: userId,
+            email: email,
+            timestamp: new Date()
+        }
 
         // generate accesstoken and refreshtoken
         const [accessToken, refreshToken] = await Promise.all([
@@ -35,19 +43,39 @@ export class TokenService {
     }
 
     // store tokens 
-    async storeTokens(userId: string, hashRefreshToken: string) {
+    async storeTokens(userId: string, email: string, hashRefreshToken: string, ip: string, userAgent: string, sessionId?: string) {
+        // Generate sessionId if not provided
+        sessionId = sessionId || randomUUID()
 
-        const session = await this.prismaService.session.upsert({
-            where: { userId: userId },
-            update: {
-                hashingRefreshToken: hashRefreshToken
-            },
-            create: {
+        // Try to find existing session by sessionId first, not userAgent
+        let existingSession = await this.prismaService.session.findUnique({
+            where: { id: sessionId }
+        })
+
+        if (existingSession) {
+            // Check if this is the same device/browser
+            await this.authService.checkIpOrUserAgentId(userAgent, ip, email, existingSession)
+
+            // Update existing session
+            return await this.prismaService.session.update({
+                where: { id: sessionId },
+                data: {
+                    hashingRefreshToken: hashRefreshToken,
+                    userIp: ip // Update IP in case it changed
+                }
+            })
+        }
+
+        // Create new session
+        return await this.prismaService.session.create({
+            data: {
+                id: sessionId,
                 hashingRefreshToken: hashRefreshToken,
-                userId: userId
+                userId: userId,
+                userAgent: userAgent,
+                userIp: ip
             }
         })
-        return session
     }
 
 

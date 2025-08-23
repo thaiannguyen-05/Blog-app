@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Query, Req, Res } from "@nestjs/common";
 import { Request, Response } from 'express';
-import { Cookies } from "src/common/decorator/cookie.decorator";
+import { Cookies } from "src/modules/auth/decorator/cookie.decorator";
 import { Public } from "src/common/decorator/public.decorator";
 import { AuthService } from "./auth.service";
 import { ChangePasswordDto } from "./dto/changePassword.dto";
@@ -44,5 +44,15 @@ export class AuthController {
     @Post("change-password")
     async changePassword(@Req() req: Request, @Body() data: ChangePasswordDto) {
         return this.authService.changePassword(req, data)
+    }
+
+    @Public()
+    @Post("refresh-token")
+    async refreshToken(
+        @Res({ passthrough: true }) res: Response,
+        @Cookies("refresh_token") refreshToken?: string,
+        @Cookies("sesison_id") sessionId?: string
+    ) {
+        return this.authService.refreshToken(res, refreshToken, sessionId)
     }
 }

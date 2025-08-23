@@ -92,5 +92,26 @@ export class EmailService {
         return await this.transporter.sendMail(mailOptions)
     }
 
+    // send email notification other device
+    async sendNotificaitonOtherDevice(toEmail: string, userAgent: string, userIp: string) {
+        // get template 
+        const template = await this.getTemplate('notification-other-device-login')
+
+        const subject = "Detect Other device"
+
+        const html = await template
+                    .replace('{USER_AGENT}', userAgent)
+                    .replace('{USER_IP}', userIp)
+        const mailOptions = {
+            from: `Thaiandev Service: ${this.configService.getOrThrow<string>("EMAIL_USER")}`,
+            to: toEmail,
+            subject,
+            html
+        }
+
+        // send email
+        return await this.transporter.sendMail(mailOptions)
+    }
+
 
 }

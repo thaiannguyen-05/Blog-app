@@ -6,7 +6,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'node:path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthCookieGuard } from './common/guard/auth-cookie.guard';
 import { CorsInterceptor } from './common/interceptor/cors.interceptor';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,6 +14,7 @@ import { CustomCacheModule } from './modules/custom-cache/customCache.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { AuthCookieGuard } from './modules/auth/guard/auth-cookie.guard';
 
 @Module({
   imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, ChatModule, CommentModule,

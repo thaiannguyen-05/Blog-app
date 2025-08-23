@@ -19,4 +19,9 @@ export class EmailConumer {
     async handleChangePassword(@Payload() data: { to: string }) {
         await this.emailService.sendNotificationChangePassword(data.to);
     }
+
+    @EventPattern('email_send_detect_device')
+    async handleDetectDevice(@Payload() data: { to: string, userAgent: string, userIp: string}) {
+        await this.emailService.sendNotificaitonOtherDevice(data.to, data.userAgent, data.userIp)
+    }
 }

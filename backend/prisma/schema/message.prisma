@@ -12,6 +12,9 @@ model Message {
     roomId String @db.Uuid
     room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+    messageType String @default("text") // text, image, file
+    isRead Boolean @default(false)
+
     createAt DateTime  @default(now())
     updateAt DateTime  @updatedAt
     deleteAt DateTime?
@@ -35,6 +38,9 @@ model Room {
 
     members  Member[]
     messages Message[]
+    
+    createAt DateTime  @default(now())
+    updateAt DateTime  @updatedAt
 }
 
 model Member {

@@ -1,0 +1,37 @@
+export const AUTH_CONSTANTS = {
+	TIME_LIFE_CACHE: 10 * 24 * 60 * 60, // 10h
+	TIME_LIFE_SESSION: 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
+	TIME_LIFE_ACCESS_TOKEN: 1000 * 60 * 60, // 1h
+	TIME_LIFE_REFRESH_TOKEN: 24 * 60 * 60 * 7, // 7d
+
+	// cache key
+	CACHE_KEY: {
+		KeyUserWithId: (mainkey: string) => `account:${mainkey}`,
+		KeyUserWithEmail: (mainkey: string) => `account:${mainkey}`
+	},
+
+		// Cache expiration times
+	MAX_AGE_CACHE_TEMPORARY: 60 * 1000, // 60 seconds
+	MAX_AGE_CACHE: 60 * 60 * 1000, // 1 hour
+
+	// Cookie configuration
+	COOKIE_CONFIG: {
+		SESSION: {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'lax' as const,
+		},
+		REFRESH_TOKEN: {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'lax' as const,
+			path: '/',
+		},
+		ACCESS_TOKEN: {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'lax' as const,
+			path: '/',
+		},
+	},
+}

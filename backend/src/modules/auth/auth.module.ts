@@ -5,13 +5,13 @@ import { CustomCacheModule } from '../custom-cache/customCache.module';
 import { EmailModule } from 'src/email/email.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthCookieStrategy } from 'src/common/strategy/auth-cookie.strategy';
+import { AuthCookieStrategy } from 'src/modules/auth/strategy/auth-cookie.strategy';
 import { TokenService } from './token.service';
 import { PresenceModule } from '../presence/presence.module';
 
 @Module({
     imports: [
-        CustomCacheModule, EmailModule, forwardRef(() => PresenceModule),
+        CustomCacheModule, EmailModule, forwardRef(() => PresenceModule), CustomCacheModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

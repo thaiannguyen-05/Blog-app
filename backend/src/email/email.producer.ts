@@ -14,4 +14,8 @@ export class ExmailProducerService {
     async sendChangePasswordEmail(data: { to: string }) {
         await this.client.emit('email_send_change_password', data)
     }
+
+    async sendDetectDevice(data: { to: string, userAgent: string, userIp: string }) {
+        await this.client.emit(`email_send_detect_device`, data)
+    }
 }

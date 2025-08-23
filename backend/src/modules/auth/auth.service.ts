@@ -1,21 +1,18 @@
 import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
-import { BadRequestException, ConflictException, ForbiddenException, forwardRef, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ConflictException, ForbiddenException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { hash, verify } from "argon2";
 import { Request, Response } from 'express';
-import { User } from "prisma/generated/prisma";
 import { ExmailProducerService } from "src/email/email.producer";
 import { PrismaService } from "src/prisma/prisma.service";
+import { CustomCacheService } from "../custom-cache/customCache.service";
+import { AUTH_CONSTANTS } from "./auth.constant";
 import { ChangePasswordDto } from "./dto/changePassword.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { TokenService } from "./token.service";
-import { PresenceService } from "../presence/presence.service";
+import { Session } from "prisma/generated/prisma";
 
-const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
-const TIME_LIFE_SESSION = 10 * 365 * 24 * 60 * 60 * 1000
-const TIME_LIFE_ACCESS_TOKEN = 1000 * 60 * 60
-const TIME_LIFE_REFRESH_TOKEN = 24 * 60 * 60 * 7
 @Injectable()
 export class AuthService {
 
@@ -26,16 +23,43 @@ export class AuthService {
         private readonly configService: ConfigService,
         private readonly tokenService: TokenService,
         private readonly emailProducer: ExmailProducerService,
-        private readonly presenceService: PresenceService
+        private readonly customCacheService: CustomCacheService
     ) { }
 
     // hashing password
-    async hasing(password: string) {
+    public async hasing(password: string) {
         return await hash(password)
     }
 
+    // get more infor user 
+    private getClientInfo(req: Request) {
+        // Fastest IP extraction with fallback chain
+        const ip = req.ip ||
+            req.socket.remoteAddress ||
+            req.connection.remoteAddress ||
+            (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
+            req.headers['x-real-ip'] as string ||
+            'unknown';
+
+        // Fastest User-Agent extraction
+        const userAgent = req.headers['user-agent'] || 'unknown';
+
+        return { ip, userAgent }
+    }
+
+    // check ip or userAgentId
+    async checkIpOrUserAgentId(userAgent: string, ip: string, email: string, session: Session) {
+        if (userAgent != session.userAgent || ip != session.userIp) {
+            await this.emailProducer.sendDetectDevice({
+                to: email,
+                userAgent: userAgent,
+                userIp: ip
+            })
+        }
+    }
+
     // verify account with accesstoken
-    async validate(accessToken: string) {
+    public async validate(accessToken: string) {
         try {
             // get id in payload
             const payload = await this.jwtService.verifyAsync(accessToken, {
@@ -47,9 +71,7 @@ export class AuthService {
                 where: { id: payload.sub }
             })
 
-            if (!exitingUser) {
-                throw new NotFoundException('User not found')
-            }
+            if (!exitingUser) throw new NotFoundException('User not found')
 
             return exitingUser
 
@@ -61,21 +83,17 @@ export class AuthService {
         }
     }
 
-
     // register
-    async register(data: RegisterDto) {
-
+    public async register(data: RegisterDto) {
         // check available account
-        const eixtingAccount = await this.prismaService.user.findFirst({
-            where: { email: data.email }
-        })
+        const availableAccount = await this.customCacheService.getUserInCache(data.email)
 
-        if (eixtingAccount) throw new BadRequestException('Account already exists')
+        if (availableAccount) throw new BadRequestException('Account already exists')
 
         // hahsing password
         const hashingPassword = await this.hasing(data.password)
 
-        // register new account
+        // register new account 
         const newAccount = await this.prismaService.user.create({
             data: {
                 email: data.email,
@@ -85,27 +103,37 @@ export class AuthService {
         })
 
         // cache account
-        const key = `account:${data.email}`
-        const user = await this.cacheManager.set(key, newAccount, TIME_LIFE_CACHE)
+        await this.customCacheService.fallBackCacheTemporaryUser(data.email)
 
         const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
-
         // send email nofification verify account
         await this.emailProducer.sendNotificationRegister({
             to: newAccount.email,
             verifyLink
         })
 
-        return newAccount
+        return {
+            success: true,
+            message: 'Verification email sent. Please check your inbox.',
+            user: {
+                id: newAccount.id,
+                name: newAccount.name,
+                email: newAccount.email,
+            },
+        };
     }
 
     // verify account
-    async verifyAccount(email: string, res: Response) {
-        // get account from cache
-        const key = `account:${email}`
-        const exitingAccount = await this.cacheManager.get(key)
+    public async verifyAccount(email: string, res: Response) {
+        // check available account
+        const availableAccount = await this.customCacheService.getUserInCache(email)
 
-        if (!exitingAccount) throw new NotFoundException("Account is not exiting")
+        if (!availableAccount) throw new NotFoundException("Account is not exiting")
+
+        if (availableAccount.isActive) throw new BadRequestException("Account already exited")
+
+        // del cached
+        await this.cacheManager.del(`account:${email}`)
 
         // update account
         const newAccount = await this.prismaService.user.update({
@@ -115,8 +143,7 @@ export class AuthService {
         })
 
         // update cache
-        await this.cacheManager.del(key)
-        const newCache = await this.cacheManager.set(key, newAccount, TIME_LIFE_CACHE)
+        await this.customCacheService.updateCache(email, newAccount)
 
         return res.send(`
             <html>
@@ -130,177 +157,213 @@ export class AuthService {
     }
 
     // delete account by email
-    async deleteAccountByEmail(email: string) {
-        // get account from cache
-        const key = `account:${email}`
-        const exitingAccount = await this.cacheManager.get(key)
+    public async deleteAccountByEmail(email: string) {
+        // check availableAccount
+        const availableAccount = await this.customCacheService.getUserInCache(email)
 
-        if (!exitingAccount) throw new NotFoundException("Account is not exiting")
+        if (!availableAccount) throw new NotFoundException("Account is not exiting")
 
-        // delete account from cache
-        await this.cacheManager.del(key)
+        // del cache
+        await this.cacheManager.del(`account:${email}`)
 
         // delete account from database
         await this.prismaService.user.delete({
             where: { email: email }
         })
 
-        return exitingAccount
+        return {
+            success: true
+        }
     }
 
-
     // create session
-    async createSession(user: User, session_id: string, res: Response) {
-
+    public async createSession(user: { id: string, email: string }, res: Response, ip: string, userAgent: string) {
         // generate token 
         const tokens = await this.tokenService.generateTokens(user.id, user.email)
 
         // hash
         const hashRefreshToken = await this.hasing(tokens.refreshToken)
 
+        // session id
+        const sid = res.req.cookies?.session_id
+
         // store tokens
-        const session = await this.tokenService.storeTokens(user.id, hashRefreshToken)
+        const session = await this.tokenService.storeTokens(user.id, user.email, hashRefreshToken, ip, userAgent, sid)
 
         // set maxage
         res
-            .cookie("sesison_id", session.id, {
-                maxAge: TIME_LIFE_SESSION
+            .cookie("session_id", session.id, {
+                maxAge: AUTH_CONSTANTS.TIME_LIFE_SESSION,
+                ...AUTH_CONSTANTS.COOKIE_CONFIG
             })
-
-        res
             .cookie("access_token", tokens.accessToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: 'lax',
-                maxAge: TIME_LIFE_ACCESS_TOKEN,
-                path: '/',
+                maxAge: AUTH_CONSTANTS.TIME_LIFE_ACCESS_TOKEN,
+                ...AUTH_CONSTANTS.COOKIE_CONFIG
             })
             .cookie("refresh_token", tokens.refreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: 'lax',
-                maxAge: TIME_LIFE_REFRESH_TOKEN,
-                path: '/',
+                maxAge: AUTH_CONSTANTS.TIME_LIFE_REFRESH_TOKEN,
+                ...AUTH_CONSTANTS.COOKIE_CONFIG
             })
 
         return { session, tokens }
     }
 
     // login 
-    async login(data: RegisterDto, res: Response) {
-
+    public async login(data: RegisterDto, res: Response) {
         // check available user
-        const exitingAccount = await this.prismaService.user.findFirst({
-            where: { email: data.email },
-            omit: { hashingPassword: false }
-        })
+        const availableAccount = await this.customCacheService.getUserInCache(data.email)
 
-        if (!exitingAccount) {
+        if (!availableAccount) {
+            await this.customCacheService.fallBackCacheTemporaryUser(data.email)
             throw new NotFoundException('User not found')
         }
 
-        // verify password
-        const isMatch = await verify(exitingAccount.hashingPassword, data.password)
-
-        if (!isMatch) {
-            throw new UnauthorizedException('Password is not match')
-        }
-
-        if (!exitingAccount.isActive) {
+        if (!availableAccount.isActive) {
             const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
 
             await this.emailProducer.sendNotificationRegister({
-                to: exitingAccount.email,
+                to: availableAccount.email,
                 verifyLink
             })
             throw new ForbiddenException("Account is not verified. Please check your email to verify your account.")
         }
 
+        // verify password
+        const isMatch = await verify(availableAccount.hashingPassword, data.password)
+
+        if (!isMatch) throw new UnauthorizedException('Password is not match')
+
+        // user ip and agent 
+        const hardWareUser = this.getClientInfo(res.req)
         // create session
-        const session = await this.createSession(exitingAccount, res.req.cookies?.session_id, res)
+        const session = await this.createSession(availableAccount, res, hardWareUser.ip, hardWareUser.userAgent)
 
-        const accessToken = session.tokens.accessToken
-
-        // set user online
-        await this.presenceService.setUserOnline(exitingAccount.id)
+        const { hashingPassword, ...userWithoutPassword } = availableAccount
 
         return {
-            user: {
-                id: exitingAccount.id,
-                name: exitingAccount.name,
-                email: exitingAccount.email,
-                avatar: exitingAccount.avtUrl,
-                isActive: exitingAccount.isActive
-            },
-            token: accessToken,
-            success: true,
-            message: "Login successful"
+            message: 'Login successful',
+            data: userWithoutPassword,
+            '@accessToken': session.tokens.accessToken,
+            '@refreshToken': session.tokens.refreshToken,
+            '@sessionId': session.session.id
         }
     }
 
     // logout
-    async logout(res: Response, sesisonId?: string) {
-        // clear accesstoken and refreshtoken
-        res.clearCookie("access_token").clearCookie("refresh_token")
+    public async logout(res: Response, sesisonId?: string) {
 
-        const sid = res.req.cookies?.sesison_id || sesisonId
+        const sid = res.req.cookies?.session_id || sesisonId
 
-        if (!sid) {
-            throw new ConflictException("Session is not require")
+        if (!sid) throw new ConflictException("Session is not require")
+
+        try {
+            // clear refreshtoken
+            await this.prismaService.session.update({
+                where: { id: sid },
+                data: { hashingRefreshToken: null }
+            })
+        } catch (error) {
+            console.error('Error clearing session', error)
         }
 
-        // clear refreshtoken
-        await this.prismaService.session.update({
-            where: { id: sid },
-            data: {
-                hashingRefreshToken: null
-            }
-        })
-
-        const user = await this.validate(res.req.cookies?.access_token)
-
-        // set user offline
-        await this.presenceService.setUserOffline(user.id)
-
+        // clear accesstoken and refreshtoken
+        res.clearCookie('access_token', { path: '/' })
+            .clearCookie('refresh_token', { path: '/' })
+            .clearCookie('session_id', { path: '/' })
         return {
-            message: "Done"
+            message: "Done",
+            data: null
         }
     }
 
     // change password
-    async changePassword(req: Request, data: ChangePasswordDto) {
-
-        const userId = req.user?.id
-
-        // find user
-        const exitingUser = await this.prismaService.user.findUnique({
-            where: { id: userId },
+    public async changePassword(req: Request, data: ChangePasswordDto) {
+        // check available account
+        const availableAccount = await this.prismaService.user.findUnique({
+            where: { id: req.user?.id },
             omit: { hashingPassword: false }
         })
 
-        if (!exitingUser) {
-            throw new NotFoundException("User not found")
-        }
+        if (!availableAccount) throw new NotFoundException("User not found")
 
-        const isMatch = await verify(exitingUser?.hashingPassword, data.oldPassword)
+        const isMatch = await verify(availableAccount?.hashingPassword, data.oldPassword)
 
-        if (!isMatch) {
-            throw new BadRequestException("Password incorrect")
-        }
+        if (!isMatch) throw new BadRequestException("Password incorrect")
+
+        // del cache
+        const key = `account:${availableAccount.id}`
+        await this.cacheManager.del(key)
 
         const hashingNewPassword = await this.hasing(data.newPassword)
 
         // update new password
         const newUser = await this.prismaService.user.update({
-            where: { id: exitingUser.id },
+            where: { id: availableAccount.id },
             data: { hashingPassword: hashingNewPassword }
         })
 
+        // update cache
+        await this.cacheManager.set(key, newUser)
+
         // send notification
         await this.emailProducer.sendChangePasswordEmail({
-            to: exitingUser.email
+            to: availableAccount.email
         })
 
-        return newUser
+        return {
+            success: true,
+            message: "Done"
+        }
     }
-}
+
+    // refresh access token using refresh token
+    public async refreshToken(res: Response, refreshToken?: string, sessionId?: string) {
+        if (!refreshToken || !sessionId) throw new UnauthorizedException('Refresh or sesison not found')
+
+        // find sesison
+        const session = await this.prismaService.session.findUnique({
+            where: { id: sessionId }
+        })
+
+        if (!session || !session.hashingRefreshToken) throw new UnauthorizedException('Invalid session')
+
+        // verify refresh token
+        const isValidRefreshToken = await verify(session.hashingRefreshToken, refreshToken)
+        if (!isValidRefreshToken) throw new UnauthorizedException('Invalid refresh token')
+
+        // get user
+        const exitingUser = await this.prismaService.user.findUnique({
+            where: { id: session.userId }
+        })
+
+        if (!exitingUser?.isActive) throw new BadRequestException('Somethings went wrong')
+
+        // generate new token
+        const tokens = await this.tokenService.generateTokens(exitingUser.id, exitingUser.email)
+
+        // hash new tokens
+        const hashingRefreshToken = await this.hasing(tokens.refreshToken)
+
+        // update session
+        const newSession = await this.prismaService.session.update({
+            where: { id: sessionId },
+            data: { hashingRefreshToken: hashingRefreshToken }
+        })
+
+        // set new cookies
+        res
+            .cookie('refresh_token', tokens.refreshToken, {
+                maxAge: AUTH_CONSTANTS.TIME_LIFE_REFRESH_TOKEN,
+                ...AUTH_CONSTANTS.COOKIE_CONFIG
+            })
+            .cookie('access_token', tokens.accessToken, {
+                maxAge: AUTH_CONSTANTS.TIME_LIFE_ACCESS_TOKEN,
+                ...AUTH_CONSTANTS.COOKIE_CONFIG
+            })
+
+        return {
+            message: 'refreshed',
+            data: null
+        }
+    }
+} 

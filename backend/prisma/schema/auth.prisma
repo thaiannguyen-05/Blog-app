@@ -3,8 +3,13 @@ model Session {
 
     hashingRefreshToken String?
 
-    userId String @db.Uuid @unique
+    userId String @db.Uuid
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    userIp    String?
+    userAgent String? @unique
+    loginAt   DateTime?
+    logout    DateTime?
 
     createAt DateTime @default(now())
 }
@@ -15,7 +20,7 @@ model Code {
     tokens     String?
     typeOfCode TypeOfCode
 
-    userId String  @db.Uuid
+    userId String @db.Uuid
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
