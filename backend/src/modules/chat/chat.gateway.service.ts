@@ -13,7 +13,7 @@ export class ChatGatewayService {
 		private readonly prismaService: PrismaService
 	) { }
 
-	async handleJoinRoom(client: Socket, user: User, chatId: string): Promise<void> {
+	async handleJoinRoom(client: Socket, user: User, chatId: string): Promise<boolean> {
 		try {
 			const chat = await this.prismaService.privateChat.findUnique({
 				where: { id: chatId },
@@ -25,14 +25,14 @@ export class ChatGatewayService {
 			})
 
 			if (!chat) {
-				client.emit('error', { message: 'Chat not found' })
-				return
+				client.emit('joinRoomError', { message: 'Chat not found' })
+				return false
 			}
 
 			// check if user is either user1 or user2 in this chat
-			if (chat.user1Id !== user.id || chat.user2Id !== user.id) {
-				client.emit('error', { message: 'you are not client in this chat' })
-				return
+			if (chat.user1Id !== user.id && chat.user2Id !== user.id) {
+				client.emit('joinRoomError', { message: 'you are not client in this chat' })
+				return false
 			}
 
 			const room = CHAT_CONSTANTS.KEY.Room(chatId)
@@ -40,9 +40,11 @@ export class ChatGatewayService {
 
 			client.emit('joinedRoom', { chatId, room })
 			this.logger.log(`User ${user.id} joined private chat room ${room}`)
+			return true
 		} catch (error) {
 			this.logger.error(`Error joining room: ${error.message}`, error.stack)
-			client.emit('error', { message: 'Failed to join room' })
+			client.emit('joinRoomError', { message: 'Failed to join room' })
+			return false
 		}
 	}
 

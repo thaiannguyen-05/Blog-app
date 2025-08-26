@@ -1,10 +1,10 @@
 import { Logger } from "@nestjs/common";
 import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
-import { Server, Socket } from 'socket.io'
+import { Server, Socket } from 'socket.io';
 import { PrismaService } from "src/prisma/prisma.service";
-import { ChatService } from "./chat.service";
 import { CHAT_CONSTANTS } from "./chat.constants";
 import { ChatGatewayService } from "./chat.gateway.service";
+import { ChatService } from "./chat.service";
 import { CreateMessageDto } from "./dto/create.message.dto";
 @WebSocketGateway({
 	cors: {

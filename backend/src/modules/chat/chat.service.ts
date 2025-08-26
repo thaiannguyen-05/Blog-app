@@ -1,11 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException, OnModuleDestroy } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException, OnModuleDestroy } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { JwtService } from "@nestjs/jwt";
-import { Redis } from 'ioredis'
-import { PayLoad } from "../auth/auth.interface";
-import { PrismaService } from "src/prisma/prisma.service";
 import { EventEmitter2 } from "@nestjs/event-emitter";
+import { JwtService } from "@nestjs/jwt";
+import { Redis } from 'ioredis';
+import { PrismaService } from "src/prisma/prisma.service";
+import { PayLoad } from "../auth/auth.interface";
 import { CreateMessageDto } from "./dto/create.message.dto";
+import { FindAllPrivateChatDto } from "./dto/find.all.message.dto";
 import { FindAllPrivateMessageDto } from "./dto/find.message.chat.dto";
 @Injectable()
 export class ChatService implements OnModuleDestroy {
@@ -232,6 +233,130 @@ export class ChatService implements OnModuleDestroy {
 		} catch (error) {
 			console.error('Error creating/getting chat:', error)
 			throw new BadRequestException('Failed to create or get chat')
+		}
+	}
+
+	async findMessage(currendUserId: string, chatId: string, query: FindAllPrivateMessageDto) {
+		try {
+			// verify access
+			const hasAccess = await this.verifyChatAccess(currendUserId, chatId)
+			if (!hasAccess) throw new ForbiddenException('Access denied to this chat')
+
+			const { page = 1, limit = 20, cursor } = query
+			const skip = (page - 1) * limit
+
+			const whereClaude: any = { chatId }
+
+			if (cursor) {
+				whereClaude.id = { lt: parseInt(cursor) }
+			}
+
+			const messages = await this.prismaService.privateMessage.findMany({
+				where: whereClaude,
+				orderBy: { createdAt: 'desc' },
+				take: limit + 1,
+				skip: cursor ? 0 : skip,
+				include: {
+					sender: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			})
+
+			const hasMore = messages.length > limit
+			const items = hasMore ? messages.slice(0, -1) : messages
+			const nextCursor = items.length > 0 ? items[items.length - 1].id.toString() : null
+
+			return {
+				items: items.reverse(),
+				pagination: {
+					page,
+					limit,
+					hasMore,
+					nextCursor,
+					total: await this.prismaService.privateMessage.count({ where: { chatId } })
+				}
+			}
+
+		} catch (error) {
+			console.error('Error finding messages:', error);
+			if (error instanceof ForbiddenException) {
+				throw error;
+			}
+			throw new BadRequestException('Failed to retrieve messages')
+		}
+	}
+
+	async findChatHistory(userId: string, query: FindAllPrivateChatDto) {
+		try {
+			const { page = 1, limit = 20, search } = query
+			const skip = (page - 1) * limit
+
+			const whereClaude: any = {
+				OR: [
+					{ user1Id: userId },
+					{ user2Id: userId }
+				]
+			}
+
+			if (search) {
+				whereClaude.AND = {
+					OR: [
+						{ user1: { name: { contains: search, mode: 'insensitive' } } },
+						{ user2: { name: { contains: search, mode: 'insensitive' } } }
+					]
+				}
+			}
+
+			const chats = await this.prismaService.privateChat.findMany({
+				where: whereClaude,
+				orderBy: { lastMessageAt: 'desc' },
+				take: limit,
+				skip,
+				include: {
+					user1: {
+						select: {
+							id: true,
+							name: true
+						}
+					},
+					user2: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			})
+
+			const total = await this.prismaService.privateChat.count({ where: whereClaude })
+
+			return {
+				items: chats.map(chat => {
+					const isUser1 = chat.user1Id === userId
+					const lastReadIndex = isUser1 ? chat.user1LastReadIndex : chat.user2LastReadIndex
+					const unreadCount = Math.max(0, chat.totalMessage - lastReadIndex)
+
+					return {
+						...chat,
+						otheruser: isUser1 ? chat.user2 : chat.user1,
+						unreadCount
+					}
+				}),
+				pagination: {
+					page,
+					limit,
+					total,
+					totalPages: Math.ceil(total / limit),
+					hasMore: skip + limit < total
+				}
+			}
+		} catch (error) {
+			console.error('Error finding chat history:', error);
+			throw new BadRequestException('Failed to retrieve chat history');
 		}
 	}
 
