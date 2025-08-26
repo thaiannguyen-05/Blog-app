@@ -27,6 +27,20 @@ Docker/
   ├── docker-compose.yml
 ```
 
+## Chức năng chính
+
+- **Quản lý người dùng:** Đăng ký, đăng nhập, xác thực JWT, cập nhật thông tin cá nhân, đổi mật khẩu.
+- **Quản lý bài viết:** Tạo, sửa, xóa, xem danh sách và chi tiết bài viết, phân trang, tìm kiếm theo từ khóa.
+- **Quản lý bình luận:** Thêm, sửa, xóa bình luận cho bài viết, phân quyền theo người dùng.
+- **Quản lý chuyên mục (category):** Tạo, sửa, xóa, phân loại bài viết theo chuyên mục.
+- **Upload hình ảnh:** Hỗ trợ upload ảnh cho bài viết và avatar người dùng.
+- **Gửi email:** Xác thực email, quên mật khẩu, thông báo hệ thống.
+- **Phân quyền & bảo mật:** Quản lý vai trò (admin, user), kiểm tra quyền truy cập API.
+- **Thống kê:** Thống kê số lượng bài viết, người dùng, bình luận.
+- **API GraphQL:** Toàn bộ backend sử dụng GraphQL, dễ dàng mở rộng và tích hợp.
+- **Tích hợp Docker:** Dễ dàng triển khai với Docker Compose, hỗ trợ các dịch vụ như PostgreSQL, Redis.
+- **Kiểm thử:** Đầy đủ unit test và e2e test cho các module chính.
+
 ## Thiết lập dự án
 
 ```bash
