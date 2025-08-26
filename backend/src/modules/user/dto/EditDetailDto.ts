@@ -1,8 +1,12 @@
-import { Optional } from "@nestjs/common";
+import { IsOptional, IsString, IsDateString, Length } from 'class-validator';
 
 export class EditDetailDto {
-    @Optional()
-    name: string
-    @Optional()
-    dateOfBirth: string
+    @IsOptional()
+    @IsString()
+    @Length(2, 50)
+    name?: string;
+
+    @IsOptional()
+    @IsDateString()
+    dateOfBirth?: string;
 }

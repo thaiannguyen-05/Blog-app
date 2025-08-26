@@ -1,0 +1,5 @@
+sudo lsof -i :6379
+sudo systemctl stop redis-server
+
+docker rm -f redis
+docker rm -f redis rabbitmq

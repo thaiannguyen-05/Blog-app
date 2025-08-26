@@ -5,6 +5,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { AUTH_CONSTANTS } from "../auth/auth.constant";
 import { isUUID } from "class-validator";
 import { Post } from "prisma/generated/prisma";
+import { USER_CONSTANTS } from "../user/user.constants";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -68,8 +69,7 @@ export class CustomCacheService {
     }
 
     // update cache
-    async updateCache(mainkey: string, object: any) {
-        const key = `account:${mainkey}`
+    async updateCache(key: string, object: any) {
         await this.cacheManager.set(key, object, AUTH_CONSTANTS.MAX_AGE_CACHE)
     }
 
@@ -147,5 +147,24 @@ export class CustomCacheService {
             posts,
             total
         }
+    }
+
+    async getAllUserPosts(mainkey: string, page: number, limit: number) {
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserPosts(mainkey)
+        const cache = await this.cacheManager.get(key) as Post[]
+
+        if (cache) return cache
+
+        // fall back
+        const skip = (page - 1) * limit
+
+        const existingPosts = await this.prismaService.post.findMany({
+            where: { userId: mainkey },
+            skip,
+            take: limit,
+            orderBy: { createAt: 'desc' }
+        })
+
+        return existingPosts
     }
 }

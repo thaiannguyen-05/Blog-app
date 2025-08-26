@@ -5,6 +5,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { EditDetailDto } from "./dto/EditDetailDto";
 import { CustomCacheService } from "../custom-cache/customCache.service";
 import { User } from "prisma/generated/prisma";
+import { USER_CONSTANTS } from "./user.constants";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -17,7 +18,7 @@ export class UserService {
         private readonly customCacheService: CustomCacheService
     ) { }
 
-    // pipe data
+    // trans data
     private parseDateString(dateStr: string): Date | null {
         // yyyy/mm/dd
         const match = dateStr.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
@@ -31,38 +32,27 @@ export class UserService {
         return date
     }
 
-    // get user
-    private async getUser(userId: string) {
-        const key = `account:${userId}`
-        const cache = await this.cacheManager.get(key) as User
-
-        if (cache) return cache
-
-        // fall back 
-        const exitingUser = await this.prismaService.user.findUnique({
-            where: { id: userId }
-        })
-
-        return exitingUser
-    }
-
     // edit information
     async editDetailUser(req: Request, data: EditDetailDto) {
-
         // check available user 
-        const userId = req.user?.id
+        const userId = req.user?.id || 'unknow'
+        const exitingUser = await this.customCacheService.getUserInCache(userId)
 
-        if (!userId) throw new ForbiddenException("Require accesstoken")
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
 
-        const exitingUser = await this.getUser(userId)
-
-        if (!exitingUser) throw new NotFoundException("user not found")
+        if (!exitingUser) {
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new NotFoundException("user not found")
+        }
 
         let date
 
-        if (data.dateOfBirth !== undefined && data.dateOfBirth !== null) {
+        if (data.dateOfBirth !== undefined) {
             date = this.parseDateString(data.dateOfBirth)
         }
+
+        // del cache
+        await this.cacheManager.del(key)
 
         // update
         const newUser = await this.prismaService.user.update({
@@ -73,25 +63,26 @@ export class UserService {
             }
         })
 
-        // cache user
-        const key = `account:${exitingUser.id}`
-        await this.cacheManager.del(key)
-        await this.cacheManager.set(key, newUser, TIME_LIFE_CACHE)
+        // update cache
+        await this.customCacheService.updateCache(key, newUser)
 
         return newUser
     }
 
-    // change avate
+    // change avata
     async changeAvt(req: Request, file: Express.Multer.File) {
-
         // find available user
-        const userId = req.user?.id
-
+        const userId = req.user?.id || 'unknow'
         if (!userId) throw new ForbiddenException("Require accesstoken")
 
-        const exitingUser = await this.getUser(userId)
+        const exitingUser = await this.customCacheService.getUserInCache(userId)
 
-        if (!exitingUser) throw new NotFoundException("user not found")
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+
+        if (!exitingUser) {
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new NotFoundException("user not found")
+        }
 
         // get file path
         const fileUrls = file.filename
@@ -105,50 +96,38 @@ export class UserService {
         })
 
         // update cache
-        const key = `account:${exitingUser.id}`
-        await this.cacheManager.del(key)
-        await this.cacheManager.set(key, newUser, TIME_LIFE_CACHE)
+        await this.customCacheService.updateCache(key, newUser)
 
         return newUser
     }
 
     // load all author post
-    async loadAllAuthorPost(req: Request) {
-        // check cache
-        const key = `account-all-post:${req.user?.id}`
+    async loadAllAuthorPost(req: Request, page: number, limit: number) {
+        const userId = req.user?.id;
+        if (!userId) throw new ForbiddenException("Require accesstoken");
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserPosts(userId);
 
-        let listPost = await this.customCacheService.getOrSet(key, () =>
-            this.prismaService.post.findMany({
-                where: { userId: req.user?.id }
-            })
-        )
+        const posts = await this.customCacheService.getAllUserPosts(userId, page, limit);
 
-        return listPost
+        if (!posts) {
+            await this.customCacheService.fallBackCacheTemporaryObject(key);
+            throw new NotFoundException("User have no available post");
+        }
+
+        return posts;
     }
 
     // find user
     async getFrolife(userId: string) {
         // check user in cache
-        const key = `user:${userId}`
+        const cache = await this.customCacheService.getUserInCache(userId)
 
-        // call get or set cache
-        const exitingUser = await this.customCacheService.getOrSet(key, () =>
-            this.prismaService.user.findUnique({
-                where: { id: userId }
-            })
-        )
+        if (!cache) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new NotFoundException("User not found")
+        }
 
-        return exitingUser
-    }
-
-    // get permission
-    async getPermisson(userId: string) {
-        // get user
-        const exitingUser = await this.prismaService.user.findUnique({
-            where: { id: userId },
-            include: { userRoles: { select: { role: true }} }
-        })
-
-        return exitingUser
+        return cache
     }
 }

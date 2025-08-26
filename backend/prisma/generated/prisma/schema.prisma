@@ -29,59 +29,59 @@ enum TypeOfCode {
   PHONE
 }
 
-model Message {
-  id Int @id @default(autoincrement())
+model PrivateChat {
+  id            String    @id @default(uuid()) @db.Uuid
+  user1Id       String    @db.Uuid
+  user2Id       String    @db.Uuid
+  lastMessage   String?
+  lastMessageAt DateTime?
 
-  content String
+  // save index
+  user1LastReadIndex Int @default(0)
+  user2LastReadIndex Int @default(0)
 
-  senderID String? @db.Uuid
-  sender   User?   @relation(fields: [senderID], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "MessageSender")
+  //total message
+  totalMessage Int @default(0)
 
-  receiverID String? @db.Uuid
-  receiver   User?   @relation(fields: [receiverID], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "MessageReceiver")
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
-  roomId String @db.Uuid
-  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // relation
+  user1          User             @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user2          User             @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  privateMessage PrivateMessage[]
 
-  messageType String  @default("text") // text, image, file
-  isRead      Boolean @default(false)
-
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
-  deleteAt DateTime?
+  @@unique([user1Id, user2Id])
+  @@index([user1Id])
+  @@index([user2Id])
+  @@index([lastMessageAt])
+  @@map("private_chats")
 }
 
-model ReadProgress {
-  id        String @id @default(uuid()) @db.Uuid
-  messageId Int    @default(0)
+model PrivateMessage {
+  id       String @id @default(uuid()) @db.Uuid
+  content  String
+  chatId   String @db.Uuid
+  senderId String @db.Uuid
 
-  roomId String @unique @db.Uuid
+  messageIndex Int
 
-  userId String @db.Uuid
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-}
+  replyToId String?          @db.Uuid
+  replyTo   PrivateMessage?  @relation("MessageReply", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  replies   PrivateMessage[] @relation("MessageReply")
 
-model Room {
-  id     String @id @default(uuid()) @db.Uuid
-  roomId String @db.Uuid
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
-  nameRoom String
+  // relation
+  chat   PrivateChat @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sender User        @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  members  Member[]
-  messages Message[]
-
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-}
-
-model Member {
-  id String @id @default(uuid()) @db.Uuid
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-
-  roomId String @db.Uuid
-  room   Room   @relation(fields: [roomId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  @@unique([chatId, messageIndex])
+  @@index([chatId, messageIndex])
+  @@index([senderId])
+  @@index([replyToId])
+  @@map("private_messages")
 }
 
 model Role {
@@ -211,21 +211,21 @@ model User {
   email           String  @unique
   hashingPassword String
 
+  lastSeen DateTime?
+
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
 
-  sessions         Session[]
-  codes            Code[]
-  posts            Post[]
-  comments         Comment[]
-  repComments      RepComment[]
-  userRoles        UserRole[]
-  member           Member[]
-  messages         Message[]      @relation("MessageSender")
-  receivedMessages Message[]      @relation("MessageReceiver")
-  readProgress     ReadProgress[]
-  readProgressId   String?        @unique @db.Uuid
+  sessions     Session[]
+  codes        Code[]
+  posts        Post[]
+  comments     Comment[]
+  repComments  RepComment[]
+  userRoles    UserRole[]
+  user1        PrivateChat[]    @relation("user1Chats")
+  user2        PrivateChat[]    @relation("user2Chats")
+  sentMessages PrivateMessage[] @relation("SentMessage")
 }
 
 enum Gender {

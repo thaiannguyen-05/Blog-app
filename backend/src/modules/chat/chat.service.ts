@@ -1,221 +1,238 @@
-import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { Cache } from "cache-manager";
-import { Message, User } from "prisma/generated/prisma";
+import { BadRequestException, Injectable, NotFoundException, OnModuleDestroy } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { Redis } from 'ioredis'
+import { PayLoad } from "../auth/auth.interface";
 import { PrismaService } from "src/prisma/prisma.service";
-import { PresenceService } from "../presence/presence.service";
-import { SendMessageDto } from "./dto/send-message.dto";
-import { AuthService } from "../auth/auth.service";
-
-const TIME_FILE_MESSAGE_IN_CACHE = 24 * 60 * 60 * 7
-const LIMIT_LOAD = 20
-
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { CreateMessageDto } from "./dto/create.message.dto";
+import { FindAllPrivateMessageDto } from "./dto/find.message.chat.dto";
 @Injectable()
-export class ChatService {
+export class ChatService implements OnModuleDestroy {
+	private redis: Redis
 
-    constructor(
-        private readonly prismaService: PrismaService,
-        @Inject(CACHE_MANAGER) private cacheManager: Cache,
-        private readonly presenceService: PresenceService,
-        private readonly authService: AuthService
-    ) { }
+	constructor(
+		private readonly configService: ConfigService,
+		private readonly jwtService: JwtService,
+		private readonly prismaService: PrismaService,
+		private readonly evenEmitter: EventEmitter2
+	) {
+		const redisUrl = this.configService.getOrThrow<string>("REDIS_URL")
+		this.redis = new Redis(redisUrl)
 
-    // create or get room
-    async createOrGetRoom(userId1: string, userId2: string) {
-        // Check if room already exists by looking for rooms with both users as members
-        const existingRoom = await this.prismaService.room.findFirst({
-            where: {
-                members: {
-                    every: {
-                        userId: {
-                            in: [userId1, userId2]
-                        }
-                    }
-                }
-            },
-            include: {
-                members: true
-            }
-        });
+		this.redis.on('error', (error) => {
+			console.log('Redis connection error:', error)
+		})
+	}
 
-        if (existingRoom && existingRoom.members.length === 2) {
-            return existingRoom;
-        }
+	async onModuleDestroy() {
+		await this.redis.disconnect()
+	}
 
-        // Create new room
-        const newRoom = await this.prismaService.room.create({
-            data: {
-                roomId: `room_${Date.now()}`,
-                nameRoom: `Chat between ${userId1} and ${userId2}`,
-                members: {
-                    create: [
-                        { userId: userId1 },
-                        { userId: userId2 }
-                    ]
-                }
-            },
-            include: {
-                members: true
-            }
-        });
+	async validateUser(userId: string, token: string) {
+		try {
+			// verify jwt token
+			const payload: PayLoad = this.jwtService.verify(token)
+			if (payload.sub != userId) return null
 
-        return newRoom;
-    }
+			// get user in db
+			const user = await this.prismaService.user.findUnique({
+				where: { id: userId },
+				select: {
+					id: true,
+					name: true,
+					email: true
+				}
+			})
 
-    // save message
-    async storeMessage(access_token: string, data: SendMessageDto) {
-        const exitingUser = await this.authService.validate(access_token)
+			return user
+		} catch (error) {
+			console.error('Error validating user:', error)
+			return null
+		}
+	}
 
-        if (!exitingUser) throw new NotFoundException("User not found")
+	async setUserOnline(userId: string, isOnline: boolean) {
+		try {
 
-        // save message in database
-        const newMessage = await this.prismaService.message.create({
-            data: {
-                content: data.content,
-                senderID: exitingUser.id,
-                receiverID: data.receiverId,
-                roomId: data.roomId,
-                messageType: data.messageType || 'text',
-            },
-            include: {
-                sender: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        avtUrl: true
-                    }
-                },
-                receiver: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        avtUrl: true
-                    }
-                }
-            }
-        })
+			const status = isOnline ? 'online' : 'offline'
+			const timestamp = new Date().toISOString()
 
-        // Clear cache for this room
-        const cacheKey = `messages:${data.roomId}`
-        await this.cacheManager.del(cacheKey)
+			await this.redis.hset('user_status', userId, JSON.stringify({
+				status,
+				lastSeen: timestamp
+			}))
 
-        return newMessage
-    }
+			// update database last seen
+			if (!isOnline) {
+				await this.prismaService.user.update({
+					where: { id: userId },
+					data: { lastSeen: new Date() }
+				})
+			}
+		} catch (error) {
+			console.error('Error setting user online status', error)
+			throw error
+		}
+	}
 
-    // loading message
-    async loadingMessage(access_token: string, roomId: string, page: number = 1, limit: number = LIMIT_LOAD) {
-        const exitingUser = await this.authService.validate(access_token)
+	async verifyChatAccess(userId: string, chatId: string): Promise<boolean> {
+		try {
+			const chat = await this.prismaService.privateChat.findFirst({
+				where: {
+					id: chatId,
+					OR: [
+						{ user1Id: userId },
+						{ user2Id: userId }
+					]
+				}
+			})
 
-        if (!exitingUser) throw new NotFoundException("User not found")
+			return !!chat
+		} catch (error) {
+			console.error("Error verifying chat access", error)
+			return false
+		}
+	}
 
-        const skip = (page - 1) * limit;
+	async markMessagesAsRead(chatId: string, userId: string) {
+		try {
+			// verify user has access this chat
+			const chat = await this.prismaService.privateChat.findFirst({
+				where: {
+					id: chatId,
+					OR: [
+						{ user1Id: userId },
+						{ user2Id: userId }
+					]
+				}
+			})
 
-        // loading message in cache
-        const key = `messages:${roomId}:${page}:${limit}`
-        const cached = await this.cacheManager.get(key) as Message[]
+			if (!chat) throw new NotFoundException("Chat not found or access denied")
 
-        if (cached) return cached
+			// update lastReadIndex 
+			const isUser1 = chat.user1Id === userId
+			const updateuser = isUser1
+				? { user1LastReadIndex: chat.totalMessage }
+				: { user2LastReadIndex: chat.totalMessage }
 
-        // fall back get message from database
-        const messages = await this.prismaService.message.findMany({
-            where: { roomId: roomId },
-            take: limit,
-            skip: skip,
-            orderBy: { createAt: 'desc' },
-            include: {
-                sender: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        avtUrl: true
-                    }
-                },
-                receiver: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        avtUrl: true
-                    }
-                }
-            }
-        })
+			// emit event for real-time updates
+			this.evenEmitter.emit('messages.read', {
+				chatId,
+				userId,
+				readIndex: chat.totalMessage
+			})
 
-        // cache message
-        await this.cacheManager.set(key, messages, TIME_FILE_MESSAGE_IN_CACHE)
+		} catch (error) {
+			console.error('Error marking messages as read:', error);
+			if (error instanceof NotFoundException) throw error;
+			throw new BadRequestException('Failed to mark messages as read')
+		}
+	}
 
-        return messages.reverse(); // Return in chronological order
-    }
+	async createMessage(userId: string, dto: CreateMessageDto) {
+		try {
+			// verify chat and user has access
+			const chat = await this.prismaService.privateChat.findFirst({
+				where: {
+					id: dto.chatId,
+					OR: [
+						{ user1Id: userId },
+						{ user2Id: userId }
+					]
+				},
+				include: {
+					user1: { select: { id: true, name: true } },
+					user2: { select: { id: true, name: true } }
+				}
+			})
 
-    // Get user's chat rooms
-    async getUserRooms(access_token: string) {
-        const exitingUser = await this.authService.validate(access_token)
+			if (!chat) throw new NotFoundException("Chat not found or access denied")
 
-        if (!exitingUser) throw new NotFoundException("User not found")
+			const totalMessage = chat?.totalMessage + 1
 
-        const rooms = await this.prismaService.room.findMany({
-            where: {
-                members: {
-                    some: {
-                        userId: exitingUser.id
-                    }
-                }
-            },
-            include: {
-                members: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                name: true,
-                                email: true,
-                                avtUrl: true
-                            }
-                        }
-                    }
-                },
-                messages: {
-                    take: 1,
-                    orderBy: { createAt: 'desc' },
-                    include: {
-                        sender: {
-                            select: {
-                                id: true,
-                                name: true,
-                                avtUrl: true
-                            }
-                        }
-                    }
-                }
-            },
-            orderBy: {
-                updateAt: 'desc'
-            }
-        });
+			// create message
+			const result = await this.prismaService.$transaction(async (tx) => {
+				const newMessage = await tx.privateMessage.create({
+					data: {
+						content: dto.content,
+						senderId: userId,
+						chatId: dto.chatId,
+						messageIndex: totalMessage
+					},
+					include: {
+						sender: {
+							select: { id: true, name: true }
+						}
+					}
+				})
 
-        return rooms;
-    }
+				await tx.privateChat.update({
+					where: { id: dto.chatId },
+					data: {
+						lastMessageAt: new Date(),
+						lastMessage: dto.content,
+						totalMessage: { increment: 1 }
+					}
+				})
 
-    // Mark messages as read
-    async markMessagesAsRead(access_token: string, roomId: string) {
-        const exitingUser = await this.authService.validate(access_token)
+				// emit event
+				this.evenEmitter.emit('private.message.created', {
+					newMessage: result,
+					chat,
+					recipientId: chat.user1Id === userId ? chat.user2Id : chat.user1Id
+				})
 
-        if (!exitingUser) throw new NotFoundException("User not found")
+				return newMessage
+			})
 
-        await this.prismaService.message.updateMany({
-            where: {
-                roomId: roomId,
-                receiverID: exitingUser.id,
-                isRead: false
-            },
-            data: {
-                isRead: true
-            }
-        });
+			return result
+		} catch (error) {
+			console.error('Error creating message :', error)
+			if (error instanceof NotFoundException) throw error
+			throw new BadRequestException('Failed to create message')
+		}
+	}
 
-        return { success: true };
-    }
+	async createOrChat(user1Id: string, user2Id: string) {
+		try {
+			if (user1Id === user2Id) {
+				throw new BadRequestException('Cannot create chat with yourself')
+			}
+
+			// check if chat already exists
+			let chat = await this.prismaService.privateChat.findFirst({
+				where: {
+					OR: [
+						{ user1Id, user2Id },
+						{ user1Id: user2Id, user2Id: user1Id }
+					]
+				},
+				include: {
+					user1: { select: { id: true, name: true } },
+					user2: { select: { id: true, name: true } }
+				}
+			})
+
+			// fall back new chat
+			if (!chat) {
+				chat = await this.prismaService.privateChat.create({
+					data: {
+						user1Id,
+						user2Id
+					},
+					include: {
+						user1: { select: { id: true, name: true } },
+						user2: { select: { id: true, name: true } }
+					}
+				})
+			}
+
+			return chat
+		} catch (error) {
+			console.error('Error creating/getting chat:', error)
+			throw new BadRequestException('Failed to create or get chat')
+		}
+	}
+
 }

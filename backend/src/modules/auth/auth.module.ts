@@ -7,11 +7,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthCookieStrategy } from 'src/modules/auth/strategy/auth-cookie.strategy';
 import { TokenService } from './token.service';
-import { PresenceModule } from '../presence/presence.module';
 
 @Module({
     imports: [
-        CustomCacheModule, EmailModule, forwardRef(() => PresenceModule), CustomCacheModule,
+        CustomCacheModule, EmailModule, CustomCacheModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

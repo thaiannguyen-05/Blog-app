@@ -138,38 +138,28 @@ exports.Prisma.CodeScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.MessageScalarFieldEnum = {
+exports.Prisma.PrivateChatScalarFieldEnum = {
   id: 'id',
-  content: 'content',
-  senderID: 'senderID',
-  receiverID: 'receiverID',
-  roomId: 'roomId',
-  messageType: 'messageType',
-  isRead: 'isRead',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  deleteAt: 'deleteAt'
-};
-
-exports.Prisma.ReadProgressScalarFieldEnum = {
-  id: 'id',
-  messageId: 'messageId',
-  roomId: 'roomId',
-  userId: 'userId'
-};
-
-exports.Prisma.RoomScalarFieldEnum = {
-  id: 'id',
-  roomId: 'roomId',
-  nameRoom: 'nameRoom',
-  createAt: 'createAt',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
+  lastMessage: 'lastMessage',
+  lastMessageAt: 'lastMessageAt',
+  user1LastReadIndex: 'user1LastReadIndex',
+  user2LastReadIndex: 'user2LastReadIndex',
+  totalMessage: 'totalMessage',
+  createdAt: 'createdAt',
   updateAt: 'updateAt'
 };
 
-exports.Prisma.MemberScalarFieldEnum = {
+exports.Prisma.PrivateMessageScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  roomId: 'roomId'
+  content: 'content',
+  chatId: 'chatId',
+  senderId: 'senderId',
+  messageIndex: 'messageIndex',
+  replyToId: 'replyToId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
@@ -230,10 +220,10 @@ exports.Prisma.UserScalarFieldEnum = {
   avtUrl: 'avtUrl',
   email: 'email',
   hashingPassword: 'hashingPassword',
+  lastSeen: 'lastSeen',
   createAt: 'createAt',
   updateAt: 'updateAt',
-  deleteAt: 'deleteAt',
-  readProgressId: 'readProgressId'
+  deleteAt: 'deleteAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -270,10 +260,8 @@ exports.Gender = exports.$Enums.Gender = {
 exports.Prisma.ModelName = {
   Session: 'Session',
   Code: 'Code',
-  Message: 'Message',
-  ReadProgress: 'ReadProgress',
-  Room: 'Room',
-  Member: 'Member',
+  PrivateChat: 'PrivateChat',
+  PrivateMessage: 'PrivateMessage',
   Role: 'Role',
   UserRole: 'UserRole',
   Permission: 'Permission',

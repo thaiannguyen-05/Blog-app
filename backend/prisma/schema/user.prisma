@@ -9,21 +9,21 @@ model User {
     email           String  @unique
     hashingPassword String
 
+    lastSeen DateTime?
+
     createAt DateTime  @default(now())
     updateAt DateTime  @updatedAt
     deleteAt DateTime?
 
-    sessions         Session[]
-    codes            Code[]
-    posts            Post[]
-    comments         Comment[]
-    repComments      RepComment[]
-    userRoles        UserRole[]
-    member           Member[]
-    messages         Message[]     @relation("MessageSender")
-    receivedMessages Message[]     @relation("MessageReceiver")
-    readProgress     ReadProgress[]
-    readProgressId   String?       @unique @db.Uuid
+    sessions     Session[]
+    codes        Code[]
+    posts        Post[]
+    comments     Comment[]
+    repComments  RepComment[]
+    userRoles    UserRole[]
+    user1        PrivateChat[]    @relation("user1Chats")
+    user2        PrivateChat[]    @relation("user2Chats")
+    sentMessages PrivateMessage[] @relation("SentMessage")
 }
 
 enum Gender {

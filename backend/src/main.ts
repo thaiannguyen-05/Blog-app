@@ -7,7 +7,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.use(cookieParser())
-
+  app.enableCors({
+  origin: "http://localhost:3000", // frontend
+  credentials: true,
+});
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {

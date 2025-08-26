@@ -143,7 +143,8 @@ export class AuthService {
         })
 
         // update cache
-        await this.customCacheService.updateCache(email, newAccount)
+        const key = AUTH_CONSTANTS.CACHE_KEY.KeyUserWithEmail(email)
+        await this.customCacheService.updateCache(key, newAccount)
 
         return res.send(`
             <html>

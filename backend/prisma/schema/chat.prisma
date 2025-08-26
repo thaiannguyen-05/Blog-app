@@ -1,0 +1,54 @@
+model PrivateChat {
+    id            String    @id @default(uuid()) @db.Uuid
+    user1Id       String    @db.Uuid
+    user2Id       String    @db.Uuid
+    lastMessage   String?
+    lastMessageAt DateTime?
+
+    // save index
+    user1LastReadIndex Int @default(0)
+    user2LastReadIndex Int @default(0)
+
+    //total message
+    totalMessage Int @default(0)
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    // relation
+    user1          User             @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    user2          User             @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    privateMessage PrivateMessage[]
+
+    @@unique([user1Id, user2Id])
+    @@index([user1Id])
+    @@index([user2Id])
+    @@index([lastMessageAt])
+    @@map("private_chats")
+}
+
+model PrivateMessage {
+    id       String @id @default(uuid()) @db.Uuid
+    content  String
+    chatId   String @db.Uuid
+    senderId String @db.Uuid
+
+    messageIndex Int
+
+    replyToId String?          @db.Uuid
+    replyTo   PrivateMessage?  @relation("MessageReply", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    replies   PrivateMessage[] @relation("MessageReply")
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    // relation
+    chat   PrivateChat @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    sender User        @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    @@unique([chatId, messageIndex])
+    @@index([chatId, messageIndex])
+    @@index([senderId])
+    @@index([replyToId])
+    @@map("private_messages")
+}

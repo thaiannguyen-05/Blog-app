@@ -13,11 +13,11 @@ import { CommentModule } from './modules/comment/comment.module';
 import { CustomCacheModule } from './modules/custom-cache/customCache.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ChatModule } from './modules/chat/chat.module';
 import { AuthCookieGuard } from './modules/auth/guard/auth-cookie.guard';
-
+import { ThrottlerModule } from '@nestjs/throttler';
+import { ChatModule } from './modules/chat/chat.module';
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, ChatModule, CommentModule,
+  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, CommentModule, ChatModule,
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -29,6 +29,15 @@ import { AuthCookieGuard } from './modules/auth/guard/auth-cookie.guard';
       installSubscriptionHandlers: true,// ho tro realtime socket
       context: ({ req }) => ({ req })
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [

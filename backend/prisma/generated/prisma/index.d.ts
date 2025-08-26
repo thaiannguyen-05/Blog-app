@@ -24,25 +24,15 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  */
 export type Code = $Result.DefaultSelection<Prisma.$CodePayload>
 /**
- * Model Message
+ * Model PrivateChat
  * 
  */
-export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+export type PrivateChat = $Result.DefaultSelection<Prisma.$PrivateChatPayload>
 /**
- * Model ReadProgress
+ * Model PrivateMessage
  * 
  */
-export type ReadProgress = $Result.DefaultSelection<Prisma.$ReadProgressPayload>
-/**
- * Model Room
- * 
- */
-export type Room = $Result.DefaultSelection<Prisma.$RoomPayload>
-/**
- * Model Member
- * 
- */
-export type Member = $Result.DefaultSelection<Prisma.$MemberPayload>
+export type PrivateMessage = $Result.DefaultSelection<Prisma.$PrivateMessagePayload>
 /**
  * Model Role
  * 
@@ -266,44 +256,24 @@ export class PrismaClient<
   get code(): Prisma.CodeDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+   * `prisma.privateChat`: Exposes CRUD operations for the **PrivateChat** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Messages
-    * const messages = await prisma.message.findMany()
+    * // Fetch zero or more PrivateChats
+    * const privateChats = await prisma.privateChat.findMany()
     * ```
     */
-  get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+  get privateChat(): Prisma.PrivateChatDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.readProgress`: Exposes CRUD operations for the **ReadProgress** model.
+   * `prisma.privateMessage`: Exposes CRUD operations for the **PrivateMessage** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ReadProgresses
-    * const readProgresses = await prisma.readProgress.findMany()
+    * // Fetch zero or more PrivateMessages
+    * const privateMessages = await prisma.privateMessage.findMany()
     * ```
     */
-  get readProgress(): Prisma.ReadProgressDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.room`: Exposes CRUD operations for the **Room** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Rooms
-    * const rooms = await prisma.room.findMany()
-    * ```
-    */
-  get room(): Prisma.RoomDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.member`: Exposes CRUD operations for the **Member** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Members
-    * const members = await prisma.member.findMany()
-    * ```
-    */
-  get member(): Prisma.MemberDelegate<ExtArgs, ClientOptions>;
+  get privateMessage(): Prisma.PrivateMessageDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.role`: Exposes CRUD operations for the **Role** model.
@@ -826,10 +796,8 @@ export namespace Prisma {
   export const ModelName: {
     Session: 'Session',
     Code: 'Code',
-    Message: 'Message',
-    ReadProgress: 'ReadProgress',
-    Room: 'Room',
-    Member: 'Member',
+    PrivateChat: 'PrivateChat',
+    PrivateMessage: 'PrivateMessage',
     Role: 'Role',
     UserRole: 'UserRole',
     Permission: 'Permission',
@@ -856,7 +824,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "session" | "code" | "message" | "readProgress" | "room" | "member" | "role" | "userRole" | "permission" | "rolePermission" | "post" | "comment" | "repComment" | "user"
+      modelProps: "session" | "code" | "privateChat" | "privateMessage" | "role" | "userRole" | "permission" | "rolePermission" | "post" | "comment" | "repComment" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1008,299 +976,151 @@ export namespace Prisma {
           }
         }
       }
-      Message: {
-        payload: Prisma.$MessagePayload<ExtArgs>
-        fields: Prisma.MessageFieldRefs
+      PrivateChat: {
+        payload: Prisma.$PrivateChatPayload<ExtArgs>
+        fields: Prisma.PrivateChatFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.MessageFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+            args: Prisma.PrivateChatFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.MessageFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           findFirst: {
-            args: Prisma.MessageFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+            args: Prisma.PrivateChatFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.MessageFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           findMany: {
-            args: Prisma.MessageFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.PrivateChatFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>[]
           }
           create: {
-            args: Prisma.MessageCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           createMany: {
-            args: Prisma.MessageCreateManyArgs<ExtArgs>
+            args: Prisma.PrivateChatCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.MessageCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.PrivateChatCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>[]
           }
           delete: {
-            args: Prisma.MessageDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           update: {
-            args: Prisma.MessageUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           deleteMany: {
-            args: Prisma.MessageDeleteManyArgs<ExtArgs>
+            args: Prisma.PrivateChatDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.MessageUpdateManyArgs<ExtArgs>
+            args: Prisma.PrivateChatUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.MessageUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.PrivateChatUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>[]
           }
           upsert: {
-            args: Prisma.MessageUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.PrivateChatUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateChatPayload>
           }
           aggregate: {
-            args: Prisma.MessageAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMessage>
+            args: Prisma.PrivateChatAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrivateChat>
           }
           groupBy: {
-            args: Prisma.MessageGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MessageGroupByOutputType>[]
+            args: Prisma.PrivateChatGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PrivateChatGroupByOutputType>[]
           }
           count: {
-            args: Prisma.MessageCountArgs<ExtArgs>
-            result: $Utils.Optional<MessageCountAggregateOutputType> | number
+            args: Prisma.PrivateChatCountArgs<ExtArgs>
+            result: $Utils.Optional<PrivateChatCountAggregateOutputType> | number
           }
         }
       }
-      ReadProgress: {
-        payload: Prisma.$ReadProgressPayload<ExtArgs>
-        fields: Prisma.ReadProgressFieldRefs
+      PrivateMessage: {
+        payload: Prisma.$PrivateMessagePayload<ExtArgs>
+        fields: Prisma.PrivateMessageFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ReadProgressFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload> | null
+            args: Prisma.PrivateMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ReadProgressFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           findFirst: {
-            args: Prisma.ReadProgressFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload> | null
+            args: Prisma.PrivateMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ReadProgressFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           findMany: {
-            args: Prisma.ReadProgressFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>[]
+            args: Prisma.PrivateMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>[]
           }
           create: {
-            args: Prisma.ReadProgressCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           createMany: {
-            args: Prisma.ReadProgressCreateManyArgs<ExtArgs>
+            args: Prisma.PrivateMessageCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ReadProgressCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>[]
+            args: Prisma.PrivateMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>[]
           }
           delete: {
-            args: Prisma.ReadProgressDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           update: {
-            args: Prisma.ReadProgressUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           deleteMany: {
-            args: Prisma.ReadProgressDeleteManyArgs<ExtArgs>
+            args: Prisma.PrivateMessageDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ReadProgressUpdateManyArgs<ExtArgs>
+            args: Prisma.PrivateMessageUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ReadProgressUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>[]
+            args: Prisma.PrivateMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>[]
           }
           upsert: {
-            args: Prisma.ReadProgressUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReadProgressPayload>
+            args: Prisma.PrivateMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PrivateMessagePayload>
           }
           aggregate: {
-            args: Prisma.ReadProgressAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateReadProgress>
+            args: Prisma.PrivateMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrivateMessage>
           }
           groupBy: {
-            args: Prisma.ReadProgressGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ReadProgressGroupByOutputType>[]
+            args: Prisma.PrivateMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PrivateMessageGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ReadProgressCountArgs<ExtArgs>
-            result: $Utils.Optional<ReadProgressCountAggregateOutputType> | number
-          }
-        }
-      }
-      Room: {
-        payload: Prisma.$RoomPayload<ExtArgs>
-        fields: Prisma.RoomFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RoomFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RoomFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          findFirst: {
-            args: Prisma.RoomFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RoomFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          findMany: {
-            args: Prisma.RoomFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
-          }
-          create: {
-            args: Prisma.RoomCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          createMany: {
-            args: Prisma.RoomCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.RoomCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
-          }
-          delete: {
-            args: Prisma.RoomDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          update: {
-            args: Prisma.RoomUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          deleteMany: {
-            args: Prisma.RoomDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RoomUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.RoomUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>[]
-          }
-          upsert: {
-            args: Prisma.RoomUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RoomPayload>
-          }
-          aggregate: {
-            args: Prisma.RoomAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRoom>
-          }
-          groupBy: {
-            args: Prisma.RoomGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RoomGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RoomCountArgs<ExtArgs>
-            result: $Utils.Optional<RoomCountAggregateOutputType> | number
-          }
-        }
-      }
-      Member: {
-        payload: Prisma.$MemberPayload<ExtArgs>
-        fields: Prisma.MemberFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.MemberFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.MemberFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          findFirst: {
-            args: Prisma.MemberFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.MemberFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          findMany: {
-            args: Prisma.MemberFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>[]
-          }
-          create: {
-            args: Prisma.MemberCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          createMany: {
-            args: Prisma.MemberCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.MemberCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>[]
-          }
-          delete: {
-            args: Prisma.MemberDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          update: {
-            args: Prisma.MemberUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          deleteMany: {
-            args: Prisma.MemberDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.MemberUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.MemberUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>[]
-          }
-          upsert: {
-            args: Prisma.MemberUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MemberPayload>
-          }
-          aggregate: {
-            args: Prisma.MemberAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMember>
-          }
-          groupBy: {
-            args: Prisma.MemberGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MemberGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.MemberCountArgs<ExtArgs>
-            result: $Utils.Optional<MemberCountAggregateOutputType> | number
+            args: Prisma.PrivateMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<PrivateMessageCountAggregateOutputType> | number
           }
         }
       }
@@ -1990,10 +1810,8 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     session?: SessionOmit
     code?: CodeOmit
-    message?: MessageOmit
-    readProgress?: ReadProgressOmit
-    room?: RoomOmit
-    member?: MemberOmit
+    privateChat?: PrivateChatOmit
+    privateMessage?: PrivateMessageOmit
     role?: RoleOmit
     userRole?: UserRoleOmit
     permission?: PermissionOmit
@@ -2078,42 +1896,64 @@ export namespace Prisma {
 
 
   /**
-   * Count Type RoomCountOutputType
+   * Count Type PrivateChatCountOutputType
    */
 
-  export type RoomCountOutputType = {
-    members: number
-    messages: number
+  export type PrivateChatCountOutputType = {
+    privateMessage: number
   }
 
-  export type RoomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    members?: boolean | RoomCountOutputTypeCountMembersArgs
-    messages?: boolean | RoomCountOutputTypeCountMessagesArgs
+  export type PrivateChatCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    privateMessage?: boolean | PrivateChatCountOutputTypeCountPrivateMessageArgs
   }
 
   // Custom InputTypes
   /**
-   * RoomCountOutputType without action
+   * PrivateChatCountOutputType without action
    */
-  export type RoomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateChatCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RoomCountOutputType
+     * Select specific fields to fetch from the PrivateChatCountOutputType
      */
-    select?: RoomCountOutputTypeSelect<ExtArgs> | null
+    select?: PrivateChatCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * RoomCountOutputType without action
+   * PrivateChatCountOutputType without action
    */
-  export type RoomCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MemberWhereInput
+  export type PrivateChatCountOutputTypeCountPrivateMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateMessageWhereInput
+  }
+
+
+  /**
+   * Count Type PrivateMessageCountOutputType
+   */
+
+  export type PrivateMessageCountOutputType = {
+    replies: number
+  }
+
+  export type PrivateMessageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replies?: boolean | PrivateMessageCountOutputTypeCountRepliesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PrivateMessageCountOutputType without action
+   */
+  export type PrivateMessageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateMessageCountOutputType
+     */
+    select?: PrivateMessageCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * RoomCountOutputType without action
+   * PrivateMessageCountOutputType without action
    */
-  export type RoomCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
+  export type PrivateMessageCountOutputTypeCountRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateMessageWhereInput
   }
 
 
@@ -2261,10 +2101,9 @@ export namespace Prisma {
     comments: number
     repComments: number
     userRoles: number
-    member: number
-    messages: number
-    receivedMessages: number
-    readProgress: number
+    user1: number
+    user2: number
+    sentMessages: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2274,10 +2113,9 @@ export namespace Prisma {
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
     repComments?: boolean | UserCountOutputTypeCountRepCommentsArgs
     userRoles?: boolean | UserCountOutputTypeCountUserRolesArgs
-    member?: boolean | UserCountOutputTypeCountMemberArgs
-    messages?: boolean | UserCountOutputTypeCountMessagesArgs
-    receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
-    readProgress?: boolean | UserCountOutputTypeCountReadProgressArgs
+    user1?: boolean | UserCountOutputTypeCountUser1Args
+    user2?: boolean | UserCountOutputTypeCountUser2Args
+    sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
   }
 
   // Custom InputTypes
@@ -2336,29 +2174,22 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MemberWhereInput
+  export type UserCountOutputTypeCountUser1Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateChatWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
+  export type UserCountOutputTypeCountUser2Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateChatWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountReceivedMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountReadProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReadProgressWhereInput
+  export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateMessageWhereInput
   }
 
 
@@ -4509,458 +4340,1642 @@ export namespace Prisma {
 
 
   /**
-   * Model Message
+   * Model PrivateChat
    */
 
-  export type AggregateMessage = {
-    _count: MessageCountAggregateOutputType | null
-    _avg: MessageAvgAggregateOutputType | null
-    _sum: MessageSumAggregateOutputType | null
-    _min: MessageMinAggregateOutputType | null
-    _max: MessageMaxAggregateOutputType | null
+  export type AggregatePrivateChat = {
+    _count: PrivateChatCountAggregateOutputType | null
+    _avg: PrivateChatAvgAggregateOutputType | null
+    _sum: PrivateChatSumAggregateOutputType | null
+    _min: PrivateChatMinAggregateOutputType | null
+    _max: PrivateChatMaxAggregateOutputType | null
   }
 
-  export type MessageAvgAggregateOutputType = {
-    id: number | null
+  export type PrivateChatAvgAggregateOutputType = {
+    user1LastReadIndex: number | null
+    user2LastReadIndex: number | null
+    totalMessage: number | null
   }
 
-  export type MessageSumAggregateOutputType = {
-    id: number | null
+  export type PrivateChatSumAggregateOutputType = {
+    user1LastReadIndex: number | null
+    user2LastReadIndex: number | null
+    totalMessage: number | null
   }
 
-  export type MessageMinAggregateOutputType = {
-    id: number | null
-    content: string | null
-    senderID: string | null
-    receiverID: string | null
-    roomId: string | null
-    messageType: string | null
-    isRead: boolean | null
-    createAt: Date | null
+  export type PrivateChatMinAggregateOutputType = {
+    id: string | null
+    user1Id: string | null
+    user2Id: string | null
+    lastMessage: string | null
+    lastMessageAt: Date | null
+    user1LastReadIndex: number | null
+    user2LastReadIndex: number | null
+    totalMessage: number | null
+    createdAt: Date | null
     updateAt: Date | null
-    deleteAt: Date | null
   }
 
-  export type MessageMaxAggregateOutputType = {
-    id: number | null
-    content: string | null
-    senderID: string | null
-    receiverID: string | null
-    roomId: string | null
-    messageType: string | null
-    isRead: boolean | null
-    createAt: Date | null
+  export type PrivateChatMaxAggregateOutputType = {
+    id: string | null
+    user1Id: string | null
+    user2Id: string | null
+    lastMessage: string | null
+    lastMessageAt: Date | null
+    user1LastReadIndex: number | null
+    user2LastReadIndex: number | null
+    totalMessage: number | null
+    createdAt: Date | null
     updateAt: Date | null
-    deleteAt: Date | null
   }
 
-  export type MessageCountAggregateOutputType = {
+  export type PrivateChatCountAggregateOutputType = {
+    id: number
+    user1Id: number
+    user2Id: number
+    lastMessage: number
+    lastMessageAt: number
+    user1LastReadIndex: number
+    user2LastReadIndex: number
+    totalMessage: number
+    createdAt: number
+    updateAt: number
+    _all: number
+  }
+
+
+  export type PrivateChatAvgAggregateInputType = {
+    user1LastReadIndex?: true
+    user2LastReadIndex?: true
+    totalMessage?: true
+  }
+
+  export type PrivateChatSumAggregateInputType = {
+    user1LastReadIndex?: true
+    user2LastReadIndex?: true
+    totalMessage?: true
+  }
+
+  export type PrivateChatMinAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    lastMessage?: true
+    lastMessageAt?: true
+    user1LastReadIndex?: true
+    user2LastReadIndex?: true
+    totalMessage?: true
+    createdAt?: true
+    updateAt?: true
+  }
+
+  export type PrivateChatMaxAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    lastMessage?: true
+    lastMessageAt?: true
+    user1LastReadIndex?: true
+    user2LastReadIndex?: true
+    totalMessage?: true
+    createdAt?: true
+    updateAt?: true
+  }
+
+  export type PrivateChatCountAggregateInputType = {
+    id?: true
+    user1Id?: true
+    user2Id?: true
+    lastMessage?: true
+    lastMessageAt?: true
+    user1LastReadIndex?: true
+    user2LastReadIndex?: true
+    totalMessage?: true
+    createdAt?: true
+    updateAt?: true
+    _all?: true
+  }
+
+  export type PrivateChatAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrivateChat to aggregate.
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivateChats to fetch.
+     */
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PrivateChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivateChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivateChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PrivateChats
+    **/
+    _count?: true | PrivateChatCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PrivateChatAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PrivateChatSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PrivateChatMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PrivateChatMaxAggregateInputType
+  }
+
+  export type GetPrivateChatAggregateType<T extends PrivateChatAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrivateChat]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePrivateChat[P]>
+      : GetScalarType<T[P], AggregatePrivateChat[P]>
+  }
+
+
+
+
+  export type PrivateChatGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateChatWhereInput
+    orderBy?: PrivateChatOrderByWithAggregationInput | PrivateChatOrderByWithAggregationInput[]
+    by: PrivateChatScalarFieldEnum[] | PrivateChatScalarFieldEnum
+    having?: PrivateChatScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PrivateChatCountAggregateInputType | true
+    _avg?: PrivateChatAvgAggregateInputType
+    _sum?: PrivateChatSumAggregateInputType
+    _min?: PrivateChatMinAggregateInputType
+    _max?: PrivateChatMaxAggregateInputType
+  }
+
+  export type PrivateChatGroupByOutputType = {
+    id: string
+    user1Id: string
+    user2Id: string
+    lastMessage: string | null
+    lastMessageAt: Date | null
+    user1LastReadIndex: number
+    user2LastReadIndex: number
+    totalMessage: number
+    createdAt: Date
+    updateAt: Date
+    _count: PrivateChatCountAggregateOutputType | null
+    _avg: PrivateChatAvgAggregateOutputType | null
+    _sum: PrivateChatSumAggregateOutputType | null
+    _min: PrivateChatMinAggregateOutputType | null
+    _max: PrivateChatMaxAggregateOutputType | null
+  }
+
+  type GetPrivateChatGroupByPayload<T extends PrivateChatGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PrivateChatGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PrivateChatGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PrivateChatGroupByOutputType[P]>
+            : GetScalarType<T[P], PrivateChatGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PrivateChatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    lastMessage?: boolean
+    lastMessageAt?: boolean
+    user1LastReadIndex?: boolean
+    user2LastReadIndex?: boolean
+    totalMessage?: boolean
+    createdAt?: boolean
+    updateAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+    privateMessage?: boolean | PrivateChat$privateMessageArgs<ExtArgs>
+    _count?: boolean | PrivateChatCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateChat"]>
+
+  export type PrivateChatSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    lastMessage?: boolean
+    lastMessageAt?: boolean
+    user1LastReadIndex?: boolean
+    user2LastReadIndex?: boolean
+    totalMessage?: boolean
+    createdAt?: boolean
+    updateAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateChat"]>
+
+  export type PrivateChatSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    lastMessage?: boolean
+    lastMessageAt?: boolean
+    user1LastReadIndex?: boolean
+    user2LastReadIndex?: boolean
+    totalMessage?: boolean
+    createdAt?: boolean
+    updateAt?: boolean
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateChat"]>
+
+  export type PrivateChatSelectScalar = {
+    id?: boolean
+    user1Id?: boolean
+    user2Id?: boolean
+    lastMessage?: boolean
+    lastMessageAt?: boolean
+    user1LastReadIndex?: boolean
+    user2LastReadIndex?: boolean
+    totalMessage?: boolean
+    createdAt?: boolean
+    updateAt?: boolean
+  }
+
+  export type PrivateChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user1Id" | "user2Id" | "lastMessage" | "lastMessageAt" | "user1LastReadIndex" | "user2LastReadIndex" | "totalMessage" | "createdAt" | "updateAt", ExtArgs["result"]["privateChat"]>
+  export type PrivateChatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+    privateMessage?: boolean | PrivateChat$privateMessageArgs<ExtArgs>
+    _count?: boolean | PrivateChatCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PrivateChatIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PrivateChatIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user1?: boolean | UserDefaultArgs<ExtArgs>
+    user2?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PrivateChatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PrivateChat"
+    objects: {
+      user1: Prisma.$UserPayload<ExtArgs>
+      user2: Prisma.$UserPayload<ExtArgs>
+      privateMessage: Prisma.$PrivateMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user1Id: string
+      user2Id: string
+      lastMessage: string | null
+      lastMessageAt: Date | null
+      user1LastReadIndex: number
+      user2LastReadIndex: number
+      totalMessage: number
+      createdAt: Date
+      updateAt: Date
+    }, ExtArgs["result"]["privateChat"]>
+    composites: {}
+  }
+
+  type PrivateChatGetPayload<S extends boolean | null | undefined | PrivateChatDefaultArgs> = $Result.GetResult<Prisma.$PrivateChatPayload, S>
+
+  type PrivateChatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PrivateChatFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PrivateChatCountAggregateInputType | true
+    }
+
+  export interface PrivateChatDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PrivateChat'], meta: { name: 'PrivateChat' } }
+    /**
+     * Find zero or one PrivateChat that matches the filter.
+     * @param {PrivateChatFindUniqueArgs} args - Arguments to find a PrivateChat
+     * @example
+     * // Get one PrivateChat
+     * const privateChat = await prisma.privateChat.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PrivateChatFindUniqueArgs>(args: SelectSubset<T, PrivateChatFindUniqueArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PrivateChat that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PrivateChatFindUniqueOrThrowArgs} args - Arguments to find a PrivateChat
+     * @example
+     * // Get one PrivateChat
+     * const privateChat = await prisma.privateChat.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PrivateChatFindUniqueOrThrowArgs>(args: SelectSubset<T, PrivateChatFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PrivateChat that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatFindFirstArgs} args - Arguments to find a PrivateChat
+     * @example
+     * // Get one PrivateChat
+     * const privateChat = await prisma.privateChat.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PrivateChatFindFirstArgs>(args?: SelectSubset<T, PrivateChatFindFirstArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PrivateChat that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatFindFirstOrThrowArgs} args - Arguments to find a PrivateChat
+     * @example
+     * // Get one PrivateChat
+     * const privateChat = await prisma.privateChat.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PrivateChatFindFirstOrThrowArgs>(args?: SelectSubset<T, PrivateChatFindFirstOrThrowArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PrivateChats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PrivateChats
+     * const privateChats = await prisma.privateChat.findMany()
+     * 
+     * // Get first 10 PrivateChats
+     * const privateChats = await prisma.privateChat.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const privateChatWithIdOnly = await prisma.privateChat.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PrivateChatFindManyArgs>(args?: SelectSubset<T, PrivateChatFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PrivateChat.
+     * @param {PrivateChatCreateArgs} args - Arguments to create a PrivateChat.
+     * @example
+     * // Create one PrivateChat
+     * const PrivateChat = await prisma.privateChat.create({
+     *   data: {
+     *     // ... data to create a PrivateChat
+     *   }
+     * })
+     * 
+     */
+    create<T extends PrivateChatCreateArgs>(args: SelectSubset<T, PrivateChatCreateArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PrivateChats.
+     * @param {PrivateChatCreateManyArgs} args - Arguments to create many PrivateChats.
+     * @example
+     * // Create many PrivateChats
+     * const privateChat = await prisma.privateChat.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PrivateChatCreateManyArgs>(args?: SelectSubset<T, PrivateChatCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PrivateChats and returns the data saved in the database.
+     * @param {PrivateChatCreateManyAndReturnArgs} args - Arguments to create many PrivateChats.
+     * @example
+     * // Create many PrivateChats
+     * const privateChat = await prisma.privateChat.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PrivateChats and only return the `id`
+     * const privateChatWithIdOnly = await prisma.privateChat.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PrivateChatCreateManyAndReturnArgs>(args?: SelectSubset<T, PrivateChatCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PrivateChat.
+     * @param {PrivateChatDeleteArgs} args - Arguments to delete one PrivateChat.
+     * @example
+     * // Delete one PrivateChat
+     * const PrivateChat = await prisma.privateChat.delete({
+     *   where: {
+     *     // ... filter to delete one PrivateChat
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PrivateChatDeleteArgs>(args: SelectSubset<T, PrivateChatDeleteArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PrivateChat.
+     * @param {PrivateChatUpdateArgs} args - Arguments to update one PrivateChat.
+     * @example
+     * // Update one PrivateChat
+     * const privateChat = await prisma.privateChat.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PrivateChatUpdateArgs>(args: SelectSubset<T, PrivateChatUpdateArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PrivateChats.
+     * @param {PrivateChatDeleteManyArgs} args - Arguments to filter PrivateChats to delete.
+     * @example
+     * // Delete a few PrivateChats
+     * const { count } = await prisma.privateChat.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PrivateChatDeleteManyArgs>(args?: SelectSubset<T, PrivateChatDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrivateChats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PrivateChats
+     * const privateChat = await prisma.privateChat.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PrivateChatUpdateManyArgs>(args: SelectSubset<T, PrivateChatUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PrivateChats and returns the data updated in the database.
+     * @param {PrivateChatUpdateManyAndReturnArgs} args - Arguments to update many PrivateChats.
+     * @example
+     * // Update many PrivateChats
+     * const privateChat = await prisma.privateChat.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PrivateChats and only return the `id`
+     * const privateChatWithIdOnly = await prisma.privateChat.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PrivateChatUpdateManyAndReturnArgs>(args: SelectSubset<T, PrivateChatUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PrivateChat.
+     * @param {PrivateChatUpsertArgs} args - Arguments to update or create a PrivateChat.
+     * @example
+     * // Update or create a PrivateChat
+     * const privateChat = await prisma.privateChat.upsert({
+     *   create: {
+     *     // ... data to create a PrivateChat
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PrivateChat we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PrivateChatUpsertArgs>(args: SelectSubset<T, PrivateChatUpsertArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PrivateChats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatCountArgs} args - Arguments to filter PrivateChats to count.
+     * @example
+     * // Count the number of PrivateChats
+     * const count = await prisma.privateChat.count({
+     *   where: {
+     *     // ... the filter for the PrivateChats we want to count
+     *   }
+     * })
+    **/
+    count<T extends PrivateChatCountArgs>(
+      args?: Subset<T, PrivateChatCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PrivateChatCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PrivateChat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PrivateChatAggregateArgs>(args: Subset<T, PrivateChatAggregateArgs>): Prisma.PrismaPromise<GetPrivateChatAggregateType<T>>
+
+    /**
+     * Group by PrivateChat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PrivateChatGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PrivateChatGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PrivateChatGroupByArgs['orderBy'] }
+        : { orderBy?: PrivateChatGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PrivateChatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPrivateChatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PrivateChat model
+   */
+  readonly fields: PrivateChatFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PrivateChat.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PrivateChatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user1<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user2<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    privateMessage<T extends PrivateChat$privateMessageArgs<ExtArgs> = {}>(args?: Subset<T, PrivateChat$privateMessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PrivateChat model
+   */
+  interface PrivateChatFieldRefs {
+    readonly id: FieldRef<"PrivateChat", 'String'>
+    readonly user1Id: FieldRef<"PrivateChat", 'String'>
+    readonly user2Id: FieldRef<"PrivateChat", 'String'>
+    readonly lastMessage: FieldRef<"PrivateChat", 'String'>
+    readonly lastMessageAt: FieldRef<"PrivateChat", 'DateTime'>
+    readonly user1LastReadIndex: FieldRef<"PrivateChat", 'Int'>
+    readonly user2LastReadIndex: FieldRef<"PrivateChat", 'Int'>
+    readonly totalMessage: FieldRef<"PrivateChat", 'Int'>
+    readonly createdAt: FieldRef<"PrivateChat", 'DateTime'>
+    readonly updateAt: FieldRef<"PrivateChat", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PrivateChat findUnique
+   */
+  export type PrivateChatFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivateChat to fetch.
+     */
+    where: PrivateChatWhereUniqueInput
+  }
+
+  /**
+   * PrivateChat findUniqueOrThrow
+   */
+  export type PrivateChatFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivateChat to fetch.
+     */
+    where: PrivateChatWhereUniqueInput
+  }
+
+  /**
+   * PrivateChat findFirst
+   */
+  export type PrivateChatFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivateChat to fetch.
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivateChats to fetch.
+     */
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrivateChats.
+     */
+    cursor?: PrivateChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivateChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivateChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrivateChats.
+     */
+    distinct?: PrivateChatScalarFieldEnum | PrivateChatScalarFieldEnum[]
+  }
+
+  /**
+   * PrivateChat findFirstOrThrow
+   */
+  export type PrivateChatFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivateChat to fetch.
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivateChats to fetch.
+     */
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PrivateChats.
+     */
+    cursor?: PrivateChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivateChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivateChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PrivateChats.
+     */
+    distinct?: PrivateChatScalarFieldEnum | PrivateChatScalarFieldEnum[]
+  }
+
+  /**
+   * PrivateChat findMany
+   */
+  export type PrivateChatFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter, which PrivateChats to fetch.
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PrivateChats to fetch.
+     */
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PrivateChats.
+     */
+    cursor?: PrivateChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PrivateChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PrivateChats.
+     */
+    skip?: number
+    distinct?: PrivateChatScalarFieldEnum | PrivateChatScalarFieldEnum[]
+  }
+
+  /**
+   * PrivateChat create
+   */
+  export type PrivateChatCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PrivateChat.
+     */
+    data: XOR<PrivateChatCreateInput, PrivateChatUncheckedCreateInput>
+  }
+
+  /**
+   * PrivateChat createMany
+   */
+  export type PrivateChatCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PrivateChats.
+     */
+    data: PrivateChatCreateManyInput | PrivateChatCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PrivateChat createManyAndReturn
+   */
+  export type PrivateChatCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * The data used to create many PrivateChats.
+     */
+    data: PrivateChatCreateManyInput | PrivateChatCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PrivateChat update
+   */
+  export type PrivateChatUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PrivateChat.
+     */
+    data: XOR<PrivateChatUpdateInput, PrivateChatUncheckedUpdateInput>
+    /**
+     * Choose, which PrivateChat to update.
+     */
+    where: PrivateChatWhereUniqueInput
+  }
+
+  /**
+   * PrivateChat updateMany
+   */
+  export type PrivateChatUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PrivateChats.
+     */
+    data: XOR<PrivateChatUpdateManyMutationInput, PrivateChatUncheckedUpdateManyInput>
+    /**
+     * Filter which PrivateChats to update
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * Limit how many PrivateChats to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PrivateChat updateManyAndReturn
+   */
+  export type PrivateChatUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * The data used to update PrivateChats.
+     */
+    data: XOR<PrivateChatUpdateManyMutationInput, PrivateChatUncheckedUpdateManyInput>
+    /**
+     * Filter which PrivateChats to update
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * Limit how many PrivateChats to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PrivateChat upsert
+   */
+  export type PrivateChatUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PrivateChat to update in case it exists.
+     */
+    where: PrivateChatWhereUniqueInput
+    /**
+     * In case the PrivateChat found by the `where` argument doesn't exist, create a new PrivateChat with this data.
+     */
+    create: XOR<PrivateChatCreateInput, PrivateChatUncheckedCreateInput>
+    /**
+     * In case the PrivateChat was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PrivateChatUpdateInput, PrivateChatUncheckedUpdateInput>
+  }
+
+  /**
+   * PrivateChat delete
+   */
+  export type PrivateChatDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+    /**
+     * Filter which PrivateChat to delete.
+     */
+    where: PrivateChatWhereUniqueInput
+  }
+
+  /**
+   * PrivateChat deleteMany
+   */
+  export type PrivateChatDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PrivateChats to delete
+     */
+    where?: PrivateChatWhereInput
+    /**
+     * Limit how many PrivateChats to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PrivateChat.privateMessage
+   */
+  export type PrivateChat$privateMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateMessage
+     */
+    select?: PrivateMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateMessage
+     */
+    omit?: PrivateMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateMessageInclude<ExtArgs> | null
+    where?: PrivateMessageWhereInput
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
+    cursor?: PrivateMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
+  }
+
+  /**
+   * PrivateChat without action
+   */
+  export type PrivateChatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PrivateChat
+     */
+    select?: PrivateChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PrivateChat
+     */
+    omit?: PrivateChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PrivateChatInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PrivateMessage
+   */
+
+  export type AggregatePrivateMessage = {
+    _count: PrivateMessageCountAggregateOutputType | null
+    _avg: PrivateMessageAvgAggregateOutputType | null
+    _sum: PrivateMessageSumAggregateOutputType | null
+    _min: PrivateMessageMinAggregateOutputType | null
+    _max: PrivateMessageMaxAggregateOutputType | null
+  }
+
+  export type PrivateMessageAvgAggregateOutputType = {
+    messageIndex: number | null
+  }
+
+  export type PrivateMessageSumAggregateOutputType = {
+    messageIndex: number | null
+  }
+
+  export type PrivateMessageMinAggregateOutputType = {
+    id: string | null
+    content: string | null
+    chatId: string | null
+    senderId: string | null
+    messageIndex: number | null
+    replyToId: string | null
+    createdAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type PrivateMessageMaxAggregateOutputType = {
+    id: string | null
+    content: string | null
+    chatId: string | null
+    senderId: string | null
+    messageIndex: number | null
+    replyToId: string | null
+    createdAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type PrivateMessageCountAggregateOutputType = {
     id: number
     content: number
-    senderID: number
-    receiverID: number
-    roomId: number
-    messageType: number
-    isRead: number
-    createAt: number
+    chatId: number
+    senderId: number
+    messageIndex: number
+    replyToId: number
+    createdAt: number
     updateAt: number
-    deleteAt: number
     _all: number
   }
 
 
-  export type MessageAvgAggregateInputType = {
-    id?: true
+  export type PrivateMessageAvgAggregateInputType = {
+    messageIndex?: true
   }
 
-  export type MessageSumAggregateInputType = {
-    id?: true
+  export type PrivateMessageSumAggregateInputType = {
+    messageIndex?: true
   }
 
-  export type MessageMinAggregateInputType = {
+  export type PrivateMessageMinAggregateInputType = {
     id?: true
     content?: true
-    senderID?: true
-    receiverID?: true
-    roomId?: true
-    messageType?: true
-    isRead?: true
-    createAt?: true
+    chatId?: true
+    senderId?: true
+    messageIndex?: true
+    replyToId?: true
+    createdAt?: true
     updateAt?: true
-    deleteAt?: true
   }
 
-  export type MessageMaxAggregateInputType = {
+  export type PrivateMessageMaxAggregateInputType = {
     id?: true
     content?: true
-    senderID?: true
-    receiverID?: true
-    roomId?: true
-    messageType?: true
-    isRead?: true
-    createAt?: true
+    chatId?: true
+    senderId?: true
+    messageIndex?: true
+    replyToId?: true
+    createdAt?: true
     updateAt?: true
-    deleteAt?: true
   }
 
-  export type MessageCountAggregateInputType = {
+  export type PrivateMessageCountAggregateInputType = {
     id?: true
     content?: true
-    senderID?: true
-    receiverID?: true
-    roomId?: true
-    messageType?: true
-    isRead?: true
-    createAt?: true
+    chatId?: true
+    senderId?: true
+    messageIndex?: true
+    replyToId?: true
+    createdAt?: true
     updateAt?: true
-    deleteAt?: true
     _all?: true
   }
 
-  export type MessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Message to aggregate.
+     * Filter which PrivateMessage to aggregate.
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of PrivateMessages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: PrivateMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` PrivateMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` PrivateMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Messages
+     * Count returned PrivateMessages
     **/
-    _count?: true | MessageCountAggregateInputType
+    _count?: true | PrivateMessageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: MessageAvgAggregateInputType
+    _avg?: PrivateMessageAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: MessageSumAggregateInputType
+    _sum?: PrivateMessageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: MessageMinAggregateInputType
+    _min?: PrivateMessageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: MessageMaxAggregateInputType
+    _max?: PrivateMessageMaxAggregateInputType
   }
 
-  export type GetMessageAggregateType<T extends MessageAggregateArgs> = {
-        [P in keyof T & keyof AggregateMessage]: P extends '_count' | 'count'
+  export type GetPrivateMessageAggregateType<T extends PrivateMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrivateMessage]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateMessage[P]>
-      : GetScalarType<T[P], AggregateMessage[P]>
+        : GetScalarType<T[P], AggregatePrivateMessage[P]>
+      : GetScalarType<T[P], AggregatePrivateMessage[P]>
   }
 
 
 
 
-  export type MessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithAggregationInput | MessageOrderByWithAggregationInput[]
-    by: MessageScalarFieldEnum[] | MessageScalarFieldEnum
-    having?: MessageScalarWhereWithAggregatesInput
+  export type PrivateMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PrivateMessageWhereInput
+    orderBy?: PrivateMessageOrderByWithAggregationInput | PrivateMessageOrderByWithAggregationInput[]
+    by: PrivateMessageScalarFieldEnum[] | PrivateMessageScalarFieldEnum
+    having?: PrivateMessageScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: MessageCountAggregateInputType | true
-    _avg?: MessageAvgAggregateInputType
-    _sum?: MessageSumAggregateInputType
-    _min?: MessageMinAggregateInputType
-    _max?: MessageMaxAggregateInputType
+    _count?: PrivateMessageCountAggregateInputType | true
+    _avg?: PrivateMessageAvgAggregateInputType
+    _sum?: PrivateMessageSumAggregateInputType
+    _min?: PrivateMessageMinAggregateInputType
+    _max?: PrivateMessageMaxAggregateInputType
   }
 
-  export type MessageGroupByOutputType = {
-    id: number
+  export type PrivateMessageGroupByOutputType = {
+    id: string
     content: string
-    senderID: string | null
-    receiverID: string | null
-    roomId: string
-    messageType: string
-    isRead: boolean
-    createAt: Date
+    chatId: string
+    senderId: string
+    messageIndex: number
+    replyToId: string | null
+    createdAt: Date
     updateAt: Date
-    deleteAt: Date | null
-    _count: MessageCountAggregateOutputType | null
-    _avg: MessageAvgAggregateOutputType | null
-    _sum: MessageSumAggregateOutputType | null
-    _min: MessageMinAggregateOutputType | null
-    _max: MessageMaxAggregateOutputType | null
+    _count: PrivateMessageCountAggregateOutputType | null
+    _avg: PrivateMessageAvgAggregateOutputType | null
+    _sum: PrivateMessageSumAggregateOutputType | null
+    _min: PrivateMessageMinAggregateOutputType | null
+    _max: PrivateMessageMaxAggregateOutputType | null
   }
 
-  type GetMessageGroupByPayload<T extends MessageGroupByArgs> = Prisma.PrismaPromise<
+  type GetPrivateMessageGroupByPayload<T extends PrivateMessageGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MessageGroupByOutputType, T['by']> &
+      PickEnumerable<PrivateMessageGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof MessageGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PrivateMessageGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], MessageGroupByOutputType[P]>
-            : GetScalarType<T[P], MessageGroupByOutputType[P]>
+              : GetScalarType<T[P], PrivateMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], PrivateMessageGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PrivateMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     content?: boolean
-    senderID?: boolean
-    receiverID?: boolean
-    roomId?: boolean
-    messageType?: boolean
-    isRead?: boolean
-    createAt?: boolean
+    chatId?: boolean
+    senderId?: boolean
+    messageIndex?: boolean
+    replyToId?: boolean
+    createdAt?: boolean
     updateAt?: boolean
-    deleteAt?: boolean
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    replies?: boolean | PrivateMessage$repliesArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | PrivateMessageCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateMessage"]>
 
-  export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PrivateMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     content?: boolean
-    senderID?: boolean
-    receiverID?: boolean
-    roomId?: boolean
-    messageType?: boolean
-    isRead?: boolean
-    createAt?: boolean
+    chatId?: boolean
+    senderId?: boolean
+    messageIndex?: boolean
+    replyToId?: boolean
+    createdAt?: boolean
     updateAt?: boolean
-    deleteAt?: boolean
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateMessage"]>
 
-  export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PrivateMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     content?: boolean
-    senderID?: boolean
-    receiverID?: boolean
-    roomId?: boolean
-    messageType?: boolean
-    isRead?: boolean
-    createAt?: boolean
+    chatId?: boolean
+    senderId?: boolean
+    messageIndex?: boolean
+    replyToId?: boolean
+    createdAt?: boolean
     updateAt?: boolean
-    deleteAt?: boolean
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["privateMessage"]>
 
-  export type MessageSelectScalar = {
+  export type PrivateMessageSelectScalar = {
     id?: boolean
     content?: boolean
-    senderID?: boolean
-    receiverID?: boolean
-    roomId?: boolean
-    messageType?: boolean
-    isRead?: boolean
-    createAt?: boolean
+    chatId?: boolean
+    senderId?: boolean
+    messageIndex?: boolean
+    replyToId?: boolean
+    createdAt?: boolean
     updateAt?: boolean
-    deleteAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "senderID" | "receiverID" | "roomId" | "messageType" | "isRead" | "createAt" | "updateAt" | "deleteAt", ExtArgs["result"]["message"]>
-  export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
+  export type PrivateMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "chatId" | "senderId" | "messageIndex" | "replyToId" | "createdAt" | "updateAt", ExtArgs["result"]["privateMessage"]>
+  export type PrivateMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    replies?: boolean | PrivateMessage$repliesArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | PrivateMessageCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
+  export type PrivateMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | Message$senderArgs<ExtArgs>
-    receiver?: boolean | Message$receiverArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
+  export type PrivateMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replyTo?: boolean | PrivateMessage$replyToArgs<ExtArgs>
+    chat?: boolean | PrivateChatDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Message"
+  export type $PrivateMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PrivateMessage"
     objects: {
-      sender: Prisma.$UserPayload<ExtArgs> | null
-      receiver: Prisma.$UserPayload<ExtArgs> | null
-      room: Prisma.$RoomPayload<ExtArgs>
+      replyTo: Prisma.$PrivateMessagePayload<ExtArgs> | null
+      replies: Prisma.$PrivateMessagePayload<ExtArgs>[]
+      chat: Prisma.$PrivateChatPayload<ExtArgs>
+      sender: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       content: string
-      senderID: string | null
-      receiverID: string | null
-      roomId: string
-      messageType: string
-      isRead: boolean
-      createAt: Date
+      chatId: string
+      senderId: string
+      messageIndex: number
+      replyToId: string | null
+      createdAt: Date
       updateAt: Date
-      deleteAt: Date | null
-    }, ExtArgs["result"]["message"]>
+    }, ExtArgs["result"]["privateMessage"]>
     composites: {}
   }
 
-  type MessageGetPayload<S extends boolean | null | undefined | MessageDefaultArgs> = $Result.GetResult<Prisma.$MessagePayload, S>
+  type PrivateMessageGetPayload<S extends boolean | null | undefined | PrivateMessageDefaultArgs> = $Result.GetResult<Prisma.$PrivateMessagePayload, S>
 
-  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MessageCountAggregateInputType | true
+  type PrivateMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PrivateMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PrivateMessageCountAggregateInputType | true
     }
 
-  export interface MessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Message'], meta: { name: 'Message' } }
+  export interface PrivateMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PrivateMessage'], meta: { name: 'PrivateMessage' } }
     /**
-     * Find zero or one Message that matches the filter.
-     * @param {MessageFindUniqueArgs} args - Arguments to find a Message
+     * Find zero or one PrivateMessage that matches the filter.
+     * @param {PrivateMessageFindUniqueArgs} args - Arguments to find a PrivateMessage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findUnique({
+     * // Get one PrivateMessage
+     * const privateMessage = await prisma.privateMessage.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends MessageFindUniqueArgs>(args: SelectSubset<T, MessageFindUniqueArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends PrivateMessageFindUniqueArgs>(args: SelectSubset<T, PrivateMessageFindUniqueArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Message that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PrivateMessage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {MessageFindUniqueOrThrowArgs} args - Arguments to find a Message
+     * @param {PrivateMessageFindUniqueOrThrowArgs} args - Arguments to find a PrivateMessage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findUniqueOrThrow({
+     * // Get one PrivateMessage
+     * const privateMessage = await prisma.privateMessage.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends MessageFindUniqueOrThrowArgs>(args: SelectSubset<T, MessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends PrivateMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, PrivateMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Message that matches the filter.
+     * Find the first PrivateMessage that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindFirstArgs} args - Arguments to find a Message
+     * @param {PrivateMessageFindFirstArgs} args - Arguments to find a PrivateMessage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findFirst({
+     * // Get one PrivateMessage
+     * const privateMessage = await prisma.privateMessage.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends MessageFindFirstArgs>(args?: SelectSubset<T, MessageFindFirstArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends PrivateMessageFindFirstArgs>(args?: SelectSubset<T, PrivateMessageFindFirstArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Message that matches the filter or
+     * Find the first PrivateMessage that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindFirstOrThrowArgs} args - Arguments to find a Message
+     * @param {PrivateMessageFindFirstOrThrowArgs} args - Arguments to find a PrivateMessage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findFirstOrThrow({
+     * // Get one PrivateMessage
+     * const privateMessage = await prisma.privateMessage.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends MessageFindFirstOrThrowArgs>(args?: SelectSubset<T, MessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends PrivateMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, PrivateMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Messages that matches the filter.
+     * Find zero or more PrivateMessages that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {PrivateMessageFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Messages
-     * const messages = await prisma.message.findMany()
+     * // Get all PrivateMessages
+     * const privateMessages = await prisma.privateMessage.findMany()
      * 
-     * // Get first 10 Messages
-     * const messages = await prisma.message.findMany({ take: 10 })
+     * // Get first 10 PrivateMessages
+     * const privateMessages = await prisma.privateMessage.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const messageWithIdOnly = await prisma.message.findMany({ select: { id: true } })
+     * const privateMessageWithIdOnly = await prisma.privateMessage.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends MessageFindManyArgs>(args?: SelectSubset<T, MessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends PrivateMessageFindManyArgs>(args?: SelectSubset<T, PrivateMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Message.
-     * @param {MessageCreateArgs} args - Arguments to create a Message.
+     * Create a PrivateMessage.
+     * @param {PrivateMessageCreateArgs} args - Arguments to create a PrivateMessage.
      * @example
-     * // Create one Message
-     * const Message = await prisma.message.create({
+     * // Create one PrivateMessage
+     * const PrivateMessage = await prisma.privateMessage.create({
      *   data: {
-     *     // ... data to create a Message
+     *     // ... data to create a PrivateMessage
      *   }
      * })
      * 
      */
-    create<T extends MessageCreateArgs>(args: SelectSubset<T, MessageCreateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends PrivateMessageCreateArgs>(args: SelectSubset<T, PrivateMessageCreateArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Messages.
-     * @param {MessageCreateManyArgs} args - Arguments to create many Messages.
+     * Create many PrivateMessages.
+     * @param {PrivateMessageCreateManyArgs} args - Arguments to create many PrivateMessages.
      * @example
-     * // Create many Messages
-     * const message = await prisma.message.createMany({
+     * // Create many PrivateMessages
+     * const privateMessage = await prisma.privateMessage.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends MessageCreateManyArgs>(args?: SelectSubset<T, MessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends PrivateMessageCreateManyArgs>(args?: SelectSubset<T, PrivateMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Messages and returns the data saved in the database.
-     * @param {MessageCreateManyAndReturnArgs} args - Arguments to create many Messages.
+     * Create many PrivateMessages and returns the data saved in the database.
+     * @param {PrivateMessageCreateManyAndReturnArgs} args - Arguments to create many PrivateMessages.
      * @example
-     * // Create many Messages
-     * const message = await prisma.message.createManyAndReturn({
+     * // Create many PrivateMessages
+     * const privateMessage = await prisma.privateMessage.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.createManyAndReturn({
+     * // Create many PrivateMessages and only return the `id`
+     * const privateMessageWithIdOnly = await prisma.privateMessage.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -4970,28 +5985,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends MessageCreateManyAndReturnArgs>(args?: SelectSubset<T, MessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends PrivateMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, PrivateMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Message.
-     * @param {MessageDeleteArgs} args - Arguments to delete one Message.
+     * Delete a PrivateMessage.
+     * @param {PrivateMessageDeleteArgs} args - Arguments to delete one PrivateMessage.
      * @example
-     * // Delete one Message
-     * const Message = await prisma.message.delete({
+     * // Delete one PrivateMessage
+     * const PrivateMessage = await prisma.privateMessage.delete({
      *   where: {
-     *     // ... filter to delete one Message
+     *     // ... filter to delete one PrivateMessage
      *   }
      * })
      * 
      */
-    delete<T extends MessageDeleteArgs>(args: SelectSubset<T, MessageDeleteArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends PrivateMessageDeleteArgs>(args: SelectSubset<T, PrivateMessageDeleteArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Message.
-     * @param {MessageUpdateArgs} args - Arguments to update one Message.
+     * Update one PrivateMessage.
+     * @param {PrivateMessageUpdateArgs} args - Arguments to update one PrivateMessage.
      * @example
-     * // Update one Message
-     * const message = await prisma.message.update({
+     * // Update one PrivateMessage
+     * const privateMessage = await prisma.privateMessage.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5001,30 +6016,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends MessageUpdateArgs>(args: SelectSubset<T, MessageUpdateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends PrivateMessageUpdateArgs>(args: SelectSubset<T, PrivateMessageUpdateArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Messages.
-     * @param {MessageDeleteManyArgs} args - Arguments to filter Messages to delete.
+     * Delete zero or more PrivateMessages.
+     * @param {PrivateMessageDeleteManyArgs} args - Arguments to filter PrivateMessages to delete.
      * @example
-     * // Delete a few Messages
-     * const { count } = await prisma.message.deleteMany({
+     * // Delete a few PrivateMessages
+     * const { count } = await prisma.privateMessage.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends MessageDeleteManyArgs>(args?: SelectSubset<T, MessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends PrivateMessageDeleteManyArgs>(args?: SelectSubset<T, PrivateMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Messages.
+     * Update zero or more PrivateMessages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PrivateMessageUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Messages
-     * const message = await prisma.message.updateMany({
+     * // Update many PrivateMessages
+     * const privateMessage = await prisma.privateMessage.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5034,14 +6049,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends MessageUpdateManyArgs>(args: SelectSubset<T, MessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends PrivateMessageUpdateManyArgs>(args: SelectSubset<T, PrivateMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Messages and returns the data updated in the database.
-     * @param {MessageUpdateManyAndReturnArgs} args - Arguments to update many Messages.
+     * Update zero or more PrivateMessages and returns the data updated in the database.
+     * @param {PrivateMessageUpdateManyAndReturnArgs} args - Arguments to update many PrivateMessages.
      * @example
-     * // Update many Messages
-     * const message = await prisma.message.updateManyAndReturn({
+     * // Update many PrivateMessages
+     * const privateMessage = await prisma.privateMessage.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5050,8 +6065,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.updateManyAndReturn({
+     * // Update zero or more PrivateMessages and only return the `id`
+     * const privateMessageWithIdOnly = await prisma.privateMessage.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5064,56 +6079,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends MessageUpdateManyAndReturnArgs>(args: SelectSubset<T, MessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends PrivateMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, PrivateMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Message.
-     * @param {MessageUpsertArgs} args - Arguments to update or create a Message.
+     * Create or update one PrivateMessage.
+     * @param {PrivateMessageUpsertArgs} args - Arguments to update or create a PrivateMessage.
      * @example
-     * // Update or create a Message
-     * const message = await prisma.message.upsert({
+     * // Update or create a PrivateMessage
+     * const privateMessage = await prisma.privateMessage.upsert({
      *   create: {
-     *     // ... data to create a Message
+     *     // ... data to create a PrivateMessage
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Message we want to update
+     *     // ... the filter for the PrivateMessage we want to update
      *   }
      * })
      */
-    upsert<T extends MessageUpsertArgs>(args: SelectSubset<T, MessageUpsertArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends PrivateMessageUpsertArgs>(args: SelectSubset<T, PrivateMessageUpsertArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Messages.
+     * Count the number of PrivateMessages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageCountArgs} args - Arguments to filter Messages to count.
+     * @param {PrivateMessageCountArgs} args - Arguments to filter PrivateMessages to count.
      * @example
-     * // Count the number of Messages
-     * const count = await prisma.message.count({
+     * // Count the number of PrivateMessages
+     * const count = await prisma.privateMessage.count({
      *   where: {
-     *     // ... the filter for the Messages we want to count
+     *     // ... the filter for the PrivateMessages we want to count
      *   }
      * })
     **/
-    count<T extends MessageCountArgs>(
-      args?: Subset<T, MessageCountArgs>,
+    count<T extends PrivateMessageCountArgs>(
+      args?: Subset<T, PrivateMessageCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], MessageCountAggregateOutputType>
+          : GetScalarType<T['select'], PrivateMessageCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Message.
+     * Allows you to perform aggregations operations on a PrivateMessage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PrivateMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5133,13 +6148,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends MessageAggregateArgs>(args: Subset<T, MessageAggregateArgs>): Prisma.PrismaPromise<GetMessageAggregateType<T>>
+    aggregate<T extends PrivateMessageAggregateArgs>(args: Subset<T, PrivateMessageAggregateArgs>): Prisma.PrismaPromise<GetPrivateMessageAggregateType<T>>
 
     /**
-     * Group by Message.
+     * Group by PrivateMessage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageGroupByArgs} args - Group by arguments.
+     * @param {PrivateMessageGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5154,14 +6169,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends MessageGroupByArgs,
+      T extends PrivateMessageGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MessageGroupByArgs['orderBy'] }
-        : { orderBy?: MessageGroupByArgs['orderBy'] },
+        ? { orderBy: PrivateMessageGroupByArgs['orderBy'] }
+        : { orderBy?: PrivateMessageGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5210,24 +6225,25 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, MessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PrivateMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPrivateMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Message model
+   * Fields of the PrivateMessage model
    */
-  readonly fields: MessageFieldRefs;
+  readonly fields: PrivateMessageFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Message.
+   * The delegate class that acts as a "Promise-like" for PrivateMessage.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PrivateMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    sender<T extends Message$senderArgs<ExtArgs> = {}>(args?: Subset<T, Message$senderArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    receiver<T extends Message$receiverArgs<ExtArgs> = {}>(args?: Subset<T, Message$receiverArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    room<T extends RoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoomDefaultArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    replyTo<T extends PrivateMessage$replyToArgs<ExtArgs> = {}>(args?: Subset<T, PrivateMessage$replyToArgs<ExtArgs>>): Prisma__PrivateMessageClient<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    replies<T extends PrivateMessage$repliesArgs<ExtArgs> = {}>(args?: Subset<T, PrivateMessage$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chat<T extends PrivateChatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PrivateChatDefaultArgs<ExtArgs>>): Prisma__PrivateChatClient<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5254,3685 +6270,471 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Message model
+   * Fields of the PrivateMessage model
    */
-  interface MessageFieldRefs {
-    readonly id: FieldRef<"Message", 'Int'>
-    readonly content: FieldRef<"Message", 'String'>
-    readonly senderID: FieldRef<"Message", 'String'>
-    readonly receiverID: FieldRef<"Message", 'String'>
-    readonly roomId: FieldRef<"Message", 'String'>
-    readonly messageType: FieldRef<"Message", 'String'>
-    readonly isRead: FieldRef<"Message", 'Boolean'>
-    readonly createAt: FieldRef<"Message", 'DateTime'>
-    readonly updateAt: FieldRef<"Message", 'DateTime'>
-    readonly deleteAt: FieldRef<"Message", 'DateTime'>
+  interface PrivateMessageFieldRefs {
+    readonly id: FieldRef<"PrivateMessage", 'String'>
+    readonly content: FieldRef<"PrivateMessage", 'String'>
+    readonly chatId: FieldRef<"PrivateMessage", 'String'>
+    readonly senderId: FieldRef<"PrivateMessage", 'String'>
+    readonly messageIndex: FieldRef<"PrivateMessage", 'Int'>
+    readonly replyToId: FieldRef<"PrivateMessage", 'String'>
+    readonly createdAt: FieldRef<"PrivateMessage", 'DateTime'>
+    readonly updateAt: FieldRef<"PrivateMessage", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Message findUnique
+   * PrivateMessage findUnique
    */
-  export type MessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Message to fetch.
+     * Filter, which PrivateMessage to fetch.
      */
-    where: MessageWhereUniqueInput
+    where: PrivateMessageWhereUniqueInput
   }
 
   /**
-   * Message findUniqueOrThrow
+   * PrivateMessage findUniqueOrThrow
    */
-  export type MessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Message to fetch.
+     * Filter, which PrivateMessage to fetch.
      */
-    where: MessageWhereUniqueInput
+    where: PrivateMessageWhereUniqueInput
   }
 
   /**
-   * Message findFirst
+   * PrivateMessage findFirst
    */
-  export type MessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Message to fetch.
+     * Filter, which PrivateMessage to fetch.
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of PrivateMessages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Messages.
+     * Sets the position for searching for PrivateMessages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: PrivateMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` PrivateMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` PrivateMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Messages.
+     * Filter by unique combinations of PrivateMessages.
      */
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
   }
 
   /**
-   * Message findFirstOrThrow
+   * PrivateMessage findFirstOrThrow
    */
-  export type MessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Message to fetch.
+     * Filter, which PrivateMessage to fetch.
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of PrivateMessages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Messages.
+     * Sets the position for searching for PrivateMessages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: PrivateMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` PrivateMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` PrivateMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Messages.
+     * Filter by unique combinations of PrivateMessages.
      */
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
   }
 
   /**
-   * Message findMany
+   * PrivateMessage findMany
    */
-  export type MessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Messages to fetch.
+     * Filter, which PrivateMessages to fetch.
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of PrivateMessages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Messages.
+     * Sets the position for listing PrivateMessages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: PrivateMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` PrivateMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` PrivateMessages.
      */
     skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
   }
 
   /**
-   * Message create
+   * PrivateMessage create
    */
-  export type MessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * The data needed to create a Message.
+     * The data needed to create a PrivateMessage.
      */
-    data: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+    data: XOR<PrivateMessageCreateInput, PrivateMessageUncheckedCreateInput>
   }
 
   /**
-   * Message createMany
+   * PrivateMessage createMany
    */
-  export type MessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Messages.
+     * The data used to create many PrivateMessages.
      */
-    data: MessageCreateManyInput | MessageCreateManyInput[]
+    data: PrivateMessageCreateManyInput | PrivateMessageCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Message createManyAndReturn
+   * PrivateMessage createManyAndReturn
    */
-  export type MessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelectCreateManyAndReturn<ExtArgs> | null
+    select?: PrivateMessageSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
-     * The data used to create many Messages.
+     * The data used to create many PrivateMessages.
      */
-    data: MessageCreateManyInput | MessageCreateManyInput[]
+    data: PrivateMessageCreateManyInput | PrivateMessageCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: PrivateMessageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Message update
+   * PrivateMessage update
    */
-  export type MessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * The data needed to update a Message.
+     * The data needed to update a PrivateMessage.
      */
-    data: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
+    data: XOR<PrivateMessageUpdateInput, PrivateMessageUncheckedUpdateInput>
     /**
-     * Choose, which Message to update.
+     * Choose, which PrivateMessage to update.
      */
-    where: MessageWhereUniqueInput
+    where: PrivateMessageWhereUniqueInput
   }
 
   /**
-   * Message updateMany
+   * PrivateMessage updateMany
    */
-  export type MessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Messages.
+     * The data used to update PrivateMessages.
      */
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    data: XOR<PrivateMessageUpdateManyMutationInput, PrivateMessageUncheckedUpdateManyInput>
     /**
-     * Filter which Messages to update
+     * Filter which PrivateMessages to update
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
-     * Limit how many Messages to update.
+     * Limit how many PrivateMessages to update.
      */
     limit?: number
   }
 
   /**
-   * Message updateManyAndReturn
+   * PrivateMessage updateManyAndReturn
    */
-  export type MessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PrivateMessageSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
-     * The data used to update Messages.
+     * The data used to update PrivateMessages.
      */
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    data: XOR<PrivateMessageUpdateManyMutationInput, PrivateMessageUncheckedUpdateManyInput>
     /**
-     * Filter which Messages to update
+     * Filter which PrivateMessages to update
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
-     * Limit how many Messages to update.
+     * Limit how many PrivateMessages to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: PrivateMessageIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Message upsert
+   * PrivateMessage upsert
    */
-  export type MessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * The filter to search for the Message to update in case it exists.
+     * The filter to search for the PrivateMessage to update in case it exists.
      */
-    where: MessageWhereUniqueInput
+    where: PrivateMessageWhereUniqueInput
     /**
-     * In case the Message found by the `where` argument doesn't exist, create a new Message with this data.
+     * In case the PrivateMessage found by the `where` argument doesn't exist, create a new PrivateMessage with this data.
      */
-    create: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+    create: XOR<PrivateMessageCreateInput, PrivateMessageUncheckedCreateInput>
     /**
-     * In case the Message was found with the provided `where` argument, update it with this data.
+     * In case the PrivateMessage was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
+    update: XOR<PrivateMessageUpdateInput, PrivateMessageUncheckedUpdateInput>
   }
 
   /**
-   * Message delete
+   * PrivateMessage delete
    */
-  export type MessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
     /**
-     * Filter which Message to delete.
+     * Filter which PrivateMessage to delete.
      */
-    where: MessageWhereUniqueInput
+    where: PrivateMessageWhereUniqueInput
   }
 
   /**
-   * Message deleteMany
+   * PrivateMessage deleteMany
    */
-  export type MessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Messages to delete
+     * Filter which PrivateMessages to delete
      */
-    where?: MessageWhereInput
+    where?: PrivateMessageWhereInput
     /**
-     * Limit how many Messages to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Message.sender
-   */
-  export type Message$senderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
-   * Message.receiver
-   */
-  export type Message$receiverArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
-   * Message without action
-   */
-  export type MessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Message
-     */
-    select?: MessageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Message
-     */
-    omit?: MessageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model ReadProgress
-   */
-
-  export type AggregateReadProgress = {
-    _count: ReadProgressCountAggregateOutputType | null
-    _avg: ReadProgressAvgAggregateOutputType | null
-    _sum: ReadProgressSumAggregateOutputType | null
-    _min: ReadProgressMinAggregateOutputType | null
-    _max: ReadProgressMaxAggregateOutputType | null
-  }
-
-  export type ReadProgressAvgAggregateOutputType = {
-    messageId: number | null
-  }
-
-  export type ReadProgressSumAggregateOutputType = {
-    messageId: number | null
-  }
-
-  export type ReadProgressMinAggregateOutputType = {
-    id: string | null
-    messageId: number | null
-    roomId: string | null
-    userId: string | null
-  }
-
-  export type ReadProgressMaxAggregateOutputType = {
-    id: string | null
-    messageId: number | null
-    roomId: string | null
-    userId: string | null
-  }
-
-  export type ReadProgressCountAggregateOutputType = {
-    id: number
-    messageId: number
-    roomId: number
-    userId: number
-    _all: number
-  }
-
-
-  export type ReadProgressAvgAggregateInputType = {
-    messageId?: true
-  }
-
-  export type ReadProgressSumAggregateInputType = {
-    messageId?: true
-  }
-
-  export type ReadProgressMinAggregateInputType = {
-    id?: true
-    messageId?: true
-    roomId?: true
-    userId?: true
-  }
-
-  export type ReadProgressMaxAggregateInputType = {
-    id?: true
-    messageId?: true
-    roomId?: true
-    userId?: true
-  }
-
-  export type ReadProgressCountAggregateInputType = {
-    id?: true
-    messageId?: true
-    roomId?: true
-    userId?: true
-    _all?: true
-  }
-
-  export type ReadProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ReadProgress to aggregate.
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ReadProgresses to fetch.
-     */
-    orderBy?: ReadProgressOrderByWithRelationInput | ReadProgressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ReadProgressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ReadProgresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ReadProgresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned ReadProgresses
-    **/
-    _count?: true | ReadProgressCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ReadProgressAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ReadProgressSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ReadProgressMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ReadProgressMaxAggregateInputType
-  }
-
-  export type GetReadProgressAggregateType<T extends ReadProgressAggregateArgs> = {
-        [P in keyof T & keyof AggregateReadProgress]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateReadProgress[P]>
-      : GetScalarType<T[P], AggregateReadProgress[P]>
-  }
-
-
-
-
-  export type ReadProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReadProgressWhereInput
-    orderBy?: ReadProgressOrderByWithAggregationInput | ReadProgressOrderByWithAggregationInput[]
-    by: ReadProgressScalarFieldEnum[] | ReadProgressScalarFieldEnum
-    having?: ReadProgressScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ReadProgressCountAggregateInputType | true
-    _avg?: ReadProgressAvgAggregateInputType
-    _sum?: ReadProgressSumAggregateInputType
-    _min?: ReadProgressMinAggregateInputType
-    _max?: ReadProgressMaxAggregateInputType
-  }
-
-  export type ReadProgressGroupByOutputType = {
-    id: string
-    messageId: number
-    roomId: string
-    userId: string
-    _count: ReadProgressCountAggregateOutputType | null
-    _avg: ReadProgressAvgAggregateOutputType | null
-    _sum: ReadProgressSumAggregateOutputType | null
-    _min: ReadProgressMinAggregateOutputType | null
-    _max: ReadProgressMaxAggregateOutputType | null
-  }
-
-  type GetReadProgressGroupByPayload<T extends ReadProgressGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ReadProgressGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ReadProgressGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ReadProgressGroupByOutputType[P]>
-            : GetScalarType<T[P], ReadProgressGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ReadProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    messageId?: boolean
-    roomId?: boolean
-    userId?: boolean
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["readProgress"]>
-
-  export type ReadProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    messageId?: boolean
-    roomId?: boolean
-    userId?: boolean
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["readProgress"]>
-
-  export type ReadProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    messageId?: boolean
-    roomId?: boolean
-    userId?: boolean
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["readProgress"]>
-
-  export type ReadProgressSelectScalar = {
-    id?: boolean
-    messageId?: boolean
-    roomId?: boolean
-    userId?: boolean
-  }
-
-  export type ReadProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "messageId" | "roomId" | "userId", ExtArgs["result"]["readProgress"]>
-  export type ReadProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ReadProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ReadProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $ReadProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ReadProgress"
-    objects: {
-      User: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      messageId: number
-      roomId: string
-      userId: string
-    }, ExtArgs["result"]["readProgress"]>
-    composites: {}
-  }
-
-  type ReadProgressGetPayload<S extends boolean | null | undefined | ReadProgressDefaultArgs> = $Result.GetResult<Prisma.$ReadProgressPayload, S>
-
-  type ReadProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ReadProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ReadProgressCountAggregateInputType | true
-    }
-
-  export interface ReadProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReadProgress'], meta: { name: 'ReadProgress' } }
-    /**
-     * Find zero or one ReadProgress that matches the filter.
-     * @param {ReadProgressFindUniqueArgs} args - Arguments to find a ReadProgress
-     * @example
-     * // Get one ReadProgress
-     * const readProgress = await prisma.readProgress.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ReadProgressFindUniqueArgs>(args: SelectSubset<T, ReadProgressFindUniqueArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one ReadProgress that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ReadProgressFindUniqueOrThrowArgs} args - Arguments to find a ReadProgress
-     * @example
-     * // Get one ReadProgress
-     * const readProgress = await prisma.readProgress.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ReadProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, ReadProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ReadProgress that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressFindFirstArgs} args - Arguments to find a ReadProgress
-     * @example
-     * // Get one ReadProgress
-     * const readProgress = await prisma.readProgress.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ReadProgressFindFirstArgs>(args?: SelectSubset<T, ReadProgressFindFirstArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ReadProgress that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressFindFirstOrThrowArgs} args - Arguments to find a ReadProgress
-     * @example
-     * // Get one ReadProgress
-     * const readProgress = await prisma.readProgress.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ReadProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, ReadProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more ReadProgresses that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ReadProgresses
-     * const readProgresses = await prisma.readProgress.findMany()
-     * 
-     * // Get first 10 ReadProgresses
-     * const readProgresses = await prisma.readProgress.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const readProgressWithIdOnly = await prisma.readProgress.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends ReadProgressFindManyArgs>(args?: SelectSubset<T, ReadProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a ReadProgress.
-     * @param {ReadProgressCreateArgs} args - Arguments to create a ReadProgress.
-     * @example
-     * // Create one ReadProgress
-     * const ReadProgress = await prisma.readProgress.create({
-     *   data: {
-     *     // ... data to create a ReadProgress
-     *   }
-     * })
-     * 
-     */
-    create<T extends ReadProgressCreateArgs>(args: SelectSubset<T, ReadProgressCreateArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many ReadProgresses.
-     * @param {ReadProgressCreateManyArgs} args - Arguments to create many ReadProgresses.
-     * @example
-     * // Create many ReadProgresses
-     * const readProgress = await prisma.readProgress.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ReadProgressCreateManyArgs>(args?: SelectSubset<T, ReadProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many ReadProgresses and returns the data saved in the database.
-     * @param {ReadProgressCreateManyAndReturnArgs} args - Arguments to create many ReadProgresses.
-     * @example
-     * // Create many ReadProgresses
-     * const readProgress = await prisma.readProgress.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many ReadProgresses and only return the `id`
-     * const readProgressWithIdOnly = await prisma.readProgress.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ReadProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, ReadProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a ReadProgress.
-     * @param {ReadProgressDeleteArgs} args - Arguments to delete one ReadProgress.
-     * @example
-     * // Delete one ReadProgress
-     * const ReadProgress = await prisma.readProgress.delete({
-     *   where: {
-     *     // ... filter to delete one ReadProgress
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ReadProgressDeleteArgs>(args: SelectSubset<T, ReadProgressDeleteArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one ReadProgress.
-     * @param {ReadProgressUpdateArgs} args - Arguments to update one ReadProgress.
-     * @example
-     * // Update one ReadProgress
-     * const readProgress = await prisma.readProgress.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ReadProgressUpdateArgs>(args: SelectSubset<T, ReadProgressUpdateArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more ReadProgresses.
-     * @param {ReadProgressDeleteManyArgs} args - Arguments to filter ReadProgresses to delete.
-     * @example
-     * // Delete a few ReadProgresses
-     * const { count } = await prisma.readProgress.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ReadProgressDeleteManyArgs>(args?: SelectSubset<T, ReadProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ReadProgresses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ReadProgresses
-     * const readProgress = await prisma.readProgress.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ReadProgressUpdateManyArgs>(args: SelectSubset<T, ReadProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ReadProgresses and returns the data updated in the database.
-     * @param {ReadProgressUpdateManyAndReturnArgs} args - Arguments to update many ReadProgresses.
-     * @example
-     * // Update many ReadProgresses
-     * const readProgress = await prisma.readProgress.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more ReadProgresses and only return the `id`
-     * const readProgressWithIdOnly = await prisma.readProgress.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ReadProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, ReadProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one ReadProgress.
-     * @param {ReadProgressUpsertArgs} args - Arguments to update or create a ReadProgress.
-     * @example
-     * // Update or create a ReadProgress
-     * const readProgress = await prisma.readProgress.upsert({
-     *   create: {
-     *     // ... data to create a ReadProgress
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ReadProgress we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ReadProgressUpsertArgs>(args: SelectSubset<T, ReadProgressUpsertArgs<ExtArgs>>): Prisma__ReadProgressClient<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of ReadProgresses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressCountArgs} args - Arguments to filter ReadProgresses to count.
-     * @example
-     * // Count the number of ReadProgresses
-     * const count = await prisma.readProgress.count({
-     *   where: {
-     *     // ... the filter for the ReadProgresses we want to count
-     *   }
-     * })
-    **/
-    count<T extends ReadProgressCountArgs>(
-      args?: Subset<T, ReadProgressCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ReadProgressCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ReadProgress.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ReadProgressAggregateArgs>(args: Subset<T, ReadProgressAggregateArgs>): Prisma.PrismaPromise<GetReadProgressAggregateType<T>>
-
-    /**
-     * Group by ReadProgress.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReadProgressGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ReadProgressGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ReadProgressGroupByArgs['orderBy'] }
-        : { orderBy?: ReadProgressGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ReadProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReadProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the ReadProgress model
-   */
-  readonly fields: ReadProgressFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for ReadProgress.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ReadProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the ReadProgress model
-   */
-  interface ReadProgressFieldRefs {
-    readonly id: FieldRef<"ReadProgress", 'String'>
-    readonly messageId: FieldRef<"ReadProgress", 'Int'>
-    readonly roomId: FieldRef<"ReadProgress", 'String'>
-    readonly userId: FieldRef<"ReadProgress", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * ReadProgress findUnique
-   */
-  export type ReadProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter, which ReadProgress to fetch.
-     */
-    where: ReadProgressWhereUniqueInput
-  }
-
-  /**
-   * ReadProgress findUniqueOrThrow
-   */
-  export type ReadProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter, which ReadProgress to fetch.
-     */
-    where: ReadProgressWhereUniqueInput
-  }
-
-  /**
-   * ReadProgress findFirst
-   */
-  export type ReadProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter, which ReadProgress to fetch.
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ReadProgresses to fetch.
-     */
-    orderBy?: ReadProgressOrderByWithRelationInput | ReadProgressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ReadProgresses.
-     */
-    cursor?: ReadProgressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ReadProgresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ReadProgresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ReadProgresses.
-     */
-    distinct?: ReadProgressScalarFieldEnum | ReadProgressScalarFieldEnum[]
-  }
-
-  /**
-   * ReadProgress findFirstOrThrow
-   */
-  export type ReadProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter, which ReadProgress to fetch.
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ReadProgresses to fetch.
-     */
-    orderBy?: ReadProgressOrderByWithRelationInput | ReadProgressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ReadProgresses.
-     */
-    cursor?: ReadProgressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ReadProgresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ReadProgresses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ReadProgresses.
-     */
-    distinct?: ReadProgressScalarFieldEnum | ReadProgressScalarFieldEnum[]
-  }
-
-  /**
-   * ReadProgress findMany
-   */
-  export type ReadProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter, which ReadProgresses to fetch.
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ReadProgresses to fetch.
-     */
-    orderBy?: ReadProgressOrderByWithRelationInput | ReadProgressOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing ReadProgresses.
-     */
-    cursor?: ReadProgressWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ReadProgresses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ReadProgresses.
-     */
-    skip?: number
-    distinct?: ReadProgressScalarFieldEnum | ReadProgressScalarFieldEnum[]
-  }
-
-  /**
-   * ReadProgress create
-   */
-  export type ReadProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * The data needed to create a ReadProgress.
-     */
-    data: XOR<ReadProgressCreateInput, ReadProgressUncheckedCreateInput>
-  }
-
-  /**
-   * ReadProgress createMany
-   */
-  export type ReadProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many ReadProgresses.
-     */
-    data: ReadProgressCreateManyInput | ReadProgressCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * ReadProgress createManyAndReturn
-   */
-  export type ReadProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * The data used to create many ReadProgresses.
-     */
-    data: ReadProgressCreateManyInput | ReadProgressCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ReadProgress update
-   */
-  export type ReadProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * The data needed to update a ReadProgress.
-     */
-    data: XOR<ReadProgressUpdateInput, ReadProgressUncheckedUpdateInput>
-    /**
-     * Choose, which ReadProgress to update.
-     */
-    where: ReadProgressWhereUniqueInput
-  }
-
-  /**
-   * ReadProgress updateMany
-   */
-  export type ReadProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update ReadProgresses.
-     */
-    data: XOR<ReadProgressUpdateManyMutationInput, ReadProgressUncheckedUpdateManyInput>
-    /**
-     * Filter which ReadProgresses to update
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * Limit how many ReadProgresses to update.
+     * Limit how many PrivateMessages to delete.
      */
     limit?: number
   }
 
   /**
-   * ReadProgress updateManyAndReturn
+   * PrivateMessage.replyTo
    */
-  export type ReadProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessage$replyToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ReadProgress
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: ReadProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ReadProgress
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * The data used to update ReadProgresses.
-     */
-    data: XOR<ReadProgressUpdateManyMutationInput, ReadProgressUncheckedUpdateManyInput>
-    /**
-     * Filter which ReadProgresses to update
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * Limit how many ReadProgresses to update.
-     */
-    limit?: number
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ReadProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
+    where?: PrivateMessageWhereInput
   }
 
   /**
-   * ReadProgress upsert
+   * PrivateMessage.replies
    */
-  export type ReadProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PrivateMessage$repliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ReadProgress
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: ReadProgressSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ReadProgress
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: ReadProgressOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * The filter to search for the ReadProgress to update in case it exists.
-     */
-    where: ReadProgressWhereUniqueInput
-    /**
-     * In case the ReadProgress found by the `where` argument doesn't exist, create a new ReadProgress with this data.
-     */
-    create: XOR<ReadProgressCreateInput, ReadProgressUncheckedCreateInput>
-    /**
-     * In case the ReadProgress was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ReadProgressUpdateInput, ReadProgressUncheckedUpdateInput>
-  }
-
-  /**
-   * ReadProgress delete
-   */
-  export type ReadProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    /**
-     * Filter which ReadProgress to delete.
-     */
-    where: ReadProgressWhereUniqueInput
-  }
-
-  /**
-   * ReadProgress deleteMany
-   */
-  export type ReadProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ReadProgresses to delete
-     */
-    where?: ReadProgressWhereInput
-    /**
-     * Limit how many ReadProgresses to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * ReadProgress without action
-   */
-  export type ReadProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Room
-   */
-
-  export type AggregateRoom = {
-    _count: RoomCountAggregateOutputType | null
-    _min: RoomMinAggregateOutputType | null
-    _max: RoomMaxAggregateOutputType | null
-  }
-
-  export type RoomMinAggregateOutputType = {
-    id: string | null
-    roomId: string | null
-    nameRoom: string | null
-    createAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type RoomMaxAggregateOutputType = {
-    id: string | null
-    roomId: string | null
-    nameRoom: string | null
-    createAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type RoomCountAggregateOutputType = {
-    id: number
-    roomId: number
-    nameRoom: number
-    createAt: number
-    updateAt: number
-    _all: number
-  }
-
-
-  export type RoomMinAggregateInputType = {
-    id?: true
-    roomId?: true
-    nameRoom?: true
-    createAt?: true
-    updateAt?: true
-  }
-
-  export type RoomMaxAggregateInputType = {
-    id?: true
-    roomId?: true
-    nameRoom?: true
-    createAt?: true
-    updateAt?: true
-  }
-
-  export type RoomCountAggregateInputType = {
-    id?: true
-    roomId?: true
-    nameRoom?: true
-    createAt?: true
-    updateAt?: true
-    _all?: true
-  }
-
-  export type RoomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Room to aggregate.
-     */
-    where?: RoomWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rooms to fetch.
-     */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RoomWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rooms from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rooms.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Rooms
-    **/
-    _count?: true | RoomCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RoomMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RoomMaxAggregateInputType
-  }
-
-  export type GetRoomAggregateType<T extends RoomAggregateArgs> = {
-        [P in keyof T & keyof AggregateRoom]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRoom[P]>
-      : GetScalarType<T[P], AggregateRoom[P]>
-  }
-
-
-
-
-  export type RoomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RoomWhereInput
-    orderBy?: RoomOrderByWithAggregationInput | RoomOrderByWithAggregationInput[]
-    by: RoomScalarFieldEnum[] | RoomScalarFieldEnum
-    having?: RoomScalarWhereWithAggregatesInput
+    include?: PrivateMessageInclude<ExtArgs> | null
+    where?: PrivateMessageWhereInput
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
+    cursor?: PrivateMessageWhereUniqueInput
     take?: number
     skip?: number
-    _count?: RoomCountAggregateInputType | true
-    _min?: RoomMinAggregateInputType
-    _max?: RoomMaxAggregateInputType
-  }
-
-  export type RoomGroupByOutputType = {
-    id: string
-    roomId: string
-    nameRoom: string
-    createAt: Date
-    updateAt: Date
-    _count: RoomCountAggregateOutputType | null
-    _min: RoomMinAggregateOutputType | null
-    _max: RoomMaxAggregateOutputType | null
-  }
-
-  type GetRoomGroupByPayload<T extends RoomGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RoomGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RoomGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RoomGroupByOutputType[P]>
-            : GetScalarType<T[P], RoomGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RoomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    roomId?: boolean
-    nameRoom?: boolean
-    createAt?: boolean
-    updateAt?: boolean
-    members?: boolean | Room$membersArgs<ExtArgs>
-    messages?: boolean | Room$messagesArgs<ExtArgs>
-    _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["room"]>
-
-  export type RoomSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    roomId?: boolean
-    nameRoom?: boolean
-    createAt?: boolean
-    updateAt?: boolean
-  }, ExtArgs["result"]["room"]>
-
-  export type RoomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    roomId?: boolean
-    nameRoom?: boolean
-    createAt?: boolean
-    updateAt?: boolean
-  }, ExtArgs["result"]["room"]>
-
-  export type RoomSelectScalar = {
-    id?: boolean
-    roomId?: boolean
-    nameRoom?: boolean
-    createAt?: boolean
-    updateAt?: boolean
-  }
-
-  export type RoomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roomId" | "nameRoom" | "createAt" | "updateAt", ExtArgs["result"]["room"]>
-  export type RoomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    members?: boolean | Room$membersArgs<ExtArgs>
-    messages?: boolean | Room$messagesArgs<ExtArgs>
-    _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type RoomIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type RoomIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $RoomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Room"
-    objects: {
-      members: Prisma.$MemberPayload<ExtArgs>[]
-      messages: Prisma.$MessagePayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      roomId: string
-      nameRoom: string
-      createAt: Date
-      updateAt: Date
-    }, ExtArgs["result"]["room"]>
-    composites: {}
-  }
-
-  type RoomGetPayload<S extends boolean | null | undefined | RoomDefaultArgs> = $Result.GetResult<Prisma.$RoomPayload, S>
-
-  type RoomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RoomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RoomCountAggregateInputType | true
-    }
-
-  export interface RoomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Room'], meta: { name: 'Room' } }
-    /**
-     * Find zero or one Room that matches the filter.
-     * @param {RoomFindUniqueArgs} args - Arguments to find a Room
-     * @example
-     * // Get one Room
-     * const room = await prisma.room.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RoomFindUniqueArgs>(args: SelectSubset<T, RoomFindUniqueArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Room that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RoomFindUniqueOrThrowArgs} args - Arguments to find a Room
-     * @example
-     * // Get one Room
-     * const room = await prisma.room.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RoomFindUniqueOrThrowArgs>(args: SelectSubset<T, RoomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Room that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindFirstArgs} args - Arguments to find a Room
-     * @example
-     * // Get one Room
-     * const room = await prisma.room.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RoomFindFirstArgs>(args?: SelectSubset<T, RoomFindFirstArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Room that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindFirstOrThrowArgs} args - Arguments to find a Room
-     * @example
-     * // Get one Room
-     * const room = await prisma.room.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RoomFindFirstOrThrowArgs>(args?: SelectSubset<T, RoomFindFirstOrThrowArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Rooms that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Rooms
-     * const rooms = await prisma.room.findMany()
-     * 
-     * // Get first 10 Rooms
-     * const rooms = await prisma.room.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const roomWithIdOnly = await prisma.room.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RoomFindManyArgs>(args?: SelectSubset<T, RoomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Room.
-     * @param {RoomCreateArgs} args - Arguments to create a Room.
-     * @example
-     * // Create one Room
-     * const Room = await prisma.room.create({
-     *   data: {
-     *     // ... data to create a Room
-     *   }
-     * })
-     * 
-     */
-    create<T extends RoomCreateArgs>(args: SelectSubset<T, RoomCreateArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Rooms.
-     * @param {RoomCreateManyArgs} args - Arguments to create many Rooms.
-     * @example
-     * // Create many Rooms
-     * const room = await prisma.room.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RoomCreateManyArgs>(args?: SelectSubset<T, RoomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Rooms and returns the data saved in the database.
-     * @param {RoomCreateManyAndReturnArgs} args - Arguments to create many Rooms.
-     * @example
-     * // Create many Rooms
-     * const room = await prisma.room.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Rooms and only return the `id`
-     * const roomWithIdOnly = await prisma.room.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends RoomCreateManyAndReturnArgs>(args?: SelectSubset<T, RoomCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Room.
-     * @param {RoomDeleteArgs} args - Arguments to delete one Room.
-     * @example
-     * // Delete one Room
-     * const Room = await prisma.room.delete({
-     *   where: {
-     *     // ... filter to delete one Room
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RoomDeleteArgs>(args: SelectSubset<T, RoomDeleteArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Room.
-     * @param {RoomUpdateArgs} args - Arguments to update one Room.
-     * @example
-     * // Update one Room
-     * const room = await prisma.room.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RoomUpdateArgs>(args: SelectSubset<T, RoomUpdateArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Rooms.
-     * @param {RoomDeleteManyArgs} args - Arguments to filter Rooms to delete.
-     * @example
-     * // Delete a few Rooms
-     * const { count } = await prisma.room.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RoomDeleteManyArgs>(args?: SelectSubset<T, RoomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Rooms.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Rooms
-     * const room = await prisma.room.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RoomUpdateManyArgs>(args: SelectSubset<T, RoomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Rooms and returns the data updated in the database.
-     * @param {RoomUpdateManyAndReturnArgs} args - Arguments to update many Rooms.
-     * @example
-     * // Update many Rooms
-     * const room = await prisma.room.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Rooms and only return the `id`
-     * const roomWithIdOnly = await prisma.room.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends RoomUpdateManyAndReturnArgs>(args: SelectSubset<T, RoomUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Room.
-     * @param {RoomUpsertArgs} args - Arguments to update or create a Room.
-     * @example
-     * // Update or create a Room
-     * const room = await prisma.room.upsert({
-     *   create: {
-     *     // ... data to create a Room
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Room we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RoomUpsertArgs>(args: SelectSubset<T, RoomUpsertArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Rooms.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomCountArgs} args - Arguments to filter Rooms to count.
-     * @example
-     * // Count the number of Rooms
-     * const count = await prisma.room.count({
-     *   where: {
-     *     // ... the filter for the Rooms we want to count
-     *   }
-     * })
-    **/
-    count<T extends RoomCountArgs>(
-      args?: Subset<T, RoomCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RoomCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Room.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RoomAggregateArgs>(args: Subset<T, RoomAggregateArgs>): Prisma.PrismaPromise<GetRoomAggregateType<T>>
-
-    /**
-     * Group by Room.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoomGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RoomGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RoomGroupByArgs['orderBy'] }
-        : { orderBy?: RoomGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RoomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Room model
-   */
-  readonly fields: RoomFieldRefs;
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Room.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
+   * PrivateMessage without action
    */
-  export interface Prisma__RoomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    members<T extends Room$membersArgs<ExtArgs> = {}>(args?: Subset<T, Room$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    messages<T extends Room$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Room$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  export type PrivateMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
+     * Select specific fields to fetch from the PrivateMessage
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
+     * Omit specific fields from the PrivateMessage
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Room model
-   */
-  interface RoomFieldRefs {
-    readonly id: FieldRef<"Room", 'String'>
-    readonly roomId: FieldRef<"Room", 'String'>
-    readonly nameRoom: FieldRef<"Room", 'String'>
-    readonly createAt: FieldRef<"Room", 'DateTime'>
-    readonly updateAt: FieldRef<"Room", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Room findUnique
-   */
-  export type RoomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter, which Room to fetch.
-     */
-    where: RoomWhereUniqueInput
-  }
-
-  /**
-   * Room findUniqueOrThrow
-   */
-  export type RoomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter, which Room to fetch.
-     */
-    where: RoomWhereUniqueInput
-  }
-
-  /**
-   * Room findFirst
-   */
-  export type RoomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter, which Room to fetch.
-     */
-    where?: RoomWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rooms to fetch.
-     */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Rooms.
-     */
-    cursor?: RoomWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rooms from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rooms.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Rooms.
-     */
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
-  }
-
-  /**
-   * Room findFirstOrThrow
-   */
-  export type RoomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter, which Room to fetch.
-     */
-    where?: RoomWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rooms to fetch.
-     */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Rooms.
-     */
-    cursor?: RoomWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rooms from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rooms.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Rooms.
-     */
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
-  }
-
-  /**
-   * Room findMany
-   */
-  export type RoomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter, which Rooms to fetch.
-     */
-    where?: RoomWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rooms to fetch.
-     */
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Rooms.
-     */
-    cursor?: RoomWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rooms from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rooms.
-     */
-    skip?: number
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
-  }
-
-  /**
-   * Room create
-   */
-  export type RoomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Room.
-     */
-    data: XOR<RoomCreateInput, RoomUncheckedCreateInput>
-  }
-
-  /**
-   * Room createMany
-   */
-  export type RoomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Rooms.
-     */
-    data: RoomCreateManyInput | RoomCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Room createManyAndReturn
-   */
-  export type RoomCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * The data used to create many Rooms.
-     */
-    data: RoomCreateManyInput | RoomCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Room update
-   */
-  export type RoomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Room.
-     */
-    data: XOR<RoomUpdateInput, RoomUncheckedUpdateInput>
-    /**
-     * Choose, which Room to update.
-     */
-    where: RoomWhereUniqueInput
-  }
-
-  /**
-   * Room updateMany
-   */
-  export type RoomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Rooms.
-     */
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyInput>
-    /**
-     * Filter which Rooms to update
-     */
-    where?: RoomWhereInput
-    /**
-     * Limit how many Rooms to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Room updateManyAndReturn
-   */
-  export type RoomUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * The data used to update Rooms.
-     */
-    data: XOR<RoomUpdateManyMutationInput, RoomUncheckedUpdateManyInput>
-    /**
-     * Filter which Rooms to update
-     */
-    where?: RoomWhereInput
-    /**
-     * Limit how many Rooms to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Room upsert
-   */
-  export type RoomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Room to update in case it exists.
-     */
-    where: RoomWhereUniqueInput
-    /**
-     * In case the Room found by the `where` argument doesn't exist, create a new Room with this data.
-     */
-    create: XOR<RoomCreateInput, RoomUncheckedCreateInput>
-    /**
-     * In case the Room was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RoomUpdateInput, RoomUncheckedUpdateInput>
-  }
-
-  /**
-   * Room delete
-   */
-  export type RoomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    /**
-     * Filter which Room to delete.
-     */
-    where: RoomWhereUniqueInput
-  }
-
-  /**
-   * Room deleteMany
-   */
-  export type RoomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Rooms to delete
-     */
-    where?: RoomWhereInput
-    /**
-     * Limit how many Rooms to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Room.members
-   */
-  export type Room$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    where?: MemberWhereInput
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    cursor?: MemberWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
-  }
-
-  /**
-   * Room.messages
-   */
-  export type Room$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Message
-     */
-    select?: MessageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Message
-     */
-    omit?: MessageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageInclude<ExtArgs> | null
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
-    cursor?: MessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
-  }
-
-  /**
-   * Room without action
-   */
-  export type RoomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Member
-   */
-
-  export type AggregateMember = {
-    _count: MemberCountAggregateOutputType | null
-    _min: MemberMinAggregateOutputType | null
-    _max: MemberMaxAggregateOutputType | null
-  }
-
-  export type MemberMinAggregateOutputType = {
-    id: string | null
-    userId: string | null
-    roomId: string | null
-  }
-
-  export type MemberMaxAggregateOutputType = {
-    id: string | null
-    userId: string | null
-    roomId: string | null
-  }
-
-  export type MemberCountAggregateOutputType = {
-    id: number
-    userId: number
-    roomId: number
-    _all: number
-  }
-
-
-  export type MemberMinAggregateInputType = {
-    id?: true
-    userId?: true
-    roomId?: true
-  }
-
-  export type MemberMaxAggregateInputType = {
-    id?: true
-    userId?: true
-    roomId?: true
-  }
-
-  export type MemberCountAggregateInputType = {
-    id?: true
-    userId?: true
-    roomId?: true
-    _all?: true
-  }
-
-  export type MemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Member to aggregate.
-     */
-    where?: MemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Members to fetch.
-     */
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: MemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Members from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Members.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Members
-    **/
-    _count?: true | MemberCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MemberMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MemberMaxAggregateInputType
-  }
-
-  export type GetMemberAggregateType<T extends MemberAggregateArgs> = {
-        [P in keyof T & keyof AggregateMember]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMember[P]>
-      : GetScalarType<T[P], AggregateMember[P]>
-  }
-
-
-
-
-  export type MemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MemberWhereInput
-    orderBy?: MemberOrderByWithAggregationInput | MemberOrderByWithAggregationInput[]
-    by: MemberScalarFieldEnum[] | MemberScalarFieldEnum
-    having?: MemberScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MemberCountAggregateInputType | true
-    _min?: MemberMinAggregateInputType
-    _max?: MemberMaxAggregateInputType
-  }
-
-  export type MemberGroupByOutputType = {
-    id: string
-    userId: string
-    roomId: string
-    _count: MemberCountAggregateOutputType | null
-    _min: MemberMinAggregateOutputType | null
-    _max: MemberMaxAggregateOutputType | null
-  }
-
-  type GetMemberGroupByPayload<T extends MemberGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<MemberGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MemberGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MemberGroupByOutputType[P]>
-            : GetScalarType<T[P], MemberGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type MemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    roomId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["member"]>
-
-  export type MemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    roomId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["member"]>
-
-  export type MemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    roomId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["member"]>
-
-  export type MemberSelectScalar = {
-    id?: boolean
-    userId?: boolean
-    roomId?: boolean
-  }
-
-  export type MemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "roomId", ExtArgs["result"]["member"]>
-  export type MemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }
-  export type MemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }
-  export type MemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    room?: boolean | RoomDefaultArgs<ExtArgs>
-  }
-
-  export type $MemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Member"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      room: Prisma.$RoomPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      userId: string
-      roomId: string
-    }, ExtArgs["result"]["member"]>
-    composites: {}
-  }
-
-  type MemberGetPayload<S extends boolean | null | undefined | MemberDefaultArgs> = $Result.GetResult<Prisma.$MemberPayload, S>
-
-  type MemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MemberCountAggregateInputType | true
-    }
-
-  export interface MemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Member'], meta: { name: 'Member' } }
-    /**
-     * Find zero or one Member that matches the filter.
-     * @param {MemberFindUniqueArgs} args - Arguments to find a Member
-     * @example
-     * // Get one Member
-     * const member = await prisma.member.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends MemberFindUniqueArgs>(args: SelectSubset<T, MemberFindUniqueArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Member that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {MemberFindUniqueOrThrowArgs} args - Arguments to find a Member
-     * @example
-     * // Get one Member
-     * const member = await prisma.member.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends MemberFindUniqueOrThrowArgs>(args: SelectSubset<T, MemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Member that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberFindFirstArgs} args - Arguments to find a Member
-     * @example
-     * // Get one Member
-     * const member = await prisma.member.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends MemberFindFirstArgs>(args?: SelectSubset<T, MemberFindFirstArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Member that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberFindFirstOrThrowArgs} args - Arguments to find a Member
-     * @example
-     * // Get one Member
-     * const member = await prisma.member.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends MemberFindFirstOrThrowArgs>(args?: SelectSubset<T, MemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Members that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Members
-     * const members = await prisma.member.findMany()
-     * 
-     * // Get first 10 Members
-     * const members = await prisma.member.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const memberWithIdOnly = await prisma.member.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends MemberFindManyArgs>(args?: SelectSubset<T, MemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Member.
-     * @param {MemberCreateArgs} args - Arguments to create a Member.
-     * @example
-     * // Create one Member
-     * const Member = await prisma.member.create({
-     *   data: {
-     *     // ... data to create a Member
-     *   }
-     * })
-     * 
-     */
-    create<T extends MemberCreateArgs>(args: SelectSubset<T, MemberCreateArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Members.
-     * @param {MemberCreateManyArgs} args - Arguments to create many Members.
-     * @example
-     * // Create many Members
-     * const member = await prisma.member.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends MemberCreateManyArgs>(args?: SelectSubset<T, MemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Members and returns the data saved in the database.
-     * @param {MemberCreateManyAndReturnArgs} args - Arguments to create many Members.
-     * @example
-     * // Create many Members
-     * const member = await prisma.member.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Members and only return the `id`
-     * const memberWithIdOnly = await prisma.member.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends MemberCreateManyAndReturnArgs>(args?: SelectSubset<T, MemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Member.
-     * @param {MemberDeleteArgs} args - Arguments to delete one Member.
-     * @example
-     * // Delete one Member
-     * const Member = await prisma.member.delete({
-     *   where: {
-     *     // ... filter to delete one Member
-     *   }
-     * })
-     * 
-     */
-    delete<T extends MemberDeleteArgs>(args: SelectSubset<T, MemberDeleteArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Member.
-     * @param {MemberUpdateArgs} args - Arguments to update one Member.
-     * @example
-     * // Update one Member
-     * const member = await prisma.member.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends MemberUpdateArgs>(args: SelectSubset<T, MemberUpdateArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Members.
-     * @param {MemberDeleteManyArgs} args - Arguments to filter Members to delete.
-     * @example
-     * // Delete a few Members
-     * const { count } = await prisma.member.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends MemberDeleteManyArgs>(args?: SelectSubset<T, MemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Members.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Members
-     * const member = await prisma.member.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends MemberUpdateManyArgs>(args: SelectSubset<T, MemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Members and returns the data updated in the database.
-     * @param {MemberUpdateManyAndReturnArgs} args - Arguments to update many Members.
-     * @example
-     * // Update many Members
-     * const member = await prisma.member.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Members and only return the `id`
-     * const memberWithIdOnly = await prisma.member.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends MemberUpdateManyAndReturnArgs>(args: SelectSubset<T, MemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Member.
-     * @param {MemberUpsertArgs} args - Arguments to update or create a Member.
-     * @example
-     * // Update or create a Member
-     * const member = await prisma.member.upsert({
-     *   create: {
-     *     // ... data to create a Member
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Member we want to update
-     *   }
-     * })
-     */
-    upsert<T extends MemberUpsertArgs>(args: SelectSubset<T, MemberUpsertArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Members.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberCountArgs} args - Arguments to filter Members to count.
-     * @example
-     * // Count the number of Members
-     * const count = await prisma.member.count({
-     *   where: {
-     *     // ... the filter for the Members we want to count
-     *   }
-     * })
-    **/
-    count<T extends MemberCountArgs>(
-      args?: Subset<T, MemberCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MemberCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Member.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MemberAggregateArgs>(args: Subset<T, MemberAggregateArgs>): Prisma.PrismaPromise<GetMemberAggregateType<T>>
-
-    /**
-     * Group by Member.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MemberGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends MemberGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MemberGroupByArgs['orderBy'] }
-        : { orderBy?: MemberGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, MemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Member model
-   */
-  readonly fields: MemberFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Member.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__MemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    room<T extends RoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoomDefaultArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Member model
-   */
-  interface MemberFieldRefs {
-    readonly id: FieldRef<"Member", 'String'>
-    readonly userId: FieldRef<"Member", 'String'>
-    readonly roomId: FieldRef<"Member", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Member findUnique
-   */
-  export type MemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter, which Member to fetch.
-     */
-    where: MemberWhereUniqueInput
-  }
-
-  /**
-   * Member findUniqueOrThrow
-   */
-  export type MemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter, which Member to fetch.
-     */
-    where: MemberWhereUniqueInput
-  }
-
-  /**
-   * Member findFirst
-   */
-  export type MemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter, which Member to fetch.
-     */
-    where?: MemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Members to fetch.
-     */
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Members.
-     */
-    cursor?: MemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Members from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Members.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Members.
-     */
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
-  }
-
-  /**
-   * Member findFirstOrThrow
-   */
-  export type MemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter, which Member to fetch.
-     */
-    where?: MemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Members to fetch.
-     */
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Members.
-     */
-    cursor?: MemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Members from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Members.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Members.
-     */
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
-  }
-
-  /**
-   * Member findMany
-   */
-  export type MemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter, which Members to fetch.
-     */
-    where?: MemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Members to fetch.
-     */
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Members.
-     */
-    cursor?: MemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Members from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Members.
-     */
-    skip?: number
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
-  }
-
-  /**
-   * Member create
-   */
-  export type MemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Member.
-     */
-    data: XOR<MemberCreateInput, MemberUncheckedCreateInput>
-  }
-
-  /**
-   * Member createMany
-   */
-  export type MemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Members.
-     */
-    data: MemberCreateManyInput | MemberCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Member createManyAndReturn
-   */
-  export type MemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * The data used to create many Members.
-     */
-    data: MemberCreateManyInput | MemberCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Member update
-   */
-  export type MemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Member.
-     */
-    data: XOR<MemberUpdateInput, MemberUncheckedUpdateInput>
-    /**
-     * Choose, which Member to update.
-     */
-    where: MemberWhereUniqueInput
-  }
-
-  /**
-   * Member updateMany
-   */
-  export type MemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Members.
-     */
-    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyInput>
-    /**
-     * Filter which Members to update
-     */
-    where?: MemberWhereInput
-    /**
-     * Limit how many Members to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Member updateManyAndReturn
-   */
-  export type MemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * The data used to update Members.
-     */
-    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyInput>
-    /**
-     * Filter which Members to update
-     */
-    where?: MemberWhereInput
-    /**
-     * Limit how many Members to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Member upsert
-   */
-  export type MemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Member to update in case it exists.
-     */
-    where: MemberWhereUniqueInput
-    /**
-     * In case the Member found by the `where` argument doesn't exist, create a new Member with this data.
-     */
-    create: XOR<MemberCreateInput, MemberUncheckedCreateInput>
-    /**
-     * In case the Member was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<MemberUpdateInput, MemberUncheckedUpdateInput>
-  }
-
-  /**
-   * Member delete
-   */
-  export type MemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
-    /**
-     * Filter which Member to delete.
-     */
-    where: MemberWhereUniqueInput
-  }
-
-  /**
-   * Member deleteMany
-   */
-  export type MemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Members to delete
-     */
-    where?: MemberWhereInput
-    /**
-     * Limit how many Members to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Member without action
-   */
-  export type MemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Member
-     */
-    select?: MemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Member
-     */
-    omit?: MemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MemberInclude<ExtArgs> | null
+    include?: PrivateMessageInclude<ExtArgs> | null
   }
 
 
@@ -16410,10 +14212,10 @@ export namespace Prisma {
     avtUrl: string | null
     email: string | null
     hashingPassword: string | null
+    lastSeen: Date | null
     createAt: Date | null
     updateAt: Date | null
     deleteAt: Date | null
-    readProgressId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -16425,10 +14227,10 @@ export namespace Prisma {
     avtUrl: string | null
     email: string | null
     hashingPassword: string | null
+    lastSeen: Date | null
     createAt: Date | null
     updateAt: Date | null
     deleteAt: Date | null
-    readProgressId: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -16440,10 +14242,10 @@ export namespace Prisma {
     avtUrl: number
     email: number
     hashingPassword: number
+    lastSeen: number
     createAt: number
     updateAt: number
     deleteAt: number
-    readProgressId: number
     _all: number
   }
 
@@ -16457,10 +14259,10 @@ export namespace Prisma {
     avtUrl?: true
     email?: true
     hashingPassword?: true
+    lastSeen?: true
     createAt?: true
     updateAt?: true
     deleteAt?: true
-    readProgressId?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -16472,10 +14274,10 @@ export namespace Prisma {
     avtUrl?: true
     email?: true
     hashingPassword?: true
+    lastSeen?: true
     createAt?: true
     updateAt?: true
     deleteAt?: true
-    readProgressId?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -16487,10 +14289,10 @@ export namespace Prisma {
     avtUrl?: true
     email?: true
     hashingPassword?: true
+    lastSeen?: true
     createAt?: true
     updateAt?: true
     deleteAt?: true
-    readProgressId?: true
     _all?: true
   }
 
@@ -16575,10 +14377,10 @@ export namespace Prisma {
     avtUrl: string | null
     email: string
     hashingPassword: string
+    lastSeen: Date | null
     createAt: Date
     updateAt: Date
     deleteAt: Date | null
-    readProgressId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -16607,20 +14409,19 @@ export namespace Prisma {
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
+    lastSeen?: boolean
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
-    readProgressId?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     codes?: boolean | User$codesArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     repComments?: boolean | User$repCommentsArgs<ExtArgs>
     userRoles?: boolean | User$userRolesArgs<ExtArgs>
-    member?: boolean | User$memberArgs<ExtArgs>
-    messages?: boolean | User$messagesArgs<ExtArgs>
-    receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
-    readProgress?: boolean | User$readProgressArgs<ExtArgs>
+    user1?: boolean | User$user1Args<ExtArgs>
+    user2?: boolean | User$user2Args<ExtArgs>
+    sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -16633,10 +14434,10 @@ export namespace Prisma {
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
+    lastSeen?: boolean
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
-    readProgressId?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16648,10 +14449,10 @@ export namespace Prisma {
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
+    lastSeen?: boolean
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
-    readProgressId?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -16663,13 +14464,13 @@ export namespace Prisma {
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
+    lastSeen?: boolean
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
-    readProgressId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gender" | "dateOfBirth" | "isActive" | "avtUrl" | "email" | "hashingPassword" | "createAt" | "updateAt" | "deleteAt" | "readProgressId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gender" | "dateOfBirth" | "isActive" | "avtUrl" | "email" | "hashingPassword" | "lastSeen" | "createAt" | "updateAt" | "deleteAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     codes?: boolean | User$codesArgs<ExtArgs>
@@ -16677,10 +14478,9 @@ export namespace Prisma {
     comments?: boolean | User$commentsArgs<ExtArgs>
     repComments?: boolean | User$repCommentsArgs<ExtArgs>
     userRoles?: boolean | User$userRolesArgs<ExtArgs>
-    member?: boolean | User$memberArgs<ExtArgs>
-    messages?: boolean | User$messagesArgs<ExtArgs>
-    receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
-    readProgress?: boolean | User$readProgressArgs<ExtArgs>
+    user1?: boolean | User$user1Args<ExtArgs>
+    user2?: boolean | User$user2Args<ExtArgs>
+    sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -16695,10 +14495,9 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
       repComments: Prisma.$RepCommentPayload<ExtArgs>[]
       userRoles: Prisma.$UserRolePayload<ExtArgs>[]
-      member: Prisma.$MemberPayload<ExtArgs>[]
-      messages: Prisma.$MessagePayload<ExtArgs>[]
-      receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
-      readProgress: Prisma.$ReadProgressPayload<ExtArgs>[]
+      user1: Prisma.$PrivateChatPayload<ExtArgs>[]
+      user2: Prisma.$PrivateChatPayload<ExtArgs>[]
+      sentMessages: Prisma.$PrivateMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16709,10 +14508,10 @@ export namespace Prisma {
       avtUrl: string | null
       email: string
       hashingPassword: string
+      lastSeen: Date | null
       createAt: Date
       updateAt: Date
       deleteAt: Date | null
-      readProgressId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -17113,10 +14912,9 @@ export namespace Prisma {
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     repComments<T extends User$repCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$repCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userRoles<T extends User$userRolesArgs<ExtArgs> = {}>(args?: Subset<T, User$userRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    member<T extends User$memberArgs<ExtArgs> = {}>(args?: Subset<T, User$memberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    messages<T extends User$messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    receivedMessages<T extends User$receivedMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    readProgress<T extends User$readProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$readProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user1<T extends User$user1Args<ExtArgs> = {}>(args?: Subset<T, User$user1Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user2<T extends User$user2Args<ExtArgs> = {}>(args?: Subset<T, User$user2Args<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17154,10 +14952,10 @@ export namespace Prisma {
     readonly avtUrl: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly hashingPassword: FieldRef<"User", 'String'>
+    readonly lastSeen: FieldRef<"User", 'DateTime'>
     readonly createAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
     readonly deleteAt: FieldRef<"User", 'DateTime'>
-    readonly readProgressId: FieldRef<"User", 'String'>
   }
     
 
@@ -17690,99 +15488,75 @@ export namespace Prisma {
   }
 
   /**
-   * User.member
+   * User.user1
    */
-  export type User$memberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$user1Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Member
+     * Select specific fields to fetch from the PrivateChat
      */
-    select?: MemberSelect<ExtArgs> | null
+    select?: PrivateChatSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Member
+     * Omit specific fields from the PrivateChat
      */
-    omit?: MemberOmit<ExtArgs> | null
+    omit?: PrivateChatOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MemberInclude<ExtArgs> | null
-    where?: MemberWhereInput
-    orderBy?: MemberOrderByWithRelationInput | MemberOrderByWithRelationInput[]
-    cursor?: MemberWhereUniqueInput
+    include?: PrivateChatInclude<ExtArgs> | null
+    where?: PrivateChatWhereInput
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    cursor?: PrivateChatWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MemberScalarFieldEnum | MemberScalarFieldEnum[]
+    distinct?: PrivateChatScalarFieldEnum | PrivateChatScalarFieldEnum[]
   }
 
   /**
-   * User.messages
+   * User.user2
    */
-  export type User$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$user2Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateChat
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateChatSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateChat
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateChatOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
-    cursor?: MessageWhereUniqueInput
+    include?: PrivateChatInclude<ExtArgs> | null
+    where?: PrivateChatWhereInput
+    orderBy?: PrivateChatOrderByWithRelationInput | PrivateChatOrderByWithRelationInput[]
+    cursor?: PrivateChatWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: PrivateChatScalarFieldEnum | PrivateChatScalarFieldEnum[]
   }
 
   /**
-   * User.receivedMessages
+   * User.sentMessages
    */
-  export type User$receivedMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$sentMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the PrivateMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: PrivateMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the PrivateMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: PrivateMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
-    cursor?: MessageWhereUniqueInput
+    include?: PrivateMessageInclude<ExtArgs> | null
+    where?: PrivateMessageWhereInput
+    orderBy?: PrivateMessageOrderByWithRelationInput | PrivateMessageOrderByWithRelationInput[]
+    cursor?: PrivateMessageWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
-  }
-
-  /**
-   * User.readProgress
-   */
-  export type User$readProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ReadProgress
-     */
-    select?: ReadProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ReadProgress
-     */
-    omit?: ReadProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReadProgressInclude<ExtArgs> | null
-    where?: ReadProgressWhereInput
-    orderBy?: ReadProgressOrderByWithRelationInput | ReadProgressOrderByWithRelationInput[]
-    cursor?: ReadProgressWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ReadProgressScalarFieldEnum | ReadProgressScalarFieldEnum[]
+    distinct?: PrivateMessageScalarFieldEnum | PrivateMessageScalarFieldEnum[]
   }
 
   /**
@@ -17842,50 +15616,34 @@ export namespace Prisma {
   export type CodeScalarFieldEnum = (typeof CodeScalarFieldEnum)[keyof typeof CodeScalarFieldEnum]
 
 
-  export const MessageScalarFieldEnum: {
+  export const PrivateChatScalarFieldEnum: {
     id: 'id',
-    content: 'content',
-    senderID: 'senderID',
-    receiverID: 'receiverID',
-    roomId: 'roomId',
-    messageType: 'messageType',
-    isRead: 'isRead',
-    createAt: 'createAt',
-    updateAt: 'updateAt',
-    deleteAt: 'deleteAt'
-  };
-
-  export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
-
-
-  export const ReadProgressScalarFieldEnum: {
-    id: 'id',
-    messageId: 'messageId',
-    roomId: 'roomId',
-    userId: 'userId'
-  };
-
-  export type ReadProgressScalarFieldEnum = (typeof ReadProgressScalarFieldEnum)[keyof typeof ReadProgressScalarFieldEnum]
-
-
-  export const RoomScalarFieldEnum: {
-    id: 'id',
-    roomId: 'roomId',
-    nameRoom: 'nameRoom',
-    createAt: 'createAt',
+    user1Id: 'user1Id',
+    user2Id: 'user2Id',
+    lastMessage: 'lastMessage',
+    lastMessageAt: 'lastMessageAt',
+    user1LastReadIndex: 'user1LastReadIndex',
+    user2LastReadIndex: 'user2LastReadIndex',
+    totalMessage: 'totalMessage',
+    createdAt: 'createdAt',
     updateAt: 'updateAt'
   };
 
-  export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
+  export type PrivateChatScalarFieldEnum = (typeof PrivateChatScalarFieldEnum)[keyof typeof PrivateChatScalarFieldEnum]
 
 
-  export const MemberScalarFieldEnum: {
+  export const PrivateMessageScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
-    roomId: 'roomId'
+    content: 'content',
+    chatId: 'chatId',
+    senderId: 'senderId',
+    messageIndex: 'messageIndex',
+    replyToId: 'replyToId',
+    createdAt: 'createdAt',
+    updateAt: 'updateAt'
   };
 
-  export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
+  export type PrivateMessageScalarFieldEnum = (typeof PrivateMessageScalarFieldEnum)[keyof typeof PrivateMessageScalarFieldEnum]
 
 
   export const RoleScalarFieldEnum: {
@@ -17967,10 +15725,10 @@ export namespace Prisma {
     avtUrl: 'avtUrl',
     email: 'email',
     hashingPassword: 'hashingPassword',
+    lastSeen: 'lastSeen',
     createAt: 'createAt',
     updateAt: 'updateAt',
-    deleteAt: 'deleteAt',
-    readProgressId: 'readProgressId'
+    deleteAt: 'deleteAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -18062,13 +15820,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'StatusPost'
    */
   export type EnumStatusPostFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusPost'>
@@ -18093,6 +15844,13 @@ export namespace Prisma {
    * Reference to a field of type 'Gender[]'
    */
   export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -18233,250 +15991,175 @@ export namespace Prisma {
     userId?: UuidWithAggregatesFilter<"Code"> | string
   }
 
-  export type MessageWhereInput = {
-    AND?: MessageWhereInput | MessageWhereInput[]
-    OR?: MessageWhereInput[]
-    NOT?: MessageWhereInput | MessageWhereInput[]
-    id?: IntFilter<"Message"> | number
-    content?: StringFilter<"Message"> | string
-    senderID?: UuidNullableFilter<"Message"> | string | null
-    receiverID?: UuidNullableFilter<"Message"> | string | null
-    roomId?: UuidFilter<"Message"> | string
-    messageType?: StringFilter<"Message"> | string
-    isRead?: BoolFilter<"Message"> | boolean
-    createAt?: DateTimeFilter<"Message"> | Date | string
-    updateAt?: DateTimeFilter<"Message"> | Date | string
-    deleteAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    sender?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    receiver?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
+  export type PrivateChatWhereInput = {
+    AND?: PrivateChatWhereInput | PrivateChatWhereInput[]
+    OR?: PrivateChatWhereInput[]
+    NOT?: PrivateChatWhereInput | PrivateChatWhereInput[]
+    id?: UuidFilter<"PrivateChat"> | string
+    user1Id?: UuidFilter<"PrivateChat"> | string
+    user2Id?: UuidFilter<"PrivateChat"> | string
+    lastMessage?: StringNullableFilter<"PrivateChat"> | string | null
+    lastMessageAt?: DateTimeNullableFilter<"PrivateChat"> | Date | string | null
+    user1LastReadIndex?: IntFilter<"PrivateChat"> | number
+    user2LastReadIndex?: IntFilter<"PrivateChat"> | number
+    totalMessage?: IntFilter<"PrivateChat"> | number
+    createdAt?: DateTimeFilter<"PrivateChat"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateChat"> | Date | string
+    user1?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user2?: XOR<UserScalarRelationFilter, UserWhereInput>
+    privateMessage?: PrivateMessageListRelationFilter
   }
 
-  export type MessageOrderByWithRelationInput = {
+  export type PrivateChatOrderByWithRelationInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    lastMessage?: SortOrderInput | SortOrder
+    lastMessageAt?: SortOrderInput | SortOrder
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+    createdAt?: SortOrder
+    updateAt?: SortOrder
+    user1?: UserOrderByWithRelationInput
+    user2?: UserOrderByWithRelationInput
+    privateMessage?: PrivateMessageOrderByRelationAggregateInput
+  }
+
+  export type PrivateChatWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    user1Id_user2Id?: PrivateChatUser1IdUser2IdCompoundUniqueInput
+    AND?: PrivateChatWhereInput | PrivateChatWhereInput[]
+    OR?: PrivateChatWhereInput[]
+    NOT?: PrivateChatWhereInput | PrivateChatWhereInput[]
+    user1Id?: UuidFilter<"PrivateChat"> | string
+    user2Id?: UuidFilter<"PrivateChat"> | string
+    lastMessage?: StringNullableFilter<"PrivateChat"> | string | null
+    lastMessageAt?: DateTimeNullableFilter<"PrivateChat"> | Date | string | null
+    user1LastReadIndex?: IntFilter<"PrivateChat"> | number
+    user2LastReadIndex?: IntFilter<"PrivateChat"> | number
+    totalMessage?: IntFilter<"PrivateChat"> | number
+    createdAt?: DateTimeFilter<"PrivateChat"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateChat"> | Date | string
+    user1?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user2?: XOR<UserScalarRelationFilter, UserWhereInput>
+    privateMessage?: PrivateMessageListRelationFilter
+  }, "id" | "user1Id_user2Id">
+
+  export type PrivateChatOrderByWithAggregationInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    lastMessage?: SortOrderInput | SortOrder
+    lastMessageAt?: SortOrderInput | SortOrder
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+    createdAt?: SortOrder
+    updateAt?: SortOrder
+    _count?: PrivateChatCountOrderByAggregateInput
+    _avg?: PrivateChatAvgOrderByAggregateInput
+    _max?: PrivateChatMaxOrderByAggregateInput
+    _min?: PrivateChatMinOrderByAggregateInput
+    _sum?: PrivateChatSumOrderByAggregateInput
+  }
+
+  export type PrivateChatScalarWhereWithAggregatesInput = {
+    AND?: PrivateChatScalarWhereWithAggregatesInput | PrivateChatScalarWhereWithAggregatesInput[]
+    OR?: PrivateChatScalarWhereWithAggregatesInput[]
+    NOT?: PrivateChatScalarWhereWithAggregatesInput | PrivateChatScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"PrivateChat"> | string
+    user1Id?: UuidWithAggregatesFilter<"PrivateChat"> | string
+    user2Id?: UuidWithAggregatesFilter<"PrivateChat"> | string
+    lastMessage?: StringNullableWithAggregatesFilter<"PrivateChat"> | string | null
+    lastMessageAt?: DateTimeNullableWithAggregatesFilter<"PrivateChat"> | Date | string | null
+    user1LastReadIndex?: IntWithAggregatesFilter<"PrivateChat"> | number
+    user2LastReadIndex?: IntWithAggregatesFilter<"PrivateChat"> | number
+    totalMessage?: IntWithAggregatesFilter<"PrivateChat"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"PrivateChat"> | Date | string
+    updateAt?: DateTimeWithAggregatesFilter<"PrivateChat"> | Date | string
+  }
+
+  export type PrivateMessageWhereInput = {
+    AND?: PrivateMessageWhereInput | PrivateMessageWhereInput[]
+    OR?: PrivateMessageWhereInput[]
+    NOT?: PrivateMessageWhereInput | PrivateMessageWhereInput[]
+    id?: UuidFilter<"PrivateMessage"> | string
+    content?: StringFilter<"PrivateMessage"> | string
+    chatId?: UuidFilter<"PrivateMessage"> | string
+    senderId?: UuidFilter<"PrivateMessage"> | string
+    messageIndex?: IntFilter<"PrivateMessage"> | number
+    replyToId?: UuidNullableFilter<"PrivateMessage"> | string | null
+    createdAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+    replyTo?: XOR<PrivateMessageNullableScalarRelationFilter, PrivateMessageWhereInput> | null
+    replies?: PrivateMessageListRelationFilter
+    chat?: XOR<PrivateChatScalarRelationFilter, PrivateChatWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PrivateMessageOrderByWithRelationInput = {
     id?: SortOrder
     content?: SortOrder
-    senderID?: SortOrderInput | SortOrder
-    receiverID?: SortOrderInput | SortOrder
-    roomId?: SortOrder
-    messageType?: SortOrder
-    isRead?: SortOrder
-    createAt?: SortOrder
+    chatId?: SortOrder
+    senderId?: SortOrder
+    messageIndex?: SortOrder
+    replyToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updateAt?: SortOrder
-    deleteAt?: SortOrderInput | SortOrder
+    replyTo?: PrivateMessageOrderByWithRelationInput
+    replies?: PrivateMessageOrderByRelationAggregateInput
+    chat?: PrivateChatOrderByWithRelationInput
     sender?: UserOrderByWithRelationInput
-    receiver?: UserOrderByWithRelationInput
-    room?: RoomOrderByWithRelationInput
   }
 
-  export type MessageWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: MessageWhereInput | MessageWhereInput[]
-    OR?: MessageWhereInput[]
-    NOT?: MessageWhereInput | MessageWhereInput[]
-    content?: StringFilter<"Message"> | string
-    senderID?: UuidNullableFilter<"Message"> | string | null
-    receiverID?: UuidNullableFilter<"Message"> | string | null
-    roomId?: UuidFilter<"Message"> | string
-    messageType?: StringFilter<"Message"> | string
-    isRead?: BoolFilter<"Message"> | boolean
-    createAt?: DateTimeFilter<"Message"> | Date | string
-    updateAt?: DateTimeFilter<"Message"> | Date | string
-    deleteAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    sender?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    receiver?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
-  }, "id">
+  export type PrivateMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    chatId_messageIndex?: PrivateMessageChatIdMessageIndexCompoundUniqueInput
+    AND?: PrivateMessageWhereInput | PrivateMessageWhereInput[]
+    OR?: PrivateMessageWhereInput[]
+    NOT?: PrivateMessageWhereInput | PrivateMessageWhereInput[]
+    content?: StringFilter<"PrivateMessage"> | string
+    chatId?: UuidFilter<"PrivateMessage"> | string
+    senderId?: UuidFilter<"PrivateMessage"> | string
+    messageIndex?: IntFilter<"PrivateMessage"> | number
+    replyToId?: UuidNullableFilter<"PrivateMessage"> | string | null
+    createdAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+    replyTo?: XOR<PrivateMessageNullableScalarRelationFilter, PrivateMessageWhereInput> | null
+    replies?: PrivateMessageListRelationFilter
+    chat?: XOR<PrivateChatScalarRelationFilter, PrivateChatWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "chatId_messageIndex">
 
-  export type MessageOrderByWithAggregationInput = {
+  export type PrivateMessageOrderByWithAggregationInput = {
     id?: SortOrder
     content?: SortOrder
-    senderID?: SortOrderInput | SortOrder
-    receiverID?: SortOrderInput | SortOrder
-    roomId?: SortOrder
-    messageType?: SortOrder
-    isRead?: SortOrder
-    createAt?: SortOrder
+    chatId?: SortOrder
+    senderId?: SortOrder
+    messageIndex?: SortOrder
+    replyToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updateAt?: SortOrder
-    deleteAt?: SortOrderInput | SortOrder
-    _count?: MessageCountOrderByAggregateInput
-    _avg?: MessageAvgOrderByAggregateInput
-    _max?: MessageMaxOrderByAggregateInput
-    _min?: MessageMinOrderByAggregateInput
-    _sum?: MessageSumOrderByAggregateInput
+    _count?: PrivateMessageCountOrderByAggregateInput
+    _avg?: PrivateMessageAvgOrderByAggregateInput
+    _max?: PrivateMessageMaxOrderByAggregateInput
+    _min?: PrivateMessageMinOrderByAggregateInput
+    _sum?: PrivateMessageSumOrderByAggregateInput
   }
 
-  export type MessageScalarWhereWithAggregatesInput = {
-    AND?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
-    OR?: MessageScalarWhereWithAggregatesInput[]
-    NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Message"> | number
-    content?: StringWithAggregatesFilter<"Message"> | string
-    senderID?: UuidNullableWithAggregatesFilter<"Message"> | string | null
-    receiverID?: UuidNullableWithAggregatesFilter<"Message"> | string | null
-    roomId?: UuidWithAggregatesFilter<"Message"> | string
-    messageType?: StringWithAggregatesFilter<"Message"> | string
-    isRead?: BoolWithAggregatesFilter<"Message"> | boolean
-    createAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
-    updateAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
-    deleteAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
-  }
-
-  export type ReadProgressWhereInput = {
-    AND?: ReadProgressWhereInput | ReadProgressWhereInput[]
-    OR?: ReadProgressWhereInput[]
-    NOT?: ReadProgressWhereInput | ReadProgressWhereInput[]
-    id?: UuidFilter<"ReadProgress"> | string
-    messageId?: IntFilter<"ReadProgress"> | number
-    roomId?: UuidFilter<"ReadProgress"> | string
-    userId?: UuidFilter<"ReadProgress"> | string
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type ReadProgressOrderByWithRelationInput = {
-    id?: SortOrder
-    messageId?: SortOrder
-    roomId?: SortOrder
-    userId?: SortOrder
-    User?: UserOrderByWithRelationInput
-  }
-
-  export type ReadProgressWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    roomId?: string
-    AND?: ReadProgressWhereInput | ReadProgressWhereInput[]
-    OR?: ReadProgressWhereInput[]
-    NOT?: ReadProgressWhereInput | ReadProgressWhereInput[]
-    messageId?: IntFilter<"ReadProgress"> | number
-    userId?: UuidFilter<"ReadProgress"> | string
-    User?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "roomId">
-
-  export type ReadProgressOrderByWithAggregationInput = {
-    id?: SortOrder
-    messageId?: SortOrder
-    roomId?: SortOrder
-    userId?: SortOrder
-    _count?: ReadProgressCountOrderByAggregateInput
-    _avg?: ReadProgressAvgOrderByAggregateInput
-    _max?: ReadProgressMaxOrderByAggregateInput
-    _min?: ReadProgressMinOrderByAggregateInput
-    _sum?: ReadProgressSumOrderByAggregateInput
-  }
-
-  export type ReadProgressScalarWhereWithAggregatesInput = {
-    AND?: ReadProgressScalarWhereWithAggregatesInput | ReadProgressScalarWhereWithAggregatesInput[]
-    OR?: ReadProgressScalarWhereWithAggregatesInput[]
-    NOT?: ReadProgressScalarWhereWithAggregatesInput | ReadProgressScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"ReadProgress"> | string
-    messageId?: IntWithAggregatesFilter<"ReadProgress"> | number
-    roomId?: UuidWithAggregatesFilter<"ReadProgress"> | string
-    userId?: UuidWithAggregatesFilter<"ReadProgress"> | string
-  }
-
-  export type RoomWhereInput = {
-    AND?: RoomWhereInput | RoomWhereInput[]
-    OR?: RoomWhereInput[]
-    NOT?: RoomWhereInput | RoomWhereInput[]
-    id?: UuidFilter<"Room"> | string
-    roomId?: UuidFilter<"Room"> | string
-    nameRoom?: StringFilter<"Room"> | string
-    createAt?: DateTimeFilter<"Room"> | Date | string
-    updateAt?: DateTimeFilter<"Room"> | Date | string
-    members?: MemberListRelationFilter
-    messages?: MessageListRelationFilter
-  }
-
-  export type RoomOrderByWithRelationInput = {
-    id?: SortOrder
-    roomId?: SortOrder
-    nameRoom?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    members?: MemberOrderByRelationAggregateInput
-    messages?: MessageOrderByRelationAggregateInput
-  }
-
-  export type RoomWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: RoomWhereInput | RoomWhereInput[]
-    OR?: RoomWhereInput[]
-    NOT?: RoomWhereInput | RoomWhereInput[]
-    roomId?: UuidFilter<"Room"> | string
-    nameRoom?: StringFilter<"Room"> | string
-    createAt?: DateTimeFilter<"Room"> | Date | string
-    updateAt?: DateTimeFilter<"Room"> | Date | string
-    members?: MemberListRelationFilter
-    messages?: MessageListRelationFilter
-  }, "id">
-
-  export type RoomOrderByWithAggregationInput = {
-    id?: SortOrder
-    roomId?: SortOrder
-    nameRoom?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: RoomCountOrderByAggregateInput
-    _max?: RoomMaxOrderByAggregateInput
-    _min?: RoomMinOrderByAggregateInput
-  }
-
-  export type RoomScalarWhereWithAggregatesInput = {
-    AND?: RoomScalarWhereWithAggregatesInput | RoomScalarWhereWithAggregatesInput[]
-    OR?: RoomScalarWhereWithAggregatesInput[]
-    NOT?: RoomScalarWhereWithAggregatesInput | RoomScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"Room"> | string
-    roomId?: UuidWithAggregatesFilter<"Room"> | string
-    nameRoom?: StringWithAggregatesFilter<"Room"> | string
-    createAt?: DateTimeWithAggregatesFilter<"Room"> | Date | string
-    updateAt?: DateTimeWithAggregatesFilter<"Room"> | Date | string
-  }
-
-  export type MemberWhereInput = {
-    AND?: MemberWhereInput | MemberWhereInput[]
-    OR?: MemberWhereInput[]
-    NOT?: MemberWhereInput | MemberWhereInput[]
-    id?: UuidFilter<"Member"> | string
-    userId?: UuidFilter<"Member"> | string
-    roomId?: UuidFilter<"Member"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
-  }
-
-  export type MemberOrderByWithRelationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    roomId?: SortOrder
-    user?: UserOrderByWithRelationInput
-    room?: RoomOrderByWithRelationInput
-  }
-
-  export type MemberWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: MemberWhereInput | MemberWhereInput[]
-    OR?: MemberWhereInput[]
-    NOT?: MemberWhereInput | MemberWhereInput[]
-    userId?: UuidFilter<"Member"> | string
-    roomId?: UuidFilter<"Member"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
-  }, "id">
-
-  export type MemberOrderByWithAggregationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    roomId?: SortOrder
-    _count?: MemberCountOrderByAggregateInput
-    _max?: MemberMaxOrderByAggregateInput
-    _min?: MemberMinOrderByAggregateInput
-  }
-
-  export type MemberScalarWhereWithAggregatesInput = {
-    AND?: MemberScalarWhereWithAggregatesInput | MemberScalarWhereWithAggregatesInput[]
-    OR?: MemberScalarWhereWithAggregatesInput[]
-    NOT?: MemberScalarWhereWithAggregatesInput | MemberScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"Member"> | string
-    userId?: UuidWithAggregatesFilter<"Member"> | string
-    roomId?: UuidWithAggregatesFilter<"Member"> | string
+  export type PrivateMessageScalarWhereWithAggregatesInput = {
+    AND?: PrivateMessageScalarWhereWithAggregatesInput | PrivateMessageScalarWhereWithAggregatesInput[]
+    OR?: PrivateMessageScalarWhereWithAggregatesInput[]
+    NOT?: PrivateMessageScalarWhereWithAggregatesInput | PrivateMessageScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"PrivateMessage"> | string
+    content?: StringWithAggregatesFilter<"PrivateMessage"> | string
+    chatId?: UuidWithAggregatesFilter<"PrivateMessage"> | string
+    senderId?: UuidWithAggregatesFilter<"PrivateMessage"> | string
+    messageIndex?: IntWithAggregatesFilter<"PrivateMessage"> | number
+    replyToId?: UuidNullableWithAggregatesFilter<"PrivateMessage"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PrivateMessage"> | Date | string
+    updateAt?: DateTimeWithAggregatesFilter<"PrivateMessage"> | Date | string
   }
 
   export type RoleWhereInput = {
@@ -18864,20 +16547,19 @@ export namespace Prisma {
     avtUrl?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     hashingPassword?: StringFilter<"User"> | string
+    lastSeen?: DateTimeNullableFilter<"User"> | Date | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
-    readProgressId?: UuidNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     codes?: CodeListRelationFilter
     posts?: PostListRelationFilter
     comments?: CommentListRelationFilter
     repComments?: RepCommentListRelationFilter
     userRoles?: UserRoleListRelationFilter
-    member?: MemberListRelationFilter
-    messages?: MessageListRelationFilter
-    receivedMessages?: MessageListRelationFilter
-    readProgress?: ReadProgressListRelationFilter
+    user1?: PrivateChatListRelationFilter
+    user2?: PrivateChatListRelationFilter
+    sentMessages?: PrivateMessageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18889,26 +16571,24 @@ export namespace Prisma {
     avtUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
+    lastSeen?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
-    readProgressId?: SortOrderInput | SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     codes?: CodeOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
     repComments?: RepCommentOrderByRelationAggregateInput
     userRoles?: UserRoleOrderByRelationAggregateInput
-    member?: MemberOrderByRelationAggregateInput
-    messages?: MessageOrderByRelationAggregateInput
-    receivedMessages?: MessageOrderByRelationAggregateInput
-    readProgress?: ReadProgressOrderByRelationAggregateInput
+    user1?: PrivateChatOrderByRelationAggregateInput
+    user2?: PrivateChatOrderByRelationAggregateInput
+    sentMessages?: PrivateMessageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    readProgressId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -18918,6 +16598,7 @@ export namespace Prisma {
     isActive?: BoolFilter<"User"> | boolean
     avtUrl?: StringNullableFilter<"User"> | string | null
     hashingPassword?: StringFilter<"User"> | string
+    lastSeen?: DateTimeNullableFilter<"User"> | Date | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -18927,11 +16608,10 @@ export namespace Prisma {
     comments?: CommentListRelationFilter
     repComments?: RepCommentListRelationFilter
     userRoles?: UserRoleListRelationFilter
-    member?: MemberListRelationFilter
-    messages?: MessageListRelationFilter
-    receivedMessages?: MessageListRelationFilter
-    readProgress?: ReadProgressListRelationFilter
-  }, "id" | "email" | "readProgressId">
+    user1?: PrivateChatListRelationFilter
+    user2?: PrivateChatListRelationFilter
+    sentMessages?: PrivateMessageListRelationFilter
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -18942,10 +16622,10 @@ export namespace Prisma {
     avtUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
+    lastSeen?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
-    readProgressId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -18963,10 +16643,10 @@ export namespace Prisma {
     avtUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     hashingPassword?: StringWithAggregatesFilter<"User"> | string
+    lastSeen?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-    readProgressId?: UuidNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type SessionCreateInput = {
@@ -19093,241 +16773,175 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type MessageCreateInput = {
+  export type PrivateChatCreateInput = {
+    id?: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    user1: UserCreateNestedOneWithoutUser1Input
+    user2: UserCreateNestedOneWithoutUser2Input
+    privateMessage?: PrivateMessageCreateNestedManyWithoutChatInput
+  }
+
+  export type PrivateChatUncheckedCreateInput = {
+    id?: string
+    user1Id: string
+    user2Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    privateMessage?: PrivateMessageUncheckedCreateNestedManyWithoutChatInput
+  }
+
+  export type PrivateChatUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user1?: UserUpdateOneRequiredWithoutUser1NestedInput
+    user2?: UserUpdateOneRequiredWithoutUser2NestedInput
+    privateMessage?: PrivateMessageUpdateManyWithoutChatNestedInput
+  }
+
+  export type PrivateChatUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    privateMessage?: PrivateMessageUncheckedUpdateManyWithoutChatNestedInput
+  }
+
+  export type PrivateChatCreateManyInput = {
+    id?: string
+    user1Id: string
+    user2Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type PrivateChatUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivateChatUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivateMessageCreateInput = {
+    id?: string
     content: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+    messageIndex: number
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
-    sender?: UserCreateNestedOneWithoutMessagesInput
-    receiver?: UserCreateNestedOneWithoutReceivedMessagesInput
-    room: RoomCreateNestedOneWithoutMessagesInput
+    replyTo?: PrivateMessageCreateNestedOneWithoutRepliesInput
+    replies?: PrivateMessageCreateNestedManyWithoutReplyToInput
+    chat: PrivateChatCreateNestedOneWithoutPrivateMessageInput
+    sender: UserCreateNestedOneWithoutSentMessagesInput
   }
 
-  export type MessageUncheckedCreateInput = {
-    id?: number
+  export type PrivateMessageUncheckedCreateInput = {
+    id?: string
     content: string
-    senderID?: string | null
-    receiverID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+    chatId: string
+    senderId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
+    replies?: PrivateMessageUncheckedCreateNestedManyWithoutReplyToInput
   }
 
-  export type MessageUpdateInput = {
+  export type PrivateMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sender?: UserUpdateOneWithoutMessagesNestedInput
-    receiver?: UserUpdateOneWithoutReceivedMessagesNestedInput
-    room?: RoomUpdateOneRequiredWithoutMessagesNestedInput
+    replyTo?: PrivateMessageUpdateOneWithoutRepliesNestedInput
+    replies?: PrivateMessageUpdateManyWithoutReplyToNestedInput
+    chat?: PrivateChatUpdateOneRequiredWithoutPrivateMessageNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentMessagesNestedInput
   }
 
-  export type MessageUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+  export type PrivateMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replies?: PrivateMessageUncheckedUpdateManyWithoutReplyToNestedInput
   }
 
-  export type MessageCreateManyInput = {
-    id?: number
+  export type PrivateMessageCreateManyInput = {
+    id?: string
     content: string
-    senderID?: string | null
-    receiverID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+    chatId: string
+    senderId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
   }
 
-  export type MessageUpdateManyMutationInput = {
+  export type PrivateMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type MessageUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+  export type PrivateMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type ReadProgressCreateInput = {
-    id?: string
-    messageId?: number
-    roomId: string
-    User: UserCreateNestedOneWithoutReadProgressInput
-  }
-
-  export type ReadProgressUncheckedCreateInput = {
-    id?: string
-    messageId?: number
-    roomId: string
-    userId: string
-  }
-
-  export type ReadProgressUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
-    User?: UserUpdateOneRequiredWithoutReadProgressNestedInput
-  }
-
-  export type ReadProgressUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ReadProgressCreateManyInput = {
-    id?: string
-    messageId?: number
-    roomId: string
-    userId: string
-  }
-
-  export type ReadProgressUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ReadProgressUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RoomCreateInput = {
-    id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    members?: MemberCreateNestedManyWithoutRoomInput
-    messages?: MessageCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomUncheckedCreateInput = {
-    id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    members?: MemberUncheckedCreateNestedManyWithoutRoomInput
-    messages?: MessageUncheckedCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: MemberUpdateManyWithoutRoomNestedInput
-    messages?: MessageUpdateManyWithoutRoomNestedInput
-  }
-
-  export type RoomUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: MemberUncheckedUpdateManyWithoutRoomNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutRoomNestedInput
-  }
-
-  export type RoomCreateManyInput = {
-    id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type RoomUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RoomUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MemberCreateInput = {
-    id?: string
-    user: UserCreateNestedOneWithoutMemberInput
-    room: RoomCreateNestedOneWithoutMembersInput
-  }
-
-  export type MemberUncheckedCreateInput = {
-    id?: string
-    userId: string
-    roomId: string
-  }
-
-  export type MemberUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutMemberNestedInput
-    room?: RoomUpdateOneRequiredWithoutMembersNestedInput
-  }
-
-  export type MemberUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MemberCreateManyInput = {
-    id?: string
-    userId: string
-    roomId: string
-  }
-
-  export type MemberUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MemberUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
   }
 
   export type RoleCreateInput = {
@@ -19695,20 +17309,19 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19720,20 +17333,19 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserUpdateInput = {
@@ -19745,20 +17357,19 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19770,20 +17381,19 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19795,10 +17405,10 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -19810,10 +17420,10 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -19825,10 +17435,10 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -20033,6 +17643,88 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type PrivateMessageListRelationFilter = {
+    every?: PrivateMessageWhereInput
+    some?: PrivateMessageWhereInput
+    none?: PrivateMessageWhereInput
+  }
+
+  export type PrivateMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PrivateChatUser1IdUser2IdCompoundUniqueInput = {
+    user1Id: string
+    user2Id: string
+  }
+
+  export type PrivateChatCountOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    lastMessage?: SortOrder
+    lastMessageAt?: SortOrder
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+    createdAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type PrivateChatAvgOrderByAggregateInput = {
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+  }
+
+  export type PrivateChatMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    lastMessage?: SortOrder
+    lastMessageAt?: SortOrder
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+    createdAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type PrivateChatMinOrderByAggregateInput = {
+    id?: SortOrder
+    user1Id?: SortOrder
+    user2Id?: SortOrder
+    lastMessage?: SortOrder
+    lastMessageAt?: SortOrder
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+    createdAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type PrivateChatSumOrderByAggregateInput = {
+    user1LastReadIndex?: SortOrder
+    user2LastReadIndex?: SortOrder
+    totalMessage?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -20060,82 +17752,60 @@ export namespace Prisma {
     not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type PrivateMessageNullableScalarRelationFilter = {
+    is?: PrivateMessageWhereInput | null
+    isNot?: PrivateMessageWhereInput | null
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
+  export type PrivateChatScalarRelationFilter = {
+    is?: PrivateChatWhereInput
+    isNot?: PrivateChatWhereInput
   }
 
-  export type RoomScalarRelationFilter = {
-    is?: RoomWhereInput
-    isNot?: RoomWhereInput
+  export type PrivateMessageChatIdMessageIndexCompoundUniqueInput = {
+    chatId: string
+    messageIndex: number
   }
 
-  export type MessageCountOrderByAggregateInput = {
+  export type PrivateMessageCountOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
-    senderID?: SortOrder
-    receiverID?: SortOrder
-    roomId?: SortOrder
-    messageType?: SortOrder
-    isRead?: SortOrder
-    createAt?: SortOrder
+    chatId?: SortOrder
+    senderId?: SortOrder
+    messageIndex?: SortOrder
+    replyToId?: SortOrder
+    createdAt?: SortOrder
     updateAt?: SortOrder
-    deleteAt?: SortOrder
   }
 
-  export type MessageAvgOrderByAggregateInput = {
-    id?: SortOrder
+  export type PrivateMessageAvgOrderByAggregateInput = {
+    messageIndex?: SortOrder
   }
 
-  export type MessageMaxOrderByAggregateInput = {
+  export type PrivateMessageMaxOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
-    senderID?: SortOrder
-    receiverID?: SortOrder
-    roomId?: SortOrder
-    messageType?: SortOrder
-    isRead?: SortOrder
-    createAt?: SortOrder
+    chatId?: SortOrder
+    senderId?: SortOrder
+    messageIndex?: SortOrder
+    replyToId?: SortOrder
+    createdAt?: SortOrder
     updateAt?: SortOrder
-    deleteAt?: SortOrder
   }
 
-  export type MessageMinOrderByAggregateInput = {
+  export type PrivateMessageMinOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
-    senderID?: SortOrder
-    receiverID?: SortOrder
-    roomId?: SortOrder
-    messageType?: SortOrder
-    isRead?: SortOrder
-    createAt?: SortOrder
+    chatId?: SortOrder
+    senderId?: SortOrder
+    messageIndex?: SortOrder
+    replyToId?: SortOrder
+    createdAt?: SortOrder
     updateAt?: SortOrder
-    deleteAt?: SortOrder
   }
 
-  export type MessageSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+  export type PrivateMessageSumOrderByAggregateInput = {
+    messageIndex?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -20169,105 +17839,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type ReadProgressCountOrderByAggregateInput = {
-    id?: SortOrder
-    messageId?: SortOrder
-    roomId?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ReadProgressAvgOrderByAggregateInput = {
-    messageId?: SortOrder
-  }
-
-  export type ReadProgressMaxOrderByAggregateInput = {
-    id?: SortOrder
-    messageId?: SortOrder
-    roomId?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ReadProgressMinOrderByAggregateInput = {
-    id?: SortOrder
-    messageId?: SortOrder
-    roomId?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ReadProgressSumOrderByAggregateInput = {
-    messageId?: SortOrder
-  }
-
-  export type MemberListRelationFilter = {
-    every?: MemberWhereInput
-    some?: MemberWhereInput
-    none?: MemberWhereInput
-  }
-
-  export type MessageListRelationFilter = {
-    every?: MessageWhereInput
-    some?: MessageWhereInput
-    none?: MessageWhereInput
-  }
-
-  export type MemberOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type MessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RoomCountOrderByAggregateInput = {
-    id?: SortOrder
-    roomId?: SortOrder
-    nameRoom?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type RoomMaxOrderByAggregateInput = {
-    id?: SortOrder
-    roomId?: SortOrder
-    nameRoom?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type RoomMinOrderByAggregateInput = {
-    id?: SortOrder
-    roomId?: SortOrder
-    nameRoom?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type MemberCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    roomId?: SortOrder
-  }
-
-  export type MemberMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    roomId?: SortOrder
-  }
-
-  export type MemberMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    roomId?: SortOrder
   }
 
   export type UserRoleListRelationFilter = {
@@ -20517,6 +18088,11 @@ export namespace Prisma {
     not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type SessionListRelationFilter = {
     every?: SessionWhereInput
     some?: SessionWhereInput
@@ -20535,10 +18111,10 @@ export namespace Prisma {
     none?: PostWhereInput
   }
 
-  export type ReadProgressListRelationFilter = {
-    every?: ReadProgressWhereInput
-    some?: ReadProgressWhereInput
-    none?: ReadProgressWhereInput
+  export type PrivateChatListRelationFilter = {
+    every?: PrivateChatWhereInput
+    some?: PrivateChatWhereInput
+    none?: PrivateChatWhereInput
   }
 
   export type SessionOrderByRelationAggregateInput = {
@@ -20553,7 +18129,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ReadProgressOrderByRelationAggregateInput = {
+  export type PrivateChatOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20566,10 +18142,10 @@ export namespace Prisma {
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
+    lastSeen?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
-    readProgressId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -20581,10 +18157,10 @@ export namespace Prisma {
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
+    lastSeen?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
-    readProgressId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -20596,10 +18172,10 @@ export namespace Prisma {
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
+    lastSeen?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
-    readProgressId?: SortOrder
   }
 
   export type EnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20610,6 +18186,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGenderNullableFilter<$PrismaModel>
     _max?: NestedEnumGenderNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -20660,54 +18244,30 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCodesInput, UserUpdateWithoutCodesInput>, UserUncheckedUpdateWithoutCodesInput>
   }
 
-  export type UserCreateNestedOneWithoutMessagesInput = {
-    create?: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMessagesInput
+  export type UserCreateNestedOneWithoutUser1Input = {
+    create?: XOR<UserCreateWithoutUser1Input, UserUncheckedCreateWithoutUser1Input>
+    connectOrCreate?: UserCreateOrConnectWithoutUser1Input
     connect?: UserWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutReceivedMessagesInput = {
-    create?: XOR<UserCreateWithoutReceivedMessagesInput, UserUncheckedCreateWithoutReceivedMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReceivedMessagesInput
+  export type UserCreateNestedOneWithoutUser2Input = {
+    create?: XOR<UserCreateWithoutUser2Input, UserUncheckedCreateWithoutUser2Input>
+    connectOrCreate?: UserCreateOrConnectWithoutUser2Input
     connect?: UserWhereUniqueInput
   }
 
-  export type RoomCreateNestedOneWithoutMessagesInput = {
-    create?: XOR<RoomCreateWithoutMessagesInput, RoomUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutMessagesInput
-    connect?: RoomWhereUniqueInput
+  export type PrivateMessageCreateNestedManyWithoutChatInput = {
+    create?: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput> | PrivateMessageCreateWithoutChatInput[] | PrivateMessageUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutChatInput | PrivateMessageCreateOrConnectWithoutChatInput[]
+    createMany?: PrivateMessageCreateManyChatInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type UserUpdateOneWithoutMessagesNestedInput = {
-    create?: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMessagesInput
-    upsert?: UserUpsertWithoutMessagesInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMessagesInput, UserUpdateWithoutMessagesInput>, UserUncheckedUpdateWithoutMessagesInput>
-  }
-
-  export type UserUpdateOneWithoutReceivedMessagesNestedInput = {
-    create?: XOR<UserCreateWithoutReceivedMessagesInput, UserUncheckedCreateWithoutReceivedMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReceivedMessagesInput
-    upsert?: UserUpsertWithoutReceivedMessagesInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedMessagesInput, UserUpdateWithoutReceivedMessagesInput>, UserUncheckedUpdateWithoutReceivedMessagesInput>
-  }
-
-  export type RoomUpdateOneRequiredWithoutMessagesNestedInput = {
-    create?: XOR<RoomCreateWithoutMessagesInput, RoomUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutMessagesInput
-    upsert?: RoomUpsertWithoutMessagesInput
-    connect?: RoomWhereUniqueInput
-    update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutMessagesInput, RoomUpdateWithoutMessagesInput>, RoomUncheckedUpdateWithoutMessagesInput>
+  export type PrivateMessageUncheckedCreateNestedManyWithoutChatInput = {
+    create?: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput> | PrivateMessageCreateWithoutChatInput[] | PrivateMessageUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutChatInput | PrivateMessageCreateOrConnectWithoutChatInput[]
+    createMany?: PrivateMessageCreateManyChatInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -20718,130 +18278,134 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserCreateNestedOneWithoutReadProgressInput = {
-    create?: XOR<UserCreateWithoutReadProgressInput, UserUncheckedCreateWithoutReadProgressInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReadProgressInput
+  export type UserUpdateOneRequiredWithoutUser1NestedInput = {
+    create?: XOR<UserCreateWithoutUser1Input, UserUncheckedCreateWithoutUser1Input>
+    connectOrCreate?: UserCreateOrConnectWithoutUser1Input
+    upsert?: UserUpsertWithoutUser1Input
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUser1Input, UserUpdateWithoutUser1Input>, UserUncheckedUpdateWithoutUser1Input>
+  }
+
+  export type UserUpdateOneRequiredWithoutUser2NestedInput = {
+    create?: XOR<UserCreateWithoutUser2Input, UserUncheckedCreateWithoutUser2Input>
+    connectOrCreate?: UserCreateOrConnectWithoutUser2Input
+    upsert?: UserUpsertWithoutUser2Input
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUser2Input, UserUpdateWithoutUser2Input>, UserUncheckedUpdateWithoutUser2Input>
+  }
+
+  export type PrivateMessageUpdateManyWithoutChatNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput> | PrivateMessageCreateWithoutChatInput[] | PrivateMessageUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutChatInput | PrivateMessageCreateOrConnectWithoutChatInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutChatInput | PrivateMessageUpsertWithWhereUniqueWithoutChatInput[]
+    createMany?: PrivateMessageCreateManyChatInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutChatInput | PrivateMessageUpdateWithWhereUniqueWithoutChatInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutChatInput | PrivateMessageUpdateManyWithWhereWithoutChatInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
+  }
+
+  export type PrivateMessageUncheckedUpdateManyWithoutChatNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput> | PrivateMessageCreateWithoutChatInput[] | PrivateMessageUncheckedCreateWithoutChatInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutChatInput | PrivateMessageCreateOrConnectWithoutChatInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutChatInput | PrivateMessageUpsertWithWhereUniqueWithoutChatInput[]
+    createMany?: PrivateMessageCreateManyChatInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutChatInput | PrivateMessageUpdateWithWhereUniqueWithoutChatInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutChatInput | PrivateMessageUpdateManyWithWhereWithoutChatInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
+  }
+
+  export type PrivateMessageCreateNestedOneWithoutRepliesInput = {
+    create?: XOR<PrivateMessageCreateWithoutRepliesInput, PrivateMessageUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutRepliesInput
+    connect?: PrivateMessageWhereUniqueInput
+  }
+
+  export type PrivateMessageCreateNestedManyWithoutReplyToInput = {
+    create?: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput> | PrivateMessageCreateWithoutReplyToInput[] | PrivateMessageUncheckedCreateWithoutReplyToInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutReplyToInput | PrivateMessageCreateOrConnectWithoutReplyToInput[]
+    createMany?: PrivateMessageCreateManyReplyToInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+  }
+
+  export type PrivateChatCreateNestedOneWithoutPrivateMessageInput = {
+    create?: XOR<PrivateChatCreateWithoutPrivateMessageInput, PrivateChatUncheckedCreateWithoutPrivateMessageInput>
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutPrivateMessageInput
+    connect?: PrivateChatWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSentMessagesInput = {
+    create?: XOR<UserCreateWithoutSentMessagesInput, UserUncheckedCreateWithoutSentMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentMessagesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutReadProgressNestedInput = {
-    create?: XOR<UserCreateWithoutReadProgressInput, UserUncheckedCreateWithoutReadProgressInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReadProgressInput
-    upsert?: UserUpsertWithoutReadProgressInput
+  export type PrivateMessageUncheckedCreateNestedManyWithoutReplyToInput = {
+    create?: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput> | PrivateMessageCreateWithoutReplyToInput[] | PrivateMessageUncheckedCreateWithoutReplyToInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutReplyToInput | PrivateMessageCreateOrConnectWithoutReplyToInput[]
+    createMany?: PrivateMessageCreateManyReplyToInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+  }
+
+  export type PrivateMessageUpdateOneWithoutRepliesNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutRepliesInput, PrivateMessageUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutRepliesInput
+    upsert?: PrivateMessageUpsertWithoutRepliesInput
+    disconnect?: PrivateMessageWhereInput | boolean
+    delete?: PrivateMessageWhereInput | boolean
+    connect?: PrivateMessageWhereUniqueInput
+    update?: XOR<XOR<PrivateMessageUpdateToOneWithWhereWithoutRepliesInput, PrivateMessageUpdateWithoutRepliesInput>, PrivateMessageUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type PrivateMessageUpdateManyWithoutReplyToNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput> | PrivateMessageCreateWithoutReplyToInput[] | PrivateMessageUncheckedCreateWithoutReplyToInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutReplyToInput | PrivateMessageCreateOrConnectWithoutReplyToInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutReplyToInput | PrivateMessageUpsertWithWhereUniqueWithoutReplyToInput[]
+    createMany?: PrivateMessageCreateManyReplyToInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutReplyToInput | PrivateMessageUpdateWithWhereUniqueWithoutReplyToInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutReplyToInput | PrivateMessageUpdateManyWithWhereWithoutReplyToInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
+  }
+
+  export type PrivateChatUpdateOneRequiredWithoutPrivateMessageNestedInput = {
+    create?: XOR<PrivateChatCreateWithoutPrivateMessageInput, PrivateChatUncheckedCreateWithoutPrivateMessageInput>
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutPrivateMessageInput
+    upsert?: PrivateChatUpsertWithoutPrivateMessageInput
+    connect?: PrivateChatWhereUniqueInput
+    update?: XOR<XOR<PrivateChatUpdateToOneWithWhereWithoutPrivateMessageInput, PrivateChatUpdateWithoutPrivateMessageInput>, PrivateChatUncheckedUpdateWithoutPrivateMessageInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+    create?: XOR<UserCreateWithoutSentMessagesInput, UserUncheckedCreateWithoutSentMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentMessagesInput
+    upsert?: UserUpsertWithoutSentMessagesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReadProgressInput, UserUpdateWithoutReadProgressInput>, UserUncheckedUpdateWithoutReadProgressInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSentMessagesInput, UserUpdateWithoutSentMessagesInput>, UserUncheckedUpdateWithoutSentMessagesInput>
   }
 
-  export type MemberCreateNestedManyWithoutRoomInput = {
-    create?: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput> | MemberCreateWithoutRoomInput[] | MemberUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutRoomInput | MemberCreateOrConnectWithoutRoomInput[]
-    createMany?: MemberCreateManyRoomInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-  }
-
-  export type MessageCreateNestedManyWithoutRoomInput = {
-    create?: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput> | MessageCreateWithoutRoomInput[] | MessageUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutRoomInput | MessageCreateOrConnectWithoutRoomInput[]
-    createMany?: MessageCreateManyRoomInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type MemberUncheckedCreateNestedManyWithoutRoomInput = {
-    create?: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput> | MemberCreateWithoutRoomInput[] | MemberUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutRoomInput | MemberCreateOrConnectWithoutRoomInput[]
-    createMany?: MemberCreateManyRoomInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-  }
-
-  export type MessageUncheckedCreateNestedManyWithoutRoomInput = {
-    create?: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput> | MessageCreateWithoutRoomInput[] | MessageUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutRoomInput | MessageCreateOrConnectWithoutRoomInput[]
-    createMany?: MessageCreateManyRoomInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type MemberUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput> | MemberCreateWithoutRoomInput[] | MemberUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutRoomInput | MemberCreateOrConnectWithoutRoomInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutRoomInput | MemberUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: MemberCreateManyRoomInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutRoomInput | MemberUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutRoomInput | MemberUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
-  }
-
-  export type MessageUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput> | MessageCreateWithoutRoomInput[] | MessageUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutRoomInput | MessageCreateOrConnectWithoutRoomInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutRoomInput | MessageUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: MessageCreateManyRoomInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutRoomInput | MessageUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutRoomInput | MessageUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type MemberUncheckedUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput> | MemberCreateWithoutRoomInput[] | MemberUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutRoomInput | MemberCreateOrConnectWithoutRoomInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutRoomInput | MemberUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: MemberCreateManyRoomInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutRoomInput | MemberUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutRoomInput | MemberUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
-  }
-
-  export type MessageUncheckedUpdateManyWithoutRoomNestedInput = {
-    create?: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput> | MessageCreateWithoutRoomInput[] | MessageUncheckedCreateWithoutRoomInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutRoomInput | MessageCreateOrConnectWithoutRoomInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutRoomInput | MessageUpsertWithWhereUniqueWithoutRoomInput[]
-    createMany?: MessageCreateManyRoomInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutRoomInput | MessageUpdateWithWhereUniqueWithoutRoomInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutRoomInput | MessageUpdateManyWithWhereWithoutRoomInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutMemberInput = {
-    create?: XOR<UserCreateWithoutMemberInput, UserUncheckedCreateWithoutMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMemberInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type RoomCreateNestedOneWithoutMembersInput = {
-    create?: XOR<RoomCreateWithoutMembersInput, RoomUncheckedCreateWithoutMembersInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutMembersInput
-    connect?: RoomWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutMemberNestedInput = {
-    create?: XOR<UserCreateWithoutMemberInput, UserUncheckedCreateWithoutMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMemberInput
-    upsert?: UserUpsertWithoutMemberInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMemberInput, UserUpdateWithoutMemberInput>, UserUncheckedUpdateWithoutMemberInput>
-  }
-
-  export type RoomUpdateOneRequiredWithoutMembersNestedInput = {
-    create?: XOR<RoomCreateWithoutMembersInput, RoomUncheckedCreateWithoutMembersInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutMembersInput
-    upsert?: RoomUpsertWithoutMembersInput
-    connect?: RoomWhereUniqueInput
-    update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutMembersInput, RoomUpdateWithoutMembersInput>, RoomUncheckedUpdateWithoutMembersInput>
+  export type PrivateMessageUncheckedUpdateManyWithoutReplyToNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput> | PrivateMessageCreateWithoutReplyToInput[] | PrivateMessageUncheckedCreateWithoutReplyToInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutReplyToInput | PrivateMessageCreateOrConnectWithoutReplyToInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutReplyToInput | PrivateMessageUpsertWithWhereUniqueWithoutReplyToInput[]
+    createMany?: PrivateMessageCreateManyReplyToInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutReplyToInput | PrivateMessageUpdateWithWhereUniqueWithoutReplyToInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutReplyToInput | PrivateMessageUpdateManyWithWhereWithoutReplyToInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -21235,32 +18799,25 @@ export namespace Prisma {
     connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
   }
 
-  export type MemberCreateNestedManyWithoutUserInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+  export type PrivateChatCreateNestedManyWithoutUser1Input = {
+    create?: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input> | PrivateChatCreateWithoutUser1Input[] | PrivateChatUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser1Input | PrivateChatCreateOrConnectWithoutUser1Input[]
+    createMany?: PrivateChatCreateManyUser1InputEnvelope
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
   }
 
-  export type MessageCreateNestedManyWithoutSenderInput = {
-    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
-    createMany?: MessageCreateManySenderInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  export type PrivateChatCreateNestedManyWithoutUser2Input = {
+    create?: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input> | PrivateChatCreateWithoutUser2Input[] | PrivateChatUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser2Input | PrivateChatCreateOrConnectWithoutUser2Input[]
+    createMany?: PrivateChatCreateManyUser2InputEnvelope
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
   }
 
-  export type MessageCreateNestedManyWithoutReceiverInput = {
-    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
-    createMany?: MessageCreateManyReceiverInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type ReadProgressCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput> | ReadProgressCreateWithoutUserInput[] | ReadProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReadProgressCreateOrConnectWithoutUserInput | ReadProgressCreateOrConnectWithoutUserInput[]
-    createMany?: ReadProgressCreateManyUserInputEnvelope
-    connect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
+  export type PrivateMessageCreateNestedManyWithoutSenderInput = {
+    create?: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput> | PrivateMessageCreateWithoutSenderInput[] | PrivateMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutSenderInput | PrivateMessageCreateOrConnectWithoutSenderInput[]
+    createMany?: PrivateMessageCreateManySenderInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
   }
 
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -21305,36 +18862,33 @@ export namespace Prisma {
     connect?: UserRoleWhereUniqueInput | UserRoleWhereUniqueInput[]
   }
 
-  export type MemberUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
+  export type PrivateChatUncheckedCreateNestedManyWithoutUser1Input = {
+    create?: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input> | PrivateChatCreateWithoutUser1Input[] | PrivateChatUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser1Input | PrivateChatCreateOrConnectWithoutUser1Input[]
+    createMany?: PrivateChatCreateManyUser1InputEnvelope
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
   }
 
-  export type MessageUncheckedCreateNestedManyWithoutSenderInput = {
-    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
-    createMany?: MessageCreateManySenderInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  export type PrivateChatUncheckedCreateNestedManyWithoutUser2Input = {
+    create?: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input> | PrivateChatCreateWithoutUser2Input[] | PrivateChatUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser2Input | PrivateChatCreateOrConnectWithoutUser2Input[]
+    createMany?: PrivateChatCreateManyUser2InputEnvelope
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
   }
 
-  export type MessageUncheckedCreateNestedManyWithoutReceiverInput = {
-    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
-    createMany?: MessageCreateManyReceiverInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type ReadProgressUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput> | ReadProgressCreateWithoutUserInput[] | ReadProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReadProgressCreateOrConnectWithoutUserInput | ReadProgressCreateOrConnectWithoutUserInput[]
-    createMany?: ReadProgressCreateManyUserInputEnvelope
-    connect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
+  export type PrivateMessageUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput> | PrivateMessageCreateWithoutSenderInput[] | PrivateMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutSenderInput | PrivateMessageCreateOrConnectWithoutSenderInput[]
+    createMany?: PrivateMessageCreateManySenderInputEnvelope
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
   }
 
   export type NullableEnumGenderFieldUpdateOperationsInput = {
     set?: $Enums.Gender | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type SessionUpdateManyWithoutUserNestedInput = {
@@ -21421,60 +18975,46 @@ export namespace Prisma {
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
   }
 
-  export type MemberUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
+  export type PrivateChatUpdateManyWithoutUser1NestedInput = {
+    create?: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input> | PrivateChatCreateWithoutUser1Input[] | PrivateChatUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser1Input | PrivateChatCreateOrConnectWithoutUser1Input[]
+    upsert?: PrivateChatUpsertWithWhereUniqueWithoutUser1Input | PrivateChatUpsertWithWhereUniqueWithoutUser1Input[]
+    createMany?: PrivateChatCreateManyUser1InputEnvelope
+    set?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    disconnect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    delete?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    update?: PrivateChatUpdateWithWhereUniqueWithoutUser1Input | PrivateChatUpdateWithWhereUniqueWithoutUser1Input[]
+    updateMany?: PrivateChatUpdateManyWithWhereWithoutUser1Input | PrivateChatUpdateManyWithWhereWithoutUser1Input[]
+    deleteMany?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
   }
 
-  export type MessageUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: MessageCreateManySenderInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  export type PrivateChatUpdateManyWithoutUser2NestedInput = {
+    create?: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input> | PrivateChatCreateWithoutUser2Input[] | PrivateChatUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser2Input | PrivateChatCreateOrConnectWithoutUser2Input[]
+    upsert?: PrivateChatUpsertWithWhereUniqueWithoutUser2Input | PrivateChatUpsertWithWhereUniqueWithoutUser2Input[]
+    createMany?: PrivateChatCreateManyUser2InputEnvelope
+    set?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    disconnect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    delete?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    update?: PrivateChatUpdateWithWhereUniqueWithoutUser2Input | PrivateChatUpdateWithWhereUniqueWithoutUser2Input[]
+    updateMany?: PrivateChatUpdateManyWithWhereWithoutUser2Input | PrivateChatUpdateManyWithWhereWithoutUser2Input[]
+    deleteMany?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
   }
 
-  export type MessageUpdateManyWithoutReceiverNestedInput = {
-    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutReceiverInput | MessageUpsertWithWhereUniqueWithoutReceiverInput[]
-    createMany?: MessageCreateManyReceiverInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutReceiverInput | MessageUpdateWithWhereUniqueWithoutReceiverInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutReceiverInput | MessageUpdateManyWithWhereWithoutReceiverInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type ReadProgressUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput> | ReadProgressCreateWithoutUserInput[] | ReadProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReadProgressCreateOrConnectWithoutUserInput | ReadProgressCreateOrConnectWithoutUserInput[]
-    upsert?: ReadProgressUpsertWithWhereUniqueWithoutUserInput | ReadProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReadProgressCreateManyUserInputEnvelope
-    set?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    disconnect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    delete?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    connect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    update?: ReadProgressUpdateWithWhereUniqueWithoutUserInput | ReadProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReadProgressUpdateManyWithWhereWithoutUserInput | ReadProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReadProgressScalarWhereInput | ReadProgressScalarWhereInput[]
+  export type PrivateMessageUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput> | PrivateMessageCreateWithoutSenderInput[] | PrivateMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutSenderInput | PrivateMessageCreateOrConnectWithoutSenderInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutSenderInput | PrivateMessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: PrivateMessageCreateManySenderInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutSenderInput | PrivateMessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutSenderInput | PrivateMessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
   }
 
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -21561,60 +19101,46 @@ export namespace Prisma {
     deleteMany?: UserRoleScalarWhereInput | UserRoleScalarWhereInput[]
   }
 
-  export type MemberUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
-    upsert?: MemberUpsertWithWhereUniqueWithoutUserInput | MemberUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: MemberCreateManyUserInputEnvelope
-    set?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    disconnect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    delete?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    connect?: MemberWhereUniqueInput | MemberWhereUniqueInput[]
-    update?: MemberUpdateWithWhereUniqueWithoutUserInput | MemberUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: MemberUpdateManyWithWhereWithoutUserInput | MemberUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: MemberScalarWhereInput | MemberScalarWhereInput[]
+  export type PrivateChatUncheckedUpdateManyWithoutUser1NestedInput = {
+    create?: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input> | PrivateChatCreateWithoutUser1Input[] | PrivateChatUncheckedCreateWithoutUser1Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser1Input | PrivateChatCreateOrConnectWithoutUser1Input[]
+    upsert?: PrivateChatUpsertWithWhereUniqueWithoutUser1Input | PrivateChatUpsertWithWhereUniqueWithoutUser1Input[]
+    createMany?: PrivateChatCreateManyUser1InputEnvelope
+    set?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    disconnect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    delete?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    update?: PrivateChatUpdateWithWhereUniqueWithoutUser1Input | PrivateChatUpdateWithWhereUniqueWithoutUser1Input[]
+    updateMany?: PrivateChatUpdateManyWithWhereWithoutUser1Input | PrivateChatUpdateManyWithWhereWithoutUser1Input[]
+    deleteMany?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
   }
 
-  export type MessageUncheckedUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput> | MessageCreateWithoutSenderInput[] | MessageUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutSenderInput | MessageUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: MessageCreateManySenderInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  export type PrivateChatUncheckedUpdateManyWithoutUser2NestedInput = {
+    create?: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input> | PrivateChatCreateWithoutUser2Input[] | PrivateChatUncheckedCreateWithoutUser2Input[]
+    connectOrCreate?: PrivateChatCreateOrConnectWithoutUser2Input | PrivateChatCreateOrConnectWithoutUser2Input[]
+    upsert?: PrivateChatUpsertWithWhereUniqueWithoutUser2Input | PrivateChatUpsertWithWhereUniqueWithoutUser2Input[]
+    createMany?: PrivateChatCreateManyUser2InputEnvelope
+    set?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    disconnect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    delete?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    connect?: PrivateChatWhereUniqueInput | PrivateChatWhereUniqueInput[]
+    update?: PrivateChatUpdateWithWhereUniqueWithoutUser2Input | PrivateChatUpdateWithWhereUniqueWithoutUser2Input[]
+    updateMany?: PrivateChatUpdateManyWithWhereWithoutUser2Input | PrivateChatUpdateManyWithWhereWithoutUser2Input[]
+    deleteMany?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
   }
 
-  export type MessageUncheckedUpdateManyWithoutReceiverNestedInput = {
-    create?: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput> | MessageCreateWithoutReceiverInput[] | MessageUncheckedCreateWithoutReceiverInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutReceiverInput | MessageCreateOrConnectWithoutReceiverInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutReceiverInput | MessageUpsertWithWhereUniqueWithoutReceiverInput[]
-    createMany?: MessageCreateManyReceiverInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutReceiverInput | MessageUpdateWithWhereUniqueWithoutReceiverInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutReceiverInput | MessageUpdateManyWithWhereWithoutReceiverInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type ReadProgressUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput> | ReadProgressCreateWithoutUserInput[] | ReadProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReadProgressCreateOrConnectWithoutUserInput | ReadProgressCreateOrConnectWithoutUserInput[]
-    upsert?: ReadProgressUpsertWithWhereUniqueWithoutUserInput | ReadProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReadProgressCreateManyUserInputEnvelope
-    set?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    disconnect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    delete?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    connect?: ReadProgressWhereUniqueInput | ReadProgressWhereUniqueInput[]
-    update?: ReadProgressUpdateWithWhereUniqueWithoutUserInput | ReadProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReadProgressUpdateManyWithWhereWithoutUserInput | ReadProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReadProgressScalarWhereInput | ReadProgressScalarWhereInput[]
+  export type PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput> | PrivateMessageCreateWithoutSenderInput[] | PrivateMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: PrivateMessageCreateOrConnectWithoutSenderInput | PrivateMessageCreateOrConnectWithoutSenderInput[]
+    upsert?: PrivateMessageUpsertWithWhereUniqueWithoutSenderInput | PrivateMessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: PrivateMessageCreateManySenderInputEnvelope
+    set?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    disconnect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    delete?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    connect?: PrivateMessageWhereUniqueInput | PrivateMessageWhereUniqueInput[]
+    update?: PrivateMessageUpdateWithWhereUniqueWithoutSenderInput | PrivateMessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: PrivateMessageUpdateManyWithWhereWithoutSenderInput | PrivateMessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -21776,22 +19302,6 @@ export namespace Prisma {
     _max?: NestedEnumTypeOfCodeFilter<$PrismaModel>
   }
 
-  export type NestedUuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -21817,6 +19327,17 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -21850,14 +19371,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedEnumStatusPostFilter<$PrismaModel = never> = {
     equals?: $Enums.StatusPost | EnumStatusPostFieldRefInput<$PrismaModel>
     in?: $Enums.StatusPost[] | ListEnumStatusPostFieldRefInput<$PrismaModel>
@@ -21882,6 +19395,11 @@ export namespace Prisma {
     not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
     in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
@@ -21890,6 +19408,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGenderNullableFilter<$PrismaModel>
     _max?: NestedEnumGenderNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -21901,19 +19427,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -21925,19 +19450,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -21965,19 +19489,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -21989,19 +19512,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserCreateWithoutCodesInput = {
@@ -22013,19 +19535,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutCodesInput = {
@@ -22037,19 +19558,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutCodesInput = {
@@ -22077,19 +19597,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCodesInput = {
@@ -22101,22 +19620,21 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
-  export type UserCreateWithoutMessagesInput = {
+  export type UserCreateWithoutUser1Input = {
     id?: string
     name?: string | null
     gender?: $Enums.Gender | null
@@ -22125,22 +19643,21 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
-  export type UserUncheckedCreateWithoutMessagesInput = {
+  export type UserUncheckedCreateWithoutUser1Input = {
     id?: string
     name?: string | null
     gender?: $Enums.Gender | null
@@ -22149,27 +19666,26 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
-  export type UserCreateOrConnectWithoutMessagesInput = {
+  export type UserCreateOrConnectWithoutUser1Input = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
+    create: XOR<UserCreateWithoutUser1Input, UserUncheckedCreateWithoutUser1Input>
   }
 
-  export type UserCreateWithoutReceivedMessagesInput = {
+  export type UserCreateWithoutUser2Input = {
     id?: string
     name?: string | null
     gender?: $Enums.Gender | null
@@ -22178,22 +19694,21 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
-  export type UserUncheckedCreateWithoutReceivedMessagesInput = {
+  export type UserUncheckedCreateWithoutUser2Input = {
     id?: string
     name?: string | null
     gender?: $Enums.Gender | null
@@ -22202,506 +19717,69 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
-  export type UserCreateOrConnectWithoutReceivedMessagesInput = {
+  export type UserCreateOrConnectWithoutUser2Input = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutReceivedMessagesInput, UserUncheckedCreateWithoutReceivedMessagesInput>
+    create: XOR<UserCreateWithoutUser2Input, UserUncheckedCreateWithoutUser2Input>
   }
 
-  export type RoomCreateWithoutMessagesInput = {
+  export type PrivateMessageCreateWithoutChatInput = {
     id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
+    content: string
+    messageIndex: number
+    createdAt?: Date | string
     updateAt?: Date | string
-    members?: MemberCreateNestedManyWithoutRoomInput
+    replyTo?: PrivateMessageCreateNestedOneWithoutRepliesInput
+    replies?: PrivateMessageCreateNestedManyWithoutReplyToInput
+    sender: UserCreateNestedOneWithoutSentMessagesInput
   }
 
-  export type RoomUncheckedCreateWithoutMessagesInput = {
+  export type PrivateMessageUncheckedCreateWithoutChatInput = {
     id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
+    content: string
+    senderId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
     updateAt?: Date | string
-    members?: MemberUncheckedCreateNestedManyWithoutRoomInput
+    replies?: PrivateMessageUncheckedCreateNestedManyWithoutReplyToInput
   }
 
-  export type RoomCreateOrConnectWithoutMessagesInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutMessagesInput, RoomUncheckedCreateWithoutMessagesInput>
+  export type PrivateMessageCreateOrConnectWithoutChatInput = {
+    where: PrivateMessageWhereUniqueInput
+    create: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput>
   }
 
-  export type UserUpsertWithoutMessagesInput = {
-    update: XOR<UserUpdateWithoutMessagesInput, UserUncheckedUpdateWithoutMessagesInput>
-    create: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutMessagesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutMessagesInput, UserUncheckedUpdateWithoutMessagesInput>
-  }
-
-  export type UserUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    codes?: CodeUpdateManyWithoutUserNestedInput
-    posts?: PostUpdateManyWithoutUserNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUpsertWithoutReceivedMessagesInput = {
-    update: XOR<UserUpdateWithoutReceivedMessagesInput, UserUncheckedUpdateWithoutReceivedMessagesInput>
-    create: XOR<UserCreateWithoutReceivedMessagesInput, UserUncheckedCreateWithoutReceivedMessagesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutReceivedMessagesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutReceivedMessagesInput, UserUncheckedUpdateWithoutReceivedMessagesInput>
-  }
-
-  export type UserUpdateWithoutReceivedMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    codes?: CodeUpdateManyWithoutUserNestedInput
-    posts?: PostUpdateManyWithoutUserNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type RoomUpsertWithoutMessagesInput = {
-    update: XOR<RoomUpdateWithoutMessagesInput, RoomUncheckedUpdateWithoutMessagesInput>
-    create: XOR<RoomCreateWithoutMessagesInput, RoomUncheckedCreateWithoutMessagesInput>
-    where?: RoomWhereInput
-  }
-
-  export type RoomUpdateToOneWithWhereWithoutMessagesInput = {
-    where?: RoomWhereInput
-    data: XOR<RoomUpdateWithoutMessagesInput, RoomUncheckedUpdateWithoutMessagesInput>
-  }
-
-  export type RoomUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: MemberUpdateManyWithoutRoomNestedInput
-  }
-
-  export type RoomUncheckedUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: MemberUncheckedUpdateManyWithoutRoomNestedInput
-  }
-
-  export type UserCreateWithoutReadProgressInput = {
-    id?: string
-    name?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
-    isActive?: boolean
-    avtUrl?: string | null
-    email: string
-    hashingPassword: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    readProgressId?: string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    codes?: CodeCreateNestedManyWithoutUserInput
-    posts?: PostCreateNestedManyWithoutUserInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-    repComments?: RepCommentCreateNestedManyWithoutSenderInput
-    userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-  }
-
-  export type UserUncheckedCreateWithoutReadProgressInput = {
-    id?: string
-    name?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
-    isActive?: boolean
-    avtUrl?: string | null
-    email: string
-    hashingPassword: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    readProgressId?: string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    codes?: CodeUncheckedCreateNestedManyWithoutUserInput
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
-    userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-  }
-
-  export type UserCreateOrConnectWithoutReadProgressInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutReadProgressInput, UserUncheckedCreateWithoutReadProgressInput>
-  }
-
-  export type UserUpsertWithoutReadProgressInput = {
-    update: XOR<UserUpdateWithoutReadProgressInput, UserUncheckedUpdateWithoutReadProgressInput>
-    create: XOR<UserCreateWithoutReadProgressInput, UserUncheckedCreateWithoutReadProgressInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutReadProgressInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutReadProgressInput, UserUncheckedUpdateWithoutReadProgressInput>
-  }
-
-  export type UserUpdateWithoutReadProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    codes?: CodeUpdateManyWithoutUserNestedInput
-    posts?: PostUpdateManyWithoutUserNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutReadProgressInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    hashingPassword?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
-    userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-  }
-
-  export type MemberCreateWithoutRoomInput = {
-    id?: string
-    user: UserCreateNestedOneWithoutMemberInput
-  }
-
-  export type MemberUncheckedCreateWithoutRoomInput = {
-    id?: string
-    userId: string
-  }
-
-  export type MemberCreateOrConnectWithoutRoomInput = {
-    where: MemberWhereUniqueInput
-    create: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput>
-  }
-
-  export type MemberCreateManyRoomInputEnvelope = {
-    data: MemberCreateManyRoomInput | MemberCreateManyRoomInput[]
+  export type PrivateMessageCreateManyChatInputEnvelope = {
+    data: PrivateMessageCreateManyChatInput | PrivateMessageCreateManyChatInput[]
     skipDuplicates?: boolean
   }
 
-  export type MessageCreateWithoutRoomInput = {
-    content: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    sender?: UserCreateNestedOneWithoutMessagesInput
-    receiver?: UserCreateNestedOneWithoutReceivedMessagesInput
-  }
-
-  export type MessageUncheckedCreateWithoutRoomInput = {
-    id?: number
-    content: string
-    senderID?: string | null
-    receiverID?: string | null
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-  }
-
-  export type MessageCreateOrConnectWithoutRoomInput = {
-    where: MessageWhereUniqueInput
-    create: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput>
-  }
-
-  export type MessageCreateManyRoomInputEnvelope = {
-    data: MessageCreateManyRoomInput | MessageCreateManyRoomInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type MemberUpsertWithWhereUniqueWithoutRoomInput = {
-    where: MemberWhereUniqueInput
-    update: XOR<MemberUpdateWithoutRoomInput, MemberUncheckedUpdateWithoutRoomInput>
-    create: XOR<MemberCreateWithoutRoomInput, MemberUncheckedCreateWithoutRoomInput>
-  }
-
-  export type MemberUpdateWithWhereUniqueWithoutRoomInput = {
-    where: MemberWhereUniqueInput
-    data: XOR<MemberUpdateWithoutRoomInput, MemberUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type MemberUpdateManyWithWhereWithoutRoomInput = {
-    where: MemberScalarWhereInput
-    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyWithoutRoomInput>
-  }
-
-  export type MemberScalarWhereInput = {
-    AND?: MemberScalarWhereInput | MemberScalarWhereInput[]
-    OR?: MemberScalarWhereInput[]
-    NOT?: MemberScalarWhereInput | MemberScalarWhereInput[]
-    id?: UuidFilter<"Member"> | string
-    userId?: UuidFilter<"Member"> | string
-    roomId?: UuidFilter<"Member"> | string
-  }
-
-  export type MessageUpsertWithWhereUniqueWithoutRoomInput = {
-    where: MessageWhereUniqueInput
-    update: XOR<MessageUpdateWithoutRoomInput, MessageUncheckedUpdateWithoutRoomInput>
-    create: XOR<MessageCreateWithoutRoomInput, MessageUncheckedCreateWithoutRoomInput>
-  }
-
-  export type MessageUpdateWithWhereUniqueWithoutRoomInput = {
-    where: MessageWhereUniqueInput
-    data: XOR<MessageUpdateWithoutRoomInput, MessageUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type MessageUpdateManyWithWhereWithoutRoomInput = {
-    where: MessageScalarWhereInput
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutRoomInput>
-  }
-
-  export type MessageScalarWhereInput = {
-    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    OR?: MessageScalarWhereInput[]
-    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    id?: IntFilter<"Message"> | number
-    content?: StringFilter<"Message"> | string
-    senderID?: UuidNullableFilter<"Message"> | string | null
-    receiverID?: UuidNullableFilter<"Message"> | string | null
-    roomId?: UuidFilter<"Message"> | string
-    messageType?: StringFilter<"Message"> | string
-    isRead?: BoolFilter<"Message"> | boolean
-    createAt?: DateTimeFilter<"Message"> | Date | string
-    updateAt?: DateTimeFilter<"Message"> | Date | string
-    deleteAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-  }
-
-  export type UserCreateWithoutMemberInput = {
-    id?: string
-    name?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
-    isActive?: boolean
-    avtUrl?: string | null
-    email: string
-    hashingPassword: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    readProgressId?: string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    codes?: CodeCreateNestedManyWithoutUserInput
-    posts?: PostCreateNestedManyWithoutUserInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-    repComments?: RepCommentCreateNestedManyWithoutSenderInput
-    userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutMemberInput = {
-    id?: string
-    name?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
-    isActive?: boolean
-    avtUrl?: string | null
-    email: string
-    hashingPassword: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    readProgressId?: string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    codes?: CodeUncheckedCreateNestedManyWithoutUserInput
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
-    userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutMemberInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutMemberInput, UserUncheckedCreateWithoutMemberInput>
-  }
-
-  export type RoomCreateWithoutMembersInput = {
-    id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    messages?: MessageCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomUncheckedCreateWithoutMembersInput = {
-    id?: string
-    roomId: string
-    nameRoom: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomCreateOrConnectWithoutMembersInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutMembersInput, RoomUncheckedCreateWithoutMembersInput>
-  }
-
-  export type UserUpsertWithoutMemberInput = {
-    update: XOR<UserUpdateWithoutMemberInput, UserUncheckedUpdateWithoutMemberInput>
-    create: XOR<UserCreateWithoutMemberInput, UserUncheckedCreateWithoutMemberInput>
+  export type UserUpsertWithoutUser1Input = {
+    update: XOR<UserUpdateWithoutUser1Input, UserUncheckedUpdateWithoutUser1Input>
+    create: XOR<UserCreateWithoutUser1Input, UserUncheckedCreateWithoutUser1Input>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutMemberInput = {
+  export type UserUpdateToOneWithWhereWithoutUser1Input = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutMemberInput, UserUncheckedUpdateWithoutMemberInput>
+    data: XOR<UserUpdateWithoutUser1Input, UserUncheckedUpdateWithoutUser1Input>
   }
 
-  export type UserUpdateWithoutMemberInput = {
+  export type UserUpdateWithoutUser1Input = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
@@ -22710,22 +19788,21 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutMemberInput = {
+  export type UserUncheckedUpdateWithoutUser1Input = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
@@ -22734,48 +19811,389 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
-  export type RoomUpsertWithoutMembersInput = {
-    update: XOR<RoomUpdateWithoutMembersInput, RoomUncheckedUpdateWithoutMembersInput>
-    create: XOR<RoomCreateWithoutMembersInput, RoomUncheckedCreateWithoutMembersInput>
-    where?: RoomWhereInput
+  export type UserUpsertWithoutUser2Input = {
+    update: XOR<UserUpdateWithoutUser2Input, UserUncheckedUpdateWithoutUser2Input>
+    create: XOR<UserCreateWithoutUser2Input, UserUncheckedCreateWithoutUser2Input>
+    where?: UserWhereInput
   }
 
-  export type RoomUpdateToOneWithWhereWithoutMembersInput = {
-    where?: RoomWhereInput
-    data: XOR<RoomUpdateWithoutMembersInput, RoomUncheckedUpdateWithoutMembersInput>
+  export type UserUpdateToOneWithWhereWithoutUser2Input = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUser2Input, UserUncheckedUpdateWithoutUser2Input>
   }
 
-  export type RoomUpdateWithoutMembersInput = {
+  export type UserUpdateWithoutUser2Input = {
     id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUpdateManyWithoutRoomNestedInput
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    codes?: CodeUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
+    userRoles?: UserRoleUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
-  export type RoomUncheckedUpdateWithoutMembersInput = {
+  export type UserUncheckedUpdateWithoutUser2Input = {
     id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-    nameRoom?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutRoomNestedInput
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
+    userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type PrivateMessageUpsertWithWhereUniqueWithoutChatInput = {
+    where: PrivateMessageWhereUniqueInput
+    update: XOR<PrivateMessageUpdateWithoutChatInput, PrivateMessageUncheckedUpdateWithoutChatInput>
+    create: XOR<PrivateMessageCreateWithoutChatInput, PrivateMessageUncheckedCreateWithoutChatInput>
+  }
+
+  export type PrivateMessageUpdateWithWhereUniqueWithoutChatInput = {
+    where: PrivateMessageWhereUniqueInput
+    data: XOR<PrivateMessageUpdateWithoutChatInput, PrivateMessageUncheckedUpdateWithoutChatInput>
+  }
+
+  export type PrivateMessageUpdateManyWithWhereWithoutChatInput = {
+    where: PrivateMessageScalarWhereInput
+    data: XOR<PrivateMessageUpdateManyMutationInput, PrivateMessageUncheckedUpdateManyWithoutChatInput>
+  }
+
+  export type PrivateMessageScalarWhereInput = {
+    AND?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
+    OR?: PrivateMessageScalarWhereInput[]
+    NOT?: PrivateMessageScalarWhereInput | PrivateMessageScalarWhereInput[]
+    id?: UuidFilter<"PrivateMessage"> | string
+    content?: StringFilter<"PrivateMessage"> | string
+    chatId?: UuidFilter<"PrivateMessage"> | string
+    senderId?: UuidFilter<"PrivateMessage"> | string
+    messageIndex?: IntFilter<"PrivateMessage"> | number
+    replyToId?: UuidNullableFilter<"PrivateMessage"> | string | null
+    createdAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateMessage"> | Date | string
+  }
+
+  export type PrivateMessageCreateWithoutRepliesInput = {
+    id?: string
+    content: string
+    messageIndex: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    replyTo?: PrivateMessageCreateNestedOneWithoutRepliesInput
+    chat: PrivateChatCreateNestedOneWithoutPrivateMessageInput
+    sender: UserCreateNestedOneWithoutSentMessagesInput
+  }
+
+  export type PrivateMessageUncheckedCreateWithoutRepliesInput = {
+    id?: string
+    content: string
+    chatId: string
+    senderId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type PrivateMessageCreateOrConnectWithoutRepliesInput = {
+    where: PrivateMessageWhereUniqueInput
+    create: XOR<PrivateMessageCreateWithoutRepliesInput, PrivateMessageUncheckedCreateWithoutRepliesInput>
+  }
+
+  export type PrivateMessageCreateWithoutReplyToInput = {
+    id?: string
+    content: string
+    messageIndex: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    replies?: PrivateMessageCreateNestedManyWithoutReplyToInput
+    chat: PrivateChatCreateNestedOneWithoutPrivateMessageInput
+    sender: UserCreateNestedOneWithoutSentMessagesInput
+  }
+
+  export type PrivateMessageUncheckedCreateWithoutReplyToInput = {
+    id?: string
+    content: string
+    chatId: string
+    senderId: string
+    messageIndex: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    replies?: PrivateMessageUncheckedCreateNestedManyWithoutReplyToInput
+  }
+
+  export type PrivateMessageCreateOrConnectWithoutReplyToInput = {
+    where: PrivateMessageWhereUniqueInput
+    create: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput>
+  }
+
+  export type PrivateMessageCreateManyReplyToInputEnvelope = {
+    data: PrivateMessageCreateManyReplyToInput | PrivateMessageCreateManyReplyToInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PrivateChatCreateWithoutPrivateMessageInput = {
+    id?: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    user1: UserCreateNestedOneWithoutUser1Input
+    user2: UserCreateNestedOneWithoutUser2Input
+  }
+
+  export type PrivateChatUncheckedCreateWithoutPrivateMessageInput = {
+    id?: string
+    user1Id: string
+    user2Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type PrivateChatCreateOrConnectWithoutPrivateMessageInput = {
+    where: PrivateChatWhereUniqueInput
+    create: XOR<PrivateChatCreateWithoutPrivateMessageInput, PrivateChatUncheckedCreateWithoutPrivateMessageInput>
+  }
+
+  export type UserCreateWithoutSentMessagesInput = {
+    id?: string
+    name?: string | null
+    gender?: $Enums.Gender | null
+    dateOfBirth?: Date | string | null
+    isActive?: boolean
+    avtUrl?: string | null
+    email: string
+    hashingPassword: string
+    lastSeen?: Date | string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    deleteAt?: Date | string | null
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    codes?: CodeCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+    repComments?: RepCommentCreateNestedManyWithoutSenderInput
+    userRoles?: UserRoleCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserUncheckedCreateWithoutSentMessagesInput = {
+    id?: string
+    name?: string | null
+    gender?: $Enums.Gender | null
+    dateOfBirth?: Date | string | null
+    isActive?: boolean
+    avtUrl?: string | null
+    email: string
+    hashingPassword: string
+    lastSeen?: Date | string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    deleteAt?: Date | string | null
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    codes?: CodeUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
+    userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+  }
+
+  export type UserCreateOrConnectWithoutSentMessagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSentMessagesInput, UserUncheckedCreateWithoutSentMessagesInput>
+  }
+
+  export type PrivateMessageUpsertWithoutRepliesInput = {
+    update: XOR<PrivateMessageUpdateWithoutRepliesInput, PrivateMessageUncheckedUpdateWithoutRepliesInput>
+    create: XOR<PrivateMessageCreateWithoutRepliesInput, PrivateMessageUncheckedCreateWithoutRepliesInput>
+    where?: PrivateMessageWhereInput
+  }
+
+  export type PrivateMessageUpdateToOneWithWhereWithoutRepliesInput = {
+    where?: PrivateMessageWhereInput
+    data: XOR<PrivateMessageUpdateWithoutRepliesInput, PrivateMessageUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type PrivateMessageUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replyTo?: PrivateMessageUpdateOneWithoutRepliesNestedInput
+    chat?: PrivateChatUpdateOneRequiredWithoutPrivateMessageNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  }
+
+  export type PrivateMessageUncheckedUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivateMessageUpsertWithWhereUniqueWithoutReplyToInput = {
+    where: PrivateMessageWhereUniqueInput
+    update: XOR<PrivateMessageUpdateWithoutReplyToInput, PrivateMessageUncheckedUpdateWithoutReplyToInput>
+    create: XOR<PrivateMessageCreateWithoutReplyToInput, PrivateMessageUncheckedCreateWithoutReplyToInput>
+  }
+
+  export type PrivateMessageUpdateWithWhereUniqueWithoutReplyToInput = {
+    where: PrivateMessageWhereUniqueInput
+    data: XOR<PrivateMessageUpdateWithoutReplyToInput, PrivateMessageUncheckedUpdateWithoutReplyToInput>
+  }
+
+  export type PrivateMessageUpdateManyWithWhereWithoutReplyToInput = {
+    where: PrivateMessageScalarWhereInput
+    data: XOR<PrivateMessageUpdateManyMutationInput, PrivateMessageUncheckedUpdateManyWithoutReplyToInput>
+  }
+
+  export type PrivateChatUpsertWithoutPrivateMessageInput = {
+    update: XOR<PrivateChatUpdateWithoutPrivateMessageInput, PrivateChatUncheckedUpdateWithoutPrivateMessageInput>
+    create: XOR<PrivateChatCreateWithoutPrivateMessageInput, PrivateChatUncheckedCreateWithoutPrivateMessageInput>
+    where?: PrivateChatWhereInput
+  }
+
+  export type PrivateChatUpdateToOneWithWhereWithoutPrivateMessageInput = {
+    where?: PrivateChatWhereInput
+    data: XOR<PrivateChatUpdateWithoutPrivateMessageInput, PrivateChatUncheckedUpdateWithoutPrivateMessageInput>
+  }
+
+  export type PrivateChatUpdateWithoutPrivateMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user1?: UserUpdateOneRequiredWithoutUser1NestedInput
+    user2?: UserUpdateOneRequiredWithoutUser2NestedInput
+  }
+
+  export type PrivateChatUncheckedUpdateWithoutPrivateMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutSentMessagesInput = {
+    update: XOR<UserUpdateWithoutSentMessagesInput, UserUncheckedUpdateWithoutSentMessagesInput>
+    create: XOR<UserCreateWithoutSentMessagesInput, UserUncheckedCreateWithoutSentMessagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSentMessagesInput, UserUncheckedUpdateWithoutSentMessagesInput>
+  }
+
+  export type UserUpdateWithoutSentMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    codes?: CodeUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
+    userRoles?: UserRoleUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSentMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
+    userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -22871,19 +20289,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutUserRolesInput = {
@@ -22895,19 +20312,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutUserRolesInput = {
@@ -22952,19 +20368,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserRolesInput = {
@@ -22976,19 +20391,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type RoleUpsertWithoutUserRolesInput = {
@@ -23133,19 +20547,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -23157,19 +20570,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -23225,19 +20637,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -23249,19 +20660,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutPostInput = {
@@ -23328,19 +20738,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     repComments?: RepCommentCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -23352,19 +20761,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -23451,19 +20859,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -23475,19 +20882,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type RepCommentUpsertWithWhereUniqueWithoutCommentInput = {
@@ -23527,19 +20933,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     codes?: CodeCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     userRoles?: UserRoleCreateNestedManyWithoutUserInput
-    member?: MemberCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressCreateNestedManyWithoutUserInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutRepCommentsInput = {
@@ -23551,19 +20956,18 @@ export namespace Prisma {
     avtUrl?: string | null
     email: string
     hashingPassword: string
+    lastSeen?: Date | string | null
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
-    readProgressId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     codes?: CodeUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     userRoles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
-    member?: MemberUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
-    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
-    readProgress?: ReadProgressUncheckedCreateNestedManyWithoutUserInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutRepCommentsInput = {
@@ -23614,19 +21018,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     codes?: CodeUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     userRoles?: UserRoleUpdateManyWithoutUserNestedInput
-    member?: MemberUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRepCommentsInput = {
@@ -23638,19 +21041,18 @@ export namespace Prisma {
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    readProgressId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     userRoles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
-    member?: MemberUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
-    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
-    readProgress?: ReadProgressUncheckedUpdateManyWithoutUserNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type CommentUpsertWithoutRepCommentsInput = {
@@ -23838,111 +21240,107 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type MemberCreateWithoutUserInput = {
+  export type PrivateChatCreateWithoutUser1Input = {
     id?: string
-    room: RoomCreateNestedOneWithoutMembersInput
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    user2: UserCreateNestedOneWithoutUser2Input
+    privateMessage?: PrivateMessageCreateNestedManyWithoutChatInput
   }
 
-  export type MemberUncheckedCreateWithoutUserInput = {
+  export type PrivateChatUncheckedCreateWithoutUser1Input = {
     id?: string
-    roomId: string
+    user2Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    privateMessage?: PrivateMessageUncheckedCreateNestedManyWithoutChatInput
   }
 
-  export type MemberCreateOrConnectWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
+  export type PrivateChatCreateOrConnectWithoutUser1Input = {
+    where: PrivateChatWhereUniqueInput
+    create: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input>
   }
 
-  export type MemberCreateManyUserInputEnvelope = {
-    data: MemberCreateManyUserInput | MemberCreateManyUserInput[]
+  export type PrivateChatCreateManyUser1InputEnvelope = {
+    data: PrivateChatCreateManyUser1Input | PrivateChatCreateManyUser1Input[]
     skipDuplicates?: boolean
   }
 
-  export type MessageCreateWithoutSenderInput = {
-    content: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+  export type PrivateChatCreateWithoutUser2Input = {
+    id?: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
-    receiver?: UserCreateNestedOneWithoutReceivedMessagesInput
-    room: RoomCreateNestedOneWithoutMessagesInput
+    user1: UserCreateNestedOneWithoutUser1Input
+    privateMessage?: PrivateMessageCreateNestedManyWithoutChatInput
   }
 
-  export type MessageUncheckedCreateWithoutSenderInput = {
-    id?: number
-    content: string
-    receiverID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+  export type PrivateChatUncheckedCreateWithoutUser2Input = {
+    id?: string
+    user1Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
+    privateMessage?: PrivateMessageUncheckedCreateNestedManyWithoutChatInput
   }
 
-  export type MessageCreateOrConnectWithoutSenderInput = {
-    where: MessageWhereUniqueInput
-    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  export type PrivateChatCreateOrConnectWithoutUser2Input = {
+    where: PrivateChatWhereUniqueInput
+    create: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input>
   }
 
-  export type MessageCreateManySenderInputEnvelope = {
-    data: MessageCreateManySenderInput | MessageCreateManySenderInput[]
+  export type PrivateChatCreateManyUser2InputEnvelope = {
+    data: PrivateChatCreateManyUser2Input | PrivateChatCreateManyUser2Input[]
     skipDuplicates?: boolean
   }
 
-  export type MessageCreateWithoutReceiverInput = {
-    content: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-    sender?: UserCreateNestedOneWithoutMessagesInput
-    room: RoomCreateNestedOneWithoutMessagesInput
-  }
-
-  export type MessageUncheckedCreateWithoutReceiverInput = {
-    id?: number
-    content: string
-    senderID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-  }
-
-  export type MessageCreateOrConnectWithoutReceiverInput = {
-    where: MessageWhereUniqueInput
-    create: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput>
-  }
-
-  export type MessageCreateManyReceiverInputEnvelope = {
-    data: MessageCreateManyReceiverInput | MessageCreateManyReceiverInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ReadProgressCreateWithoutUserInput = {
+  export type PrivateMessageCreateWithoutSenderInput = {
     id?: string
-    messageId?: number
-    roomId: string
+    content: string
+    messageIndex: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    replyTo?: PrivateMessageCreateNestedOneWithoutRepliesInput
+    replies?: PrivateMessageCreateNestedManyWithoutReplyToInput
+    chat: PrivateChatCreateNestedOneWithoutPrivateMessageInput
   }
 
-  export type ReadProgressUncheckedCreateWithoutUserInput = {
+  export type PrivateMessageUncheckedCreateWithoutSenderInput = {
     id?: string
-    messageId?: number
-    roomId: string
+    content: string
+    chatId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
+    replies?: PrivateMessageUncheckedCreateNestedManyWithoutReplyToInput
   }
 
-  export type ReadProgressCreateOrConnectWithoutUserInput = {
-    where: ReadProgressWhereUniqueInput
-    create: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput>
+  export type PrivateMessageCreateOrConnectWithoutSenderInput = {
+    where: PrivateMessageWhereUniqueInput
+    create: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput>
   }
 
-  export type ReadProgressCreateManyUserInputEnvelope = {
-    data: ReadProgressCreateManyUserInput | ReadProgressCreateManyUserInput[]
+  export type PrivateMessageCreateManySenderInputEnvelope = {
+    data: PrivateMessageCreateManySenderInput | PrivateMessageCreateManySenderInput[]
     skipDuplicates?: boolean
   }
 
@@ -24080,145 +21478,152 @@ export namespace Prisma {
     data: XOR<UserRoleUpdateManyMutationInput, UserRoleUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type MemberUpsertWithWhereUniqueWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    update: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
-    create: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput>
+  export type PrivateChatUpsertWithWhereUniqueWithoutUser1Input = {
+    where: PrivateChatWhereUniqueInput
+    update: XOR<PrivateChatUpdateWithoutUser1Input, PrivateChatUncheckedUpdateWithoutUser1Input>
+    create: XOR<PrivateChatCreateWithoutUser1Input, PrivateChatUncheckedCreateWithoutUser1Input>
   }
 
-  export type MemberUpdateWithWhereUniqueWithoutUserInput = {
-    where: MemberWhereUniqueInput
-    data: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
+  export type PrivateChatUpdateWithWhereUniqueWithoutUser1Input = {
+    where: PrivateChatWhereUniqueInput
+    data: XOR<PrivateChatUpdateWithoutUser1Input, PrivateChatUncheckedUpdateWithoutUser1Input>
   }
 
-  export type MemberUpdateManyWithWhereWithoutUserInput = {
-    where: MemberScalarWhereInput
-    data: XOR<MemberUpdateManyMutationInput, MemberUncheckedUpdateManyWithoutUserInput>
+  export type PrivateChatUpdateManyWithWhereWithoutUser1Input = {
+    where: PrivateChatScalarWhereInput
+    data: XOR<PrivateChatUpdateManyMutationInput, PrivateChatUncheckedUpdateManyWithoutUser1Input>
   }
 
-  export type MessageUpsertWithWhereUniqueWithoutSenderInput = {
-    where: MessageWhereUniqueInput
-    update: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
-    create: XOR<MessageCreateWithoutSenderInput, MessageUncheckedCreateWithoutSenderInput>
+  export type PrivateChatScalarWhereInput = {
+    AND?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
+    OR?: PrivateChatScalarWhereInput[]
+    NOT?: PrivateChatScalarWhereInput | PrivateChatScalarWhereInput[]
+    id?: UuidFilter<"PrivateChat"> | string
+    user1Id?: UuidFilter<"PrivateChat"> | string
+    user2Id?: UuidFilter<"PrivateChat"> | string
+    lastMessage?: StringNullableFilter<"PrivateChat"> | string | null
+    lastMessageAt?: DateTimeNullableFilter<"PrivateChat"> | Date | string | null
+    user1LastReadIndex?: IntFilter<"PrivateChat"> | number
+    user2LastReadIndex?: IntFilter<"PrivateChat"> | number
+    totalMessage?: IntFilter<"PrivateChat"> | number
+    createdAt?: DateTimeFilter<"PrivateChat"> | Date | string
+    updateAt?: DateTimeFilter<"PrivateChat"> | Date | string
   }
 
-  export type MessageUpdateWithWhereUniqueWithoutSenderInput = {
-    where: MessageWhereUniqueInput
-    data: XOR<MessageUpdateWithoutSenderInput, MessageUncheckedUpdateWithoutSenderInput>
+  export type PrivateChatUpsertWithWhereUniqueWithoutUser2Input = {
+    where: PrivateChatWhereUniqueInput
+    update: XOR<PrivateChatUpdateWithoutUser2Input, PrivateChatUncheckedUpdateWithoutUser2Input>
+    create: XOR<PrivateChatCreateWithoutUser2Input, PrivateChatUncheckedCreateWithoutUser2Input>
   }
 
-  export type MessageUpdateManyWithWhereWithoutSenderInput = {
-    where: MessageScalarWhereInput
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutSenderInput>
+  export type PrivateChatUpdateWithWhereUniqueWithoutUser2Input = {
+    where: PrivateChatWhereUniqueInput
+    data: XOR<PrivateChatUpdateWithoutUser2Input, PrivateChatUncheckedUpdateWithoutUser2Input>
   }
 
-  export type MessageUpsertWithWhereUniqueWithoutReceiverInput = {
-    where: MessageWhereUniqueInput
-    update: XOR<MessageUpdateWithoutReceiverInput, MessageUncheckedUpdateWithoutReceiverInput>
-    create: XOR<MessageCreateWithoutReceiverInput, MessageUncheckedCreateWithoutReceiverInput>
+  export type PrivateChatUpdateManyWithWhereWithoutUser2Input = {
+    where: PrivateChatScalarWhereInput
+    data: XOR<PrivateChatUpdateManyMutationInput, PrivateChatUncheckedUpdateManyWithoutUser2Input>
   }
 
-  export type MessageUpdateWithWhereUniqueWithoutReceiverInput = {
-    where: MessageWhereUniqueInput
-    data: XOR<MessageUpdateWithoutReceiverInput, MessageUncheckedUpdateWithoutReceiverInput>
+  export type PrivateMessageUpsertWithWhereUniqueWithoutSenderInput = {
+    where: PrivateMessageWhereUniqueInput
+    update: XOR<PrivateMessageUpdateWithoutSenderInput, PrivateMessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<PrivateMessageCreateWithoutSenderInput, PrivateMessageUncheckedCreateWithoutSenderInput>
   }
 
-  export type MessageUpdateManyWithWhereWithoutReceiverInput = {
-    where: MessageScalarWhereInput
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutReceiverInput>
+  export type PrivateMessageUpdateWithWhereUniqueWithoutSenderInput = {
+    where: PrivateMessageWhereUniqueInput
+    data: XOR<PrivateMessageUpdateWithoutSenderInput, PrivateMessageUncheckedUpdateWithoutSenderInput>
   }
 
-  export type ReadProgressUpsertWithWhereUniqueWithoutUserInput = {
-    where: ReadProgressWhereUniqueInput
-    update: XOR<ReadProgressUpdateWithoutUserInput, ReadProgressUncheckedUpdateWithoutUserInput>
-    create: XOR<ReadProgressCreateWithoutUserInput, ReadProgressUncheckedCreateWithoutUserInput>
+  export type PrivateMessageUpdateManyWithWhereWithoutSenderInput = {
+    where: PrivateMessageScalarWhereInput
+    data: XOR<PrivateMessageUpdateManyMutationInput, PrivateMessageUncheckedUpdateManyWithoutSenderInput>
   }
 
-  export type ReadProgressUpdateWithWhereUniqueWithoutUserInput = {
-    where: ReadProgressWhereUniqueInput
-    data: XOR<ReadProgressUpdateWithoutUserInput, ReadProgressUncheckedUpdateWithoutUserInput>
-  }
-
-  export type ReadProgressUpdateManyWithWhereWithoutUserInput = {
-    where: ReadProgressScalarWhereInput
-    data: XOR<ReadProgressUpdateManyMutationInput, ReadProgressUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type ReadProgressScalarWhereInput = {
-    AND?: ReadProgressScalarWhereInput | ReadProgressScalarWhereInput[]
-    OR?: ReadProgressScalarWhereInput[]
-    NOT?: ReadProgressScalarWhereInput | ReadProgressScalarWhereInput[]
-    id?: UuidFilter<"ReadProgress"> | string
-    messageId?: IntFilter<"ReadProgress"> | number
-    roomId?: UuidFilter<"ReadProgress"> | string
-    userId?: UuidFilter<"ReadProgress"> | string
-  }
-
-  export type MemberCreateManyRoomInput = {
+  export type PrivateMessageCreateManyChatInput = {
     id?: string
-    userId: string
-  }
-
-  export type MessageCreateManyRoomInput = {
-    id?: number
     content: string
-    senderID?: string | null
-    receiverID?: string | null
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+    senderId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
   }
 
-  export type MemberUpdateWithoutRoomInput = {
+  export type PrivateMessageUpdateWithoutChatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutMemberNestedInput
+    content?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replyTo?: PrivateMessageUpdateOneWithoutRepliesNestedInput
+    replies?: PrivateMessageUpdateManyWithoutReplyToNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentMessagesNestedInput
   }
 
-  export type MemberUncheckedUpdateWithoutRoomInput = {
+  export type PrivateMessageUncheckedUpdateWithoutChatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: PrivateMessageUncheckedUpdateManyWithoutReplyToNestedInput
   }
 
-  export type MemberUncheckedUpdateManyWithoutRoomInput = {
+  export type PrivateMessageUncheckedUpdateManyWithoutChatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageUpdateWithoutRoomInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sender?: UserUpdateOneWithoutMessagesNestedInput
-    receiver?: UserUpdateOneWithoutReceivedMessagesNestedInput
+  export type PrivateMessageCreateManyReplyToInput = {
+    id?: string
+    content: string
+    chatId: string
+    senderId: string
+    messageIndex: number
+    createdAt?: Date | string
+    updateAt?: Date | string
   }
 
-  export type MessageUncheckedUpdateWithoutRoomInput = {
-    id?: IntFieldUpdateOperationsInput | number
+  export type PrivateMessageUpdateWithoutReplyToInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replies?: PrivateMessageUpdateManyWithoutReplyToNestedInput
+    chat?: PrivateChatUpdateOneRequiredWithoutPrivateMessageNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentMessagesNestedInput
   }
 
-  export type MessageUncheckedUpdateManyWithoutRoomInput = {
-    id?: IntFieldUpdateOperationsInput | number
+  export type PrivateMessageUncheckedUpdateWithoutReplyToInput = {
+    id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    replies?: PrivateMessageUncheckedUpdateManyWithoutReplyToNestedInput
+  }
+
+  export type PrivateMessageUncheckedUpdateManyWithoutReplyToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserRoleCreateManyRoleInput = {
@@ -24381,39 +21786,38 @@ export namespace Prisma {
     roleId: string
   }
 
-  export type MemberCreateManyUserInput = {
+  export type PrivateChatCreateManyUser1Input = {
     id?: string
-    roomId: string
-  }
-
-  export type MessageCreateManySenderInput = {
-    id?: number
-    content: string
-    receiverID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
+    user2Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
     updateAt?: Date | string
-    deleteAt?: Date | string | null
   }
 
-  export type MessageCreateManyReceiverInput = {
-    id?: number
-    content: string
-    senderID?: string | null
-    roomId: string
-    messageType?: string
-    isRead?: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    deleteAt?: Date | string | null
-  }
-
-  export type ReadProgressCreateManyUserInput = {
+  export type PrivateChatCreateManyUser2Input = {
     id?: string
-    messageId?: number
-    roomId: string
+    user1Id: string
+    lastMessage?: string | null
+    lastMessageAt?: Date | string | null
+    user1LastReadIndex?: number
+    user2LastReadIndex?: number
+    totalMessage?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type PrivateMessageCreateManySenderInput = {
+    id?: string
+    content: string
+    chatId: string
+    messageIndex: number
+    replyToId?: string | null
+    createdAt?: Date | string
+    updateAt?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -24558,107 +21962,112 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type MemberUpdateWithoutUserInput = {
+  export type PrivateChatUpdateWithoutUser1Input = {
     id?: StringFieldUpdateOperationsInput | string
-    room?: RoomUpdateOneRequiredWithoutMembersNestedInput
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user2?: UserUpdateOneRequiredWithoutUser2NestedInput
+    privateMessage?: PrivateMessageUpdateManyWithoutChatNestedInput
   }
 
-  export type MemberUncheckedUpdateWithoutUserInput = {
+  export type PrivateChatUncheckedUpdateWithoutUser1Input = {
     id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    privateMessage?: PrivateMessageUncheckedUpdateManyWithoutChatNestedInput
   }
 
-  export type MemberUncheckedUpdateManyWithoutUserInput = {
+  export type PrivateChatUncheckedUpdateManyWithoutUser1Input = {
     id?: StringFieldUpdateOperationsInput | string
-    roomId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type MessageUpdateWithoutSenderInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user2Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    receiver?: UserUpdateOneWithoutReceivedMessagesNestedInput
-    room?: RoomUpdateOneRequiredWithoutMessagesNestedInput
   }
 
-  export type MessageUncheckedUpdateWithoutSenderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type MessageUncheckedUpdateManyWithoutSenderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    receiverID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type MessageUpdateWithoutReceiverInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sender?: UserUpdateOneWithoutMessagesNestedInput
-    room?: RoomUpdateOneRequiredWithoutMessagesNestedInput
-  }
-
-  export type MessageUncheckedUpdateWithoutReceiverInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type MessageUncheckedUpdateManyWithoutReceiverInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    senderID?: NullableStringFieldUpdateOperationsInput | string | null
-    roomId?: StringFieldUpdateOperationsInput | string
-    messageType?: StringFieldUpdateOperationsInput | string
-    isRead?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type ReadProgressUpdateWithoutUserInput = {
+  export type PrivateChatUpdateWithoutUser2Input = {
     id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user1?: UserUpdateOneRequiredWithoutUser1NestedInput
+    privateMessage?: PrivateMessageUpdateManyWithoutChatNestedInput
   }
 
-  export type ReadProgressUncheckedUpdateWithoutUserInput = {
+  export type PrivateChatUncheckedUpdateWithoutUser2Input = {
     id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    privateMessage?: PrivateMessageUncheckedUpdateManyWithoutChatNestedInput
   }
 
-  export type ReadProgressUncheckedUpdateManyWithoutUserInput = {
+  export type PrivateChatUncheckedUpdateManyWithoutUser2Input = {
     id?: StringFieldUpdateOperationsInput | string
-    messageId?: IntFieldUpdateOperationsInput | number
-    roomId?: StringFieldUpdateOperationsInput | string
+    user1Id?: StringFieldUpdateOperationsInput | string
+    lastMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user1LastReadIndex?: IntFieldUpdateOperationsInput | number
+    user2LastReadIndex?: IntFieldUpdateOperationsInput | number
+    totalMessage?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PrivateMessageUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replyTo?: PrivateMessageUpdateOneWithoutRepliesNestedInput
+    replies?: PrivateMessageUpdateManyWithoutReplyToNestedInput
+    chat?: PrivateChatUpdateOneRequiredWithoutPrivateMessageNestedInput
+  }
+
+  export type PrivateMessageUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: PrivateMessageUncheckedUpdateManyWithoutReplyToNestedInput
+  }
+
+  export type PrivateMessageUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    chatId?: StringFieldUpdateOperationsInput | string
+    messageIndex?: IntFieldUpdateOperationsInput | number
+    replyToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

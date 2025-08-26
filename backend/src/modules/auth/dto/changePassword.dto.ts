@@ -1,4 +1,13 @@
+import { IsString, MinLength, MaxLength } from 'class-validator';
+
 export class ChangePasswordDto {
-    oldPassword: string
-    newPassword: string
+    @IsString()
+    @MinLength(6)
+    @MaxLength(50)
+    oldPassword: string;
+
+    @IsString()
+    @MinLength(6)
+    @MaxLength(50)
+    newPassword: string;
 }

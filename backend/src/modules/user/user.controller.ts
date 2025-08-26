@@ -49,8 +49,15 @@ export class UserController {
             }
         })
     }))
-    async createPost(@Req() req: Request, @Body('content') content: string, @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>) {
-        // Match service signature: createPost(req: Request, content: string, files: Array<Express.Multer.File>)
+    async createPost(
+        @Req() req: Request,
+        @Body('content') content: string,
+        @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>
+    ) {
+        if (!content?.trim()) {
+            throw new BadRequestException("Post content cannot be empty")
+        }
+        // Service expects: createPost(req, content, files)
         return this.postService.createPost(req, content, files || [])
     }
 
@@ -64,37 +71,46 @@ export class UserController {
             }
         })
     }))
-    async editPost(@Query('idPost') idPost: string, @Body('newContent') newContent: string, @Req() req: Request, @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>) {
-        // Match service signature: editPost(req: Request, files: Array<Express.Multer.File>, newContent: string, postId: string)
+    async editPost(
+        @Req() req: Request,
+        @UploadedFiles(new FileArrayValidationPipe()) files: Array<Express.Multer.File>,
+        @Body('newContent') newContent: string,
+        @Query('idPost') idPost: string
+    ) {
+        if (!newContent?.trim()) {
+            throw new BadRequestException("Post content cannot be empty")
+        }
+        // Service expects: editPost(req, files, newContent, postId)
         return this.postService.editPost(req, files || [], newContent, idPost)
     }
 
     @Delete('delete-post')
-    async deletePost(@Req() req: Request, @Query('postId') postId: string) {
-        // Match service signature: deletePost(postId: string, req: Request)
+    async deletePost(
+        @Query('postId') postId: string,
+        @Req() req: Request
+    ) {
+        // Service expects: deletePost(postId, req)
         return this.postService.deletePost(postId, req)
     }
 
-    @Get('list-post')
-    async listPost(@Req() req: Request) {
-        return this.userService.loadAllAuthorPost(req)
-    }
 
     @Public()
     @Get('post')
-    async getDetailPost(@Query('postId') postId: string, @Query('page') page?: number, @Query('limit') limit?: number) {
-        // Match service signature: getPost(postId: string, page: number, limit: number)
+    async getDetailPost(
+        @Query('postId') postId: string,
+        @Query('page') page?: number,
+        @Query('limit') limit?: number
+    ) {
         const pageNum = page ? Number(page) : 1
         const limitNum = limit ? Number(limit) : 10
 
         if (isNaN(pageNum) || isNaN(limitNum) || pageNum < 1 || limitNum < 1) {
             throw new BadRequestException("Page and limit must be positive numbers")
         }
-
+        // Service expects: getPost(postId, page, limit)
         return this.postService.getPost(postId, pageNum, limitNum)
     }
 
-    // Add search endpoint to match findPostByName service method
     @Public()
     @Get('search')
     async searchPosts(
@@ -113,7 +129,7 @@ export class UserController {
             throw new BadRequestException("Page and limit must be positive numbers")
         }
 
-        // Match service signature: findPostByName(content: string, page: number, limit: number)
+        // Service expects: findPostByName(content, page, limit)
         return this.postService.findPostByName(content, pageNum, limitNum)
     }
 
