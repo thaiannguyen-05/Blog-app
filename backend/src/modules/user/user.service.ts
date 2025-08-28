@@ -2,9 +2,9 @@ import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
 import { BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { Request } from 'express';
 import { PrismaService } from "src/prisma/prisma.service";
-import { EditDetailDto } from "./dto/EditDetailDto";
 import { CustomCacheService } from "../custom-cache/customCache.service";
-import { User } from "prisma/generated/prisma";
+import { EditDetailDto } from "./dto/EditDetailDto";
+import { FindUserByName } from "./dto/FindUserByName";
 import { USER_CONSTANTS } from "./user.constants";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
@@ -13,7 +13,7 @@ const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 export class UserService {
 
     constructor(
-        @Inject(CACHE_MANAGER) private cacheManager: Cache,
+        @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
         private readonly prismaService: PrismaService,
         private readonly customCacheService: CustomCacheService
     ) { }
@@ -70,7 +70,7 @@ export class UserService {
     }
 
     // change avata
-    async changeAvt(req: Request, file: Express.Multer.File) {
+    async changeAvt(req: Request, filePath: string) {
         // find available user
         const userId = req.user?.id || 'unknow'
         if (!userId) throw new ForbiddenException("Require accesstoken")
@@ -84,15 +84,12 @@ export class UserService {
             throw new NotFoundException("user not found")
         }
 
-        // get file path
-        const fileUrls = file.filename
-
-        if (!fileUrls) throw new BadRequestException("File path is not empty")
+        if (!filePath) throw new BadRequestException("File path is not empty")
 
         // update avt user
         const newUser = await this.prismaService.user.update({
             where: { id: exitingUser.id },
-            data: { avtUrl: fileUrls }
+            data: { avtUrl: filePath }
         })
 
         // update cache
@@ -129,5 +126,69 @@ export class UserService {
         }
 
         return cache
+    }
+
+    // find user by name
+    async findUserByName(name: string, query: FindUserByName) {
+        const { page = 1, limit = 20, cursor } = query;
+        const skip = (page - 1) * limit;
+
+        // get in cache
+        const cachedUsers = await this.customCacheService.getListUserByName(name)
+        if (Array.isArray(cachedUsers) && cachedUsers.length > 0) {
+            const hasMore = cachedUsers.length > limit;
+            const items = hasMore ? cachedUsers.slice(0, -1) : cachedUsers;
+            const nextCursor = items.length > 0 ? items[items.length - 1].id.toString() : null;
+            let total: number | null = null;
+            if (page === 1 && !cursor) {
+                total = cachedUsers.length;
+            }
+            return {
+                items,
+                pagination: {
+                    page,
+                    limit,
+                    hasMore,
+                    nextCursor,
+                    total
+                }
+            };
+        }
+
+        const whereClause: any = { name: { contains: name, mode: 'insensitive' } };
+        if (cursor) {
+            whereClause.id = { lt: parseInt(cursor) };
+        }
+
+        const listUser = await this.prismaService.user.findMany({
+            where: whereClause,
+            take: limit + 1,
+            skip: cursor ? 0 : skip,
+        });
+
+        const hasMore = listUser.length > limit;
+        const items = hasMore ? listUser.slice(0, -1) : listUser;
+        const nextCursor = items.length > 0 ? items[items.length - 1].id.toString() : null;
+
+        let total: number | null = null;
+        if (page === 1 && !cursor) {
+            total = await this.prismaService.user.count({
+                where: { name: { contains: name, mode: 'insensitive' } },
+            });
+        }
+
+        // cache
+        await this.customCacheService.cacheLagerOfDatauser(name, items);
+
+        return {
+            items,
+            pagination: {
+                page,
+                limit,
+                hasMore,
+                nextCursor,
+                total
+            }
+        };
     }
 }

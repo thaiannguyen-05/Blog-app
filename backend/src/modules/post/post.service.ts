@@ -1,9 +1,12 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import { Request } from 'express';
 import { PrismaService } from "src/prisma/prisma.service";
 import { CustomCacheService } from "../custom-cache/customCache.service";
+import { GetDetailPostDto } from "./dto/get.detail.post.dto";
+import { GetManyPostDto } from "./dto/get.many.post.dto";
+import { POST_CONSTANTS } from "./post.constants";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -13,25 +16,26 @@ export class PostService {
     constructor(
         private readonly prismaService: PrismaService,
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
-        private readonly customCache: CustomCacheService
+        private readonly customCache: CustomCacheService,
     ) { }
 
     // create post
-    async createPost(req: Request, content: string, files: Array<Express.Multer.File>) {
+    async createPost(req: Request, content: string, paths: string[]) {
         const userId = req.user?.id || 'unknow'
 
         const availableUser = await this.customCache.getUserInCache(userId)
 
         if (!availableUser) throw new NotFoundException("user not found")
 
-        // filter file name
-        const urlFiles = files.map(file => file.filename) || []
+        if (!content?.trim()) {
+            throw new BadRequestException("Post content cannot be empty")
+        }
 
         // create post
         const newPost = await this.prismaService.post.create({
             data: {
                 content: content,
-                urlImgs: urlFiles,
+                urlImgs: paths,
                 userId: availableUser.id
             }
         })
@@ -43,12 +47,17 @@ export class PostService {
     }
 
     // edit post
-    async editPost(req: Request, files: Array<Express.Multer.File>, newContent: string, postId: string) {
+    async editPost(req: Request, filePaths: string[], postId: string, newContent?: string) {
+        // find available post
         const exitingPost = await this.prismaService.post.findUnique({
             where: { id: postId }
         })
 
         if (!exitingPost) throw new NotFoundException("Post not found")
+
+        if (!newContent?.trim()) {
+            throw new BadRequestException("Post content cannot be empty")
+        }
 
         // check validate author post
         if (req.user?.id !== exitingPost.userId) {
@@ -56,14 +65,15 @@ export class PostService {
             throw new UnauthorizedException("You are not author post")
         }
 
-        let urlFiles: string[] = exitingPost.urlImgs || []
+        // tao array linkPaths
+        let urlImgs: string[] = exitingPost.urlImgs || []
 
-        if (Array.isArray(files) && files.length > 0) {
-            const newFileNames = files.map(file => file.filename)
-            urlFiles = urlFiles.concat(newFileNames)
+
+        if (Array.isArray(filePaths) && filePaths.length > 0) {
+            urlImgs = urlImgs.concat(filePaths)
         }
 
-        const data = { urlImgs: urlFiles, content: newContent }
+        const data = { urlImgs: urlImgs, content: newContent }
 
         // del cache
         const key = `post:${postId}`
@@ -119,8 +129,8 @@ export class PostService {
     }
 
     // get detail post
-    async getPost(postId: string, page: number, limit: number) {
-        const exitingPost = await this.customCache.getPostInCache(postId)
+    async getPost(postId: string, query: GetDetailPostDto) {
+        const exitingPost = await this.customCache.getPostInCache(postId, query)
 
         if (!exitingPost) {
             await this.customCache.fallBackCacheTemporaryObject(`post:${postId}`)
@@ -131,11 +141,14 @@ export class PostService {
     }
 
     // find post by name
-    async findPostByName(content: string, page: number, limit: number) {
-        const cache = await this.customCache.getManyPostInCache(content, page, limit)
+    async findPostByName(name: string, query: GetManyPostDto) {
+        if (!name?.trim()) {
+            throw new BadRequestException("Search content cannot be empty")
+        }
+        const cache = await this.customCache.getManyPostInCache(name, query)
 
         if (!cache) {
-            const key = `posts:${content}:${page}:${limit}`
+            const key = POST_CONSTANTS.CACHE_KEY.KeyUserWithPosts(name)
             await this.customCache.fallBackCacheTemporaryObject(key)
             throw new NotFoundException("Posts not found")
         }

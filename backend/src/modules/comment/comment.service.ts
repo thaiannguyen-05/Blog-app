@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import { Request } from "express";
 import { Comment, Post } from "prisma/generated/prisma";
@@ -53,6 +53,10 @@ export class CommentService {
 
         if (!exitingPost) throw new NotFoundException("Post not found")
 
+        if (!content?.trim()) {
+            throw new BadRequestException("Comment content cannot be empty")
+        }
+
         const newComment = await this.prismaService.comment.create({
             data: {
                 content: content,
@@ -78,6 +82,10 @@ export class CommentService {
         const existingComment = await this.getCommentOrThrow(commentId)
 
         if (!existingComment) throw new NotFoundException("Comment not found")
+
+        if (!newContent?.trim()) {
+            throw new BadRequestException("Comment content cannot be empty")
+        }
 
         const newComment = await this.prismaService.comment.update({
             where: { id: existingComment.id },

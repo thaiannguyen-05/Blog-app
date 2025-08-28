@@ -12,6 +12,7 @@ import { ChangePasswordDto } from "./dto/changePassword.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { TokenService } from "./token.service";
 import { Session } from "prisma/generated/prisma";
+import { LoginDto } from "./dto/login.dto";
 
 @Injectable()
 export class AuthService {
@@ -85,28 +86,29 @@ export class AuthService {
 
     // register
     public async register(data: RegisterDto) {
-        // check available account
+        // 1.check available account
         const availableAccount = await this.customCacheService.getUserInCache(data.email)
 
         if (availableAccount) throw new BadRequestException('Account already exists')
 
-        // hahsing password
+        // 2.hahsing password
         const hashingPassword = await this.hasing(data.password)
 
-        // register new account 
+        // 3.create account
         const newAccount = await this.prismaService.user.create({
             data: {
+                userName: data.userName,
                 email: data.email,
                 hashingPassword: hashingPassword
             },
             omit: { hashingPassword: false }
         })
 
-        // cache account
+        // 4.cache account
         await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`)
 
         const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
-        // send email nofification verify account
+        // 5.send email nofification verify account
         await this.emailProducer.sendNotificationRegister({
             to: newAccount.email,
             verifyLink
@@ -117,6 +119,7 @@ export class AuthService {
             message: 'Verification email sent. Please check your inbox.',
             user: {
                 id: newAccount.id,
+                userName: newAccount.userName,
                 name: newAccount.name,
                 email: newAccount.email,
             },
@@ -125,24 +128,24 @@ export class AuthService {
 
     // verify account
     public async verifyAccount(email: string, res: Response) {
-        // check available account
+        // 1.check available account
         const availableAccount = await this.customCacheService.getUserInCache(email)
 
         if (!availableAccount) throw new NotFoundException("Account is not exiting")
 
         if (availableAccount.isActive) throw new BadRequestException("Account already exited")
 
-        // del cached
+        // 2.del cached
         await this.cacheManager.del(`account:${email}`)
 
-        // update account
+        // 3.update account
         const newAccount = await this.prismaService.user.update({
             where: { email: email },
             data: { isActive: true },
             omit: { hashingPassword: false }
         })
 
-        // update cache
+        // 4.update cache
         const key = AUTH_CONSTANTS.CACHE_KEY.KeyUserWithEmail(email)
         await this.customCacheService.updateCache(key, newAccount)
 
@@ -179,19 +182,19 @@ export class AuthService {
 
     // create session
     public async createSession(user: { id: string, email: string }, res: Response, ip: string, userAgent: string) {
-        // generate token 
+        // 1.generate token 
         const tokens = await this.tokenService.generateTokens(user.id, user.email)
 
-        // hash
+        // 2.hashing refresh token
         const hashRefreshToken = await this.hasing(tokens.refreshToken)
 
-        // session id
+        // 3. get session id
         const sid = res.req.cookies?.session_id
 
-        // store tokens
+        // 4. store tokens
         const session = await this.tokenService.storeTokens(user.id, user.email, hashRefreshToken, ip, userAgent, sid)
 
-        // set maxage
+        // 5. set maxage
         res
             .cookie("session_id", session.id, {
                 maxAge: AUTH_CONSTANTS.TIME_LIFE_SESSION,
@@ -210,17 +213,22 @@ export class AuthService {
     }
 
     // login 
-    public async login(data: RegisterDto, res: Response) {
-        // check available user
-        const availableAccount = await this.customCacheService.getUserInCache(data.email)
+    public async login(data: LoginDto, res: Response) {
+        // 1.check available user / login with userName or email
+        const availableAccount = await this.prismaService.user.findFirst({
+            where: {
+                OR: [
+                    { userName: data.accessor },
+                    { email: data.accessor }
+                ]
+            },
+            omit: { hashingPassword: false }
+        })
 
-        if (!availableAccount) {
-            await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`)
-            throw new NotFoundException('User not found')
-        }
+        if (!availableAccount) throw new NotFoundException('Acount is not existing')
 
         if (!availableAccount.isActive) {
-            const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`
+            const verifyLink = `http://localhost:4000/auth/verify-account?email=${availableAccount.email}`
 
             await this.emailProducer.sendNotificationRegister({
                 to: availableAccount.email,
@@ -229,14 +237,14 @@ export class AuthService {
             throw new ForbiddenException("Account is not verified. Please check your email to verify your account.")
         }
 
-        // verify password
+        // 2.verify password
         const isMatch = await verify(availableAccount.hashingPassword, data.password)
 
         if (!isMatch) throw new UnauthorizedException('Password is not match')
 
-        // user ip and agent 
+        // 3.user ip and agent 
         const hardWareUser = this.getClientInfo(res.req)
-        // create session
+        // 4.create session
         const session = await this.createSession(availableAccount, res, hardWareUser.ip, hardWareUser.userAgent)
 
         const { hashingPassword, ...userWithoutPassword } = availableAccount
@@ -252,7 +260,7 @@ export class AuthService {
 
     // logout
     public async logout(res: Response, sesisonId?: string) {
-
+        // get sessionId in the req
         const sid = res.req.cookies?.session_id || sesisonId
 
         if (!sid) throw new ConflictException("Session is not require")
@@ -286,7 +294,8 @@ export class AuthService {
         })
 
         if (!availableAccount) throw new NotFoundException("User not found")
-
+        
+        // validate password
         const isMatch = await verify(availableAccount?.hashingPassword, data.oldPassword)
 
         if (!isMatch) throw new BadRequestException("Password incorrect")

@@ -5,6 +5,7 @@ import { Public } from "src/common/decorator/public.decorator";
 import { AuthService } from "./auth.service";
 import { ChangePasswordDto } from "./dto/changePassword.dto";
 import { RegisterDto } from "./dto/register.dto";
+import { LoginDto } from "./dto/login.dto";
 
 @Controller('auth')
 export class AuthController {
@@ -31,7 +32,7 @@ export class AuthController {
 
     @Public()
     @Post('login')
-    async login(@Body() data: RegisterDto, @Res() res: Response) {
+    async login(@Body() data: LoginDto, @Res() res: Response) {
         const result = await this.authService.login(data, res)
         return res.json(result)
     }

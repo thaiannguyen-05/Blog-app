@@ -44,21 +44,22 @@ export class TokenService {
 
     // store tokens 
     async storeTokens(userId: string, email: string, hashRefreshToken: string, ip: string, userAgent: string, sessionId?: string) {
-        // Generate sessionId if not provided
+        // 1.Generate sessionId if not provided
         sessionId = sessionId || randomUUID()
 
-        // Try to find existing session by sessionId first, not userAgent
+        // 2.Try to find existing session by sessionId first, not userAgent
         let existingSession = await this.prismaService.session.findUnique({
-            where: { id: sessionId }
+            where: { userAgent }
         })
-
+        
+        // 3. update session if session is available
         if (existingSession) {
             // Check if this is the same device/browser
             await this.authService.checkIpOrUserAgentId(userAgent, ip, email, existingSession)
 
             // Update existing session
             return await this.prismaService.session.update({
-                where: { id: sessionId },
+                where: { id: existingSession.id },
                 data: {
                     hashingRefreshToken: hashRefreshToken,
                     userIp: ip // Update IP in case it changed
@@ -66,7 +67,7 @@ export class TokenService {
             })
         }
 
-        // Create new session
+        // 4.Fallback create new session
         return await this.prismaService.session.create({
             data: {
                 id: sessionId,

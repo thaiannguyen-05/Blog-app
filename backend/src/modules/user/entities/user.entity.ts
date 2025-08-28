@@ -30,4 +30,6 @@ export class UserQl implements Partial<User> {
       nullable: true
     })
     avtUrl?: string
+
+    
 }

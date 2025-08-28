@@ -13,13 +13,14 @@ export class AuthCookieStrategy extends PassportStrategy(Strategy, 'auth-cookie'
     }
 
     async validate(req: Request): Promise<any> {
-
+        // get access token from cookie
         const accessToken = req.cookies?.access_token
 
         if(!accessToken) {
             throw new UnauthorizedException("Access token not found")
         }
 
+        // validate user
         return this.authService.validate(accessToken)
     }
 

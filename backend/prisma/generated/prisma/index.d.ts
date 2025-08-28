@@ -14209,6 +14209,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     dateOfBirth: Date | null
     isActive: boolean | null
+    userName: string | null
     avtUrl: string | null
     email: string | null
     hashingPassword: string | null
@@ -14224,6 +14225,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     dateOfBirth: Date | null
     isActive: boolean | null
+    userName: string | null
     avtUrl: string | null
     email: string | null
     hashingPassword: string | null
@@ -14239,6 +14241,7 @@ export namespace Prisma {
     gender: number
     dateOfBirth: number
     isActive: number
+    userName: number
     avtUrl: number
     email: number
     hashingPassword: number
@@ -14256,6 +14259,7 @@ export namespace Prisma {
     gender?: true
     dateOfBirth?: true
     isActive?: true
+    userName?: true
     avtUrl?: true
     email?: true
     hashingPassword?: true
@@ -14271,6 +14275,7 @@ export namespace Prisma {
     gender?: true
     dateOfBirth?: true
     isActive?: true
+    userName?: true
     avtUrl?: true
     email?: true
     hashingPassword?: true
@@ -14286,6 +14291,7 @@ export namespace Prisma {
     gender?: true
     dateOfBirth?: true
     isActive?: true
+    userName?: true
     avtUrl?: true
     email?: true
     hashingPassword?: true
@@ -14374,6 +14380,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     dateOfBirth: Date | null
     isActive: boolean
+    userName: string
     avtUrl: string | null
     email: string
     hashingPassword: string
@@ -14406,6 +14413,7 @@ export namespace Prisma {
     gender?: boolean
     dateOfBirth?: boolean
     isActive?: boolean
+    userName?: boolean
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
@@ -14431,6 +14439,7 @@ export namespace Prisma {
     gender?: boolean
     dateOfBirth?: boolean
     isActive?: boolean
+    userName?: boolean
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
@@ -14446,6 +14455,7 @@ export namespace Prisma {
     gender?: boolean
     dateOfBirth?: boolean
     isActive?: boolean
+    userName?: boolean
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
@@ -14461,6 +14471,7 @@ export namespace Prisma {
     gender?: boolean
     dateOfBirth?: boolean
     isActive?: boolean
+    userName?: boolean
     avtUrl?: boolean
     email?: boolean
     hashingPassword?: boolean
@@ -14470,7 +14481,7 @@ export namespace Prisma {
     deleteAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gender" | "dateOfBirth" | "isActive" | "avtUrl" | "email" | "hashingPassword" | "lastSeen" | "createAt" | "updateAt" | "deleteAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gender" | "dateOfBirth" | "isActive" | "userName" | "avtUrl" | "email" | "hashingPassword" | "lastSeen" | "createAt" | "updateAt" | "deleteAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     codes?: boolean | User$codesArgs<ExtArgs>
@@ -14505,6 +14516,7 @@ export namespace Prisma {
       gender: $Enums.Gender | null
       dateOfBirth: Date | null
       isActive: boolean
+      userName: string
       avtUrl: string | null
       email: string
       hashingPassword: string
@@ -14949,6 +14961,7 @@ export namespace Prisma {
     readonly gender: FieldRef<"User", 'Gender'>
     readonly dateOfBirth: FieldRef<"User", 'DateTime'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly userName: FieldRef<"User", 'String'>
     readonly avtUrl: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly hashingPassword: FieldRef<"User", 'String'>
@@ -15722,6 +15735,7 @@ export namespace Prisma {
     gender: 'gender',
     dateOfBirth: 'dateOfBirth',
     isActive: 'isActive',
+    userName: 'userName',
     avtUrl: 'avtUrl',
     email: 'email',
     hashingPassword: 'hashingPassword',
@@ -16544,6 +16558,7 @@ export namespace Prisma {
     gender?: EnumGenderNullableFilter<"User"> | $Enums.Gender | null
     dateOfBirth?: DateTimeNullableFilter<"User"> | Date | string | null
     isActive?: BoolFilter<"User"> | boolean
+    userName?: StringFilter<"User"> | string
     avtUrl?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     hashingPassword?: StringFilter<"User"> | string
@@ -16568,6 +16583,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    userName?: SortOrder
     avtUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
@@ -16588,6 +16604,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userName?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -16611,7 +16628,7 @@ export namespace Prisma {
     user1?: PrivateChatListRelationFilter
     user2?: PrivateChatListRelationFilter
     sentMessages?: PrivateMessageListRelationFilter
-  }, "id" | "email">
+  }, "id" | "userName" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -16619,6 +16636,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    userName?: SortOrder
     avtUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
@@ -16640,6 +16658,7 @@ export namespace Prisma {
     gender?: EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null
     dateOfBirth?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    userName?: StringWithAggregatesFilter<"User"> | string
     avtUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     hashingPassword?: StringWithAggregatesFilter<"User"> | string
@@ -17306,6 +17325,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -17330,6 +17350,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -17354,6 +17375,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -17378,6 +17400,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -17402,6 +17425,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -17417,6 +17441,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -17432,6 +17457,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -18139,6 +18165,7 @@ export namespace Prisma {
     gender?: SortOrder
     dateOfBirth?: SortOrder
     isActive?: SortOrder
+    userName?: SortOrder
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
@@ -18154,6 +18181,7 @@ export namespace Prisma {
     gender?: SortOrder
     dateOfBirth?: SortOrder
     isActive?: SortOrder
+    userName?: SortOrder
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
@@ -18169,6 +18197,7 @@ export namespace Prisma {
     gender?: SortOrder
     dateOfBirth?: SortOrder
     isActive?: SortOrder
+    userName?: SortOrder
     avtUrl?: SortOrder
     email?: SortOrder
     hashingPassword?: SortOrder
@@ -19424,6 +19453,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19447,6 +19477,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19486,6 +19517,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19509,6 +19541,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19532,6 +19565,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19555,6 +19589,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19594,6 +19629,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19617,6 +19653,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19640,6 +19677,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19663,6 +19701,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19691,6 +19730,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19714,6 +19754,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -19785,6 +19826,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19808,6 +19850,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19842,6 +19885,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -19865,6 +19909,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20008,6 +20053,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20031,6 +20077,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20156,6 +20203,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20179,6 +20227,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20286,6 +20335,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20309,6 +20359,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20365,6 +20416,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20388,6 +20440,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20544,6 +20597,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20567,6 +20621,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20634,6 +20689,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20657,6 +20713,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20735,6 +20792,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20758,6 +20816,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20856,6 +20915,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20879,6 +20939,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -20930,6 +20991,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -20953,6 +21015,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     dateOfBirth?: Date | string | null
     isActive?: boolean
+    userName: string
     avtUrl?: string | null
     email: string
     hashingPassword: string
@@ -21015,6 +21078,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string
@@ -21038,6 +21102,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
     avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     hashingPassword?: StringFieldUpdateOperationsInput | string

@@ -5,6 +5,7 @@ model User {
     dateOfBirth DateTime?
     isActive    Boolean   @default(false)
 
+    userName        String @unique
     avtUrl          String?
     email           String  @unique
     hashingPassword String

@@ -3,6 +3,7 @@ export const USER_CONSTANTS = {
 	CACHE_KEY: {
 		KeyUserWithId: (mainkey: string) => `account:${mainkey}`,
 		KeyUserWithEmail: (mainkey: string) => `account:${mainkey}`,
+		KeyUserWithName: (mainkey: string) => `accounts:${mainkey}`,
 		KeyUserPosts: (mainkey: string) => `userPosts:${mainkey}`
 	},
 

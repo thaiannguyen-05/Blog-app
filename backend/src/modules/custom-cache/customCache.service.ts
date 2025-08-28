@@ -1,11 +1,14 @@
 import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { UserWithPasswordExplicit } from "../auth/auth.interface";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AUTH_CONSTANTS } from "../auth/auth.constant";
 import { isUUID } from "class-validator";
-import { Post } from "prisma/generated/prisma";
+import { Post, User } from "prisma/generated/prisma";
 import { USER_CONSTANTS } from "../user/user.constants";
+import { GetDetailPostDto } from "../post/dto/get.detail.post.dto";
+import { POST_CONSTANTS } from "../post/post.constants";
+import { GetManyPostDto } from "../post/dto/get.many.post.dto";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -14,7 +17,7 @@ export class CustomCacheService {
 
     constructor(
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
-        private readonly prismaService: PrismaService
+        private readonly prismaService: PrismaService,
     ) { }
 
     // validate email
@@ -74,25 +77,32 @@ export class CustomCacheService {
     }
 
     // get post
-    async getPostInCache(postId: string) {
+    async getPostInCache(postId: string, query: GetDetailPostDto) {
         const key = `post:${postId}`
         const cache = await this.cacheManager.get(key) as Post
 
         if (cache) return cache
 
+        const { page = 1, limit = 20, cursor } = query
+        const skip = (page - 1) * limit
+
+        const whereClaude: any = { postId, deleteAt: null }
+
+        if (cursor) {
+            whereClaude.id = { lt: parseInt(cursor) }
+        }
+
         // Fallback to database
         const existingPost = await this.prismaService.post.findUnique({
-            where: {
-                id: postId,
-                deleteAt: null // Don't return soft-deleted posts
-            },
+            where: whereClaude,
             include: {
                 user: {
                     select: { id: true, name: true, email: true }
                 },
                 comments: {
-                    take: 10, // Limit initial comments
                     orderBy: { createAt: 'desc' },
+                    take: limit + 1, // Limit initial comments
+                    skip: cursor ? 0 : skip,
                     include: {
                         user: { select: { id: true, name: true } }
                     }
@@ -109,15 +119,17 @@ export class CustomCacheService {
     }
 
     // get many posts in cache
-    async getManyPostInCache(mainkey: string, page: number, limit: number) {
-        const key = `posts:${mainkey}:${page}:${limit}`
+    async getManyPostInCache(mainkey: string, query: GetManyPostDto) {
+        const key = POST_CONSTANTS.CACHE_KEY.KeyUserWithPosts(mainkey)
         const cache = await this.cacheManager.get(key) as Post[]
 
         if (cache) return cache
 
+        const { page = 1, limit = 20, cursor } = query
+
         const skip = (page - 1) * limit
 
-        const where: any = {
+        const whereClause: any = {
             status: 'PUBLIC',
             content: {
                 contains: mainkey,
@@ -126,17 +138,21 @@ export class CustomCacheService {
             deleteAt: null
         }
 
+        if (cursor) {
+            whereClause.id = { lt: parseInt(cursor) }
+        }
+
         const [posts, total] = await Promise.all([
             this.prismaService.post.findMany({
-                where,
-                skip,
-                take: limit,
+                where: whereClause,
                 orderBy: { createAt: 'desc' },
+                take: limit + 1,
+                skip: cursor ? 0 : skip,
                 include: {
                     user: { select: { id: true, name: true } }
                 }
             }),
-            this.prismaService.post.count({ where })
+            this.prismaService.post.count({ where: whereClause })
         ])
 
         if (posts.length > 0) {
@@ -166,5 +182,19 @@ export class CustomCacheService {
         })
 
         return existingPosts
+    }
+
+    async cacheLagerOfDatauser(mainkey: string, listUser: User[]) {
+        try {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithName(mainkey)
+            return await this.cacheManager.set(key, listUser, USER_CONSTANTS.MAX_AGE_CACHE_TEMPORARY)
+        } catch (error) {
+            throw new BadRequestException('Do not set the cache', error)
+        }
+    }
+
+    async getListUserByName(mainkey: string) {
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithName(mainkey)
+        return await this.cacheManager.get(key)
     }
 }
