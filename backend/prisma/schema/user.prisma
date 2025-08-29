@@ -5,7 +5,7 @@ model User {
     dateOfBirth DateTime?
     isActive    Boolean   @default(false)
 
-    userName        String @unique
+    userName        String  @unique
     avtUrl          String?
     email           String  @unique
     hashingPassword String
@@ -16,15 +16,39 @@ model User {
     updateAt DateTime  @updatedAt
     deleteAt DateTime?
 
-    sessions     Session[]
-    codes        Code[]
-    posts        Post[]
-    comments     Comment[]
-    repComments  RepComment[]
-    userRoles    UserRole[]
-    user1        PrivateChat[]    @relation("user1Chats")
-    user2        PrivateChat[]    @relation("user2Chats")
-    sentMessages PrivateMessage[] @relation("SentMessage")
+    // relation
+    sessions      Session[]
+    codes         Code[]
+    posts         Post[]             @relation("ownPosts")
+    postLiked     BehaviorWithPost[] @relation("postLiked")
+    comments      Comment[]
+    repComments   RepComment[]
+    roles         Role[]
+    user1         PrivateChat[]      @relation("user1Chats")
+    user2         PrivateChat[]      @relation("user2Chats")
+    sentMessages  PrivateMessage[]   @relation("SentMessage")
+    followingUser Following[]        @relation("followingUser")
+    followers     Follower[]         @relation("followers")
+}
+
+model Following {
+    id String @id @default(uuid()) @db.Uuid
+
+    userId String
+    user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+}
+
+model Follower {
+    id String @id @default(uuid()) @db.Uuid
+
+    userId String
+    user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
 }
 
 enum Gender {

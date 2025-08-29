@@ -7,13 +7,16 @@ model Post {
     urlImgs String[]
 
     userId String @db.Uuid
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    user   User   @relation(name: "ownPosts", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createAt DateTime  @default(now())
     updateAt DateTime  @updatedAt
     deleteAt DateTime?
 
+    // relation
     comments Comment[]
+
+    userLiked BehaviorWithPost[] @relation("userLiked")
 
     // Add indexes for better performance
     @@index([userId])
@@ -35,6 +38,7 @@ model Comment {
     createAt DateTime @default(now())
     updateAt DateTime @updatedAt
 
+    // relation
     repComments RepComment[]
 
     // Add indexes
@@ -55,6 +59,23 @@ model RepComment {
 
     commentId String  @db.Uuid
     comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model BehaviorWithPost {
+    id String @id @default(uuid()) @db.Uuid
+
+    isLiked Boolean @default(false)
+
+    userId String @db.Uuid @unique
+    user   User   @relation(name: "postLiked", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    postId String @db.Uuid @unique
+    post   Post   @relation(name: "userLiked", fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    @@unique([userId, postId])
 }
 
 enum StatusPost {

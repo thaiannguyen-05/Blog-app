@@ -1,34 +1,17 @@
 model Role {
-    id   String @id @default(uuid()) @db.Uuid
-    name String @unique
-
-    userRoles      UserRole[]
-    RolePermission RolePermission[]
-}
-
-// m to m user-role
-model UserRole {
-    userId String @db.Uuid
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-    roleId String @db.Uuid
-    role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-    @@id([userId, roleId])
+    id         Int          @id @default(autoincrement())
+    name       String       @unique
+    createdAt  DateTime     @default(now())
+    updateAt   DateTime     @updatedAt
+    users      User[]
+    permission Permission[]
 }
 
 model Permission {
-    id        String           @id @default(uuid()) @db.Uuid
-    name      String           @unique
-    rolePerms RolePermission[]
-}
-
-model RolePermission {
-    roleId       String @db.Uuid
-    permissionId String @db.Uuid
-
-    role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-    permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-
-    @@id([roleId, permissionId])
+    id          Int      @id @default(autoincrement())
+    key         String   @unique
+    description String
+    createdAt   DateTime @default(now())
+    updateAt    DateTime @updatedAt
+    roles       Role[]
 }

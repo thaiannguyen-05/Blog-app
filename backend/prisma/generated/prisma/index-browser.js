@@ -164,22 +164,17 @@ exports.Prisma.PrivateMessageScalarFieldEnum = {
 
 exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.UserRoleScalarFieldEnum = {
-  userId: 'userId',
-  roleId: 'roleId'
+  name: 'name',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 };
 
 exports.Prisma.PermissionScalarFieldEnum = {
   id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.RolePermissionScalarFieldEnum = {
-  roleId: 'roleId',
-  permissionId: 'permissionId'
+  key: 'key',
+  description: 'description',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 };
 
 exports.Prisma.PostScalarFieldEnum = {
@@ -209,6 +204,15 @@ exports.Prisma.RepCommentScalarFieldEnum = {
   updateAt: 'updateAt',
   senderID: 'senderID',
   commentId: 'commentId'
+};
+
+exports.Prisma.BehaviorWithPostScalarFieldEnum = {
+  id: 'id',
+  isLiked: 'isLiked',
+  userId: 'userId',
+  postId: 'postId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -264,12 +268,11 @@ exports.Prisma.ModelName = {
   PrivateChat: 'PrivateChat',
   PrivateMessage: 'PrivateMessage',
   Role: 'Role',
-  UserRole: 'UserRole',
   Permission: 'Permission',
-  RolePermission: 'RolePermission',
   Post: 'Post',
   Comment: 'Comment',
   RepComment: 'RepComment',
+  BehaviorWithPost: 'BehaviorWithPost',
   User: 'User'
 };
 

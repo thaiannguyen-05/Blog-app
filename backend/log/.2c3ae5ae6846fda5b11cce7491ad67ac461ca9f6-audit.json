@@ -54,6 +54,16 @@
             "date": 1756447431929,
             "name": "log/nest-log-2025-08-29-06.log",
             "hash": "050c4a32eb7d7114aaed5de00f66088f1473b562e9858ce26f9a4ec4e906ea05"
+        },
+        {
+            "date": 1756451863851,
+            "name": "log/nest-log-2025-08-29-07.log",
+            "hash": "a304fdc7ba1fff2c4965b6b8b096c77302b53e6c6081b453c0444f44dc2f2b02"
+        },
+        {
+            "date": 1756456009478,
+            "name": "log/nest-log-2025-08-29-08.log",
+            "hash": "fcec48bcac84adb5d6af0a58e3d4999a003097a8dca4a96a8772983ed5ba7a5a"
         }
     ],
     "hashType": "sha256"

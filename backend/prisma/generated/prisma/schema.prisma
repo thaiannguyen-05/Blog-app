@@ -85,38 +85,21 @@ model PrivateMessage {
 }
 
 model Role {
-  id   String @id @default(uuid()) @db.Uuid
-  name String @unique
-
-  userRoles      UserRole[]
-  RolePermission RolePermission[]
-}
-
-// m to m user-role
-model UserRole {
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  roleId String @db.Uuid
-  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@id([userId, roleId])
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  createdAt  DateTime     @default(now())
+  updateAt   DateTime     @updatedAt
+  users      User[]
+  permission Permission[]
 }
 
 model Permission {
-  id        String           @id @default(uuid()) @db.Uuid
-  name      String           @unique
-  rolePerms RolePermission[]
-}
-
-model RolePermission {
-  roleId       String @db.Uuid
-  permissionId String @db.Uuid
-
-  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-
-  @@id([roleId, permissionId])
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  roles       Role[]
 }
 
 // This is your Prisma schema file,
@@ -144,13 +127,16 @@ model Post {
   urlImgs String[]
 
   userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   User   @relation(name: "ownPosts", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
 
+  // relation
   comments Comment[]
+
+  userLiked BehaviorWithPost[] @relation("userLiked")
 
   // Add indexes for better performance
   @@index([userId])
@@ -172,6 +158,7 @@ model Comment {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
+  // relation
   repComments RepComment[]
 
   // Add indexes
@@ -192,6 +179,23 @@ model RepComment {
 
   commentId String  @db.Uuid
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model BehaviorWithPost {
+  id String @id @default(uuid()) @db.Uuid
+
+  isLiked Boolean @default(false)
+
+  userId String @unique @db.Uuid
+  user   User   @relation(name: "postLiked", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  postId String @unique @db.Uuid
+  post   Post   @relation(name: "userLiked", fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@unique([userId, postId])
 }
 
 enum StatusPost {
@@ -218,15 +222,17 @@ model User {
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
 
+  // relation
   sessions     Session[]
   codes        Code[]
-  posts        Post[]
+  posts        Post[]             @relation("ownPosts")
+  postLiked    BehaviorWithPost[] @relation("postLiked")
   comments     Comment[]
   repComments  RepComment[]
-  userRoles    UserRole[]
-  user1        PrivateChat[]    @relation("user1Chats")
-  user2        PrivateChat[]    @relation("user2Chats")
-  sentMessages PrivateMessage[] @relation("SentMessage")
+  roles        Role[]
+  user1        PrivateChat[]      @relation("user1Chats")
+  user2        PrivateChat[]      @relation("user2Chats")
+  sentMessages PrivateMessage[]   @relation("SentMessage")
 }
 
 enum Gender {

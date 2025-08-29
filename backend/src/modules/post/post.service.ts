@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import { Request } from 'express';
 import { PrismaService } from "src/prisma/prisma.service";
@@ -7,6 +7,7 @@ import { CustomCacheService } from "../custom-cache/customCache.service";
 import { GetDetailPostDto } from "./dto/get.detail.post.dto";
 import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { POST_CONSTANTS } from "./post.constants";
+import { USER_CONSTANTS } from "../user/user.constants";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -154,6 +155,112 @@ export class PostService {
         }
 
         return cache
+    }
 
+    // like post
+    async likePost(req: Request, postId: string) {
+        // get user in cache
+        const userId = req.user?.id || 'unknow'
+        const cached = await this.customCache.getUserInCache(userId)
+
+        if (!cached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCache.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('User are not existed')
+        }
+
+        // find post 
+        const existingPost = await this.customCache.getPostInCache(postId, {})
+
+        const key = POST_CONSTANTS.CACHE_KEY.Postkey(postId)
+
+        if (!existingPost) {
+            await this.customCache.fallBackCacheTemporaryObject(key)
+            throw new NotFoundException("Post is not available")
+        }
+
+        // del cache
+        await this.cacheManager.del(key)
+
+        const currentBehavior = await this.prismaService.behaviorWithPost.findUnique({
+            where: { userId_postId: { userId, postId } }
+        })
+
+        if (currentBehavior?.isLiked) {
+            throw new BadRequestException("Post already liked")
+        }
+
+        // update statusPost
+        const behaviorWithPost = await this.prismaService.behaviorWithPost.upsert({
+            where: { userId_postId: { userId, postId } },
+            update: {
+                isLiked: true
+            },
+            create: {
+                postId,
+                userId,
+                isLiked: true
+            }
+        })
+        // update cache 
+        await this.customCache.updateCache(key, behaviorWithPost)
+
+        return {
+            post: behaviorWithPost
+        }
+    }
+
+    // unliked post
+    async unLikePost(req: Request, postId: string) {
+        // get user in cache
+        const userId = req.user?.id || 'unknow'
+        const cached = await this.customCache.getUserInCache(userId)
+
+        if (!cached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCache.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('User are not existed')
+        }
+
+        // find post 
+        const existingPost = await this.customCache.getPostInCache(postId, {})
+
+        const key = POST_CONSTANTS.CACHE_KEY.Postkey(postId)
+
+        if (!existingPost) {
+            await this.customCache.fallBackCacheTemporaryObject(key)
+            throw new NotFoundException("Post is not available")
+        }
+
+        // del cache
+        await this.cacheManager.del(key)
+
+        const currentBehavior = await this.prismaService.behaviorWithPost.findUnique({
+            where: { userId_postId: { userId, postId } }
+        })
+
+        if (!currentBehavior?.isLiked) {
+            throw new BadRequestException("Post already unLiked")
+        }
+
+        // update statusPost
+        const behaviorWithPost = await this.prismaService.behaviorWithPost.upsert({
+            where: { userId_postId: { userId, postId } },
+            update: {
+                isLiked: false
+            },
+            create: {
+                postId,
+                userId,
+                isLiked: false
+            }
+        })
+
+        // update cache 
+        await this.customCache.updateCache(key, behaviorWithPost)
+
+        return {
+            post: behaviorWithPost
+        }
     }
 }

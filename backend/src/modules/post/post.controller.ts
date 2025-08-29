@@ -73,4 +73,20 @@ export class PostController {
 	) {
 		return this.postService.findPostByName(content, query)
 	}
+
+	@Put('like-post')
+	@ApiOperation({ summary: "Like post" })
+	@ApiQuery({ name: 'postId', required: true, type: String })
+	@ApiResponse({ status: 200, description: "Post liked" })
+	async likePost(@Req() req: Request, @Query('postId') postId: string) {
+		return this.postService.likePost(req, postId)
+	}
+
+	@Put('unlike-post')
+	@ApiOperation({ summary: "Unlike post" })
+	@ApiQuery({ name: 'postId', required: true, type: String })
+	@ApiResponse({ status: 200, description: "Post unliked" })
+	async unLikedPost(@Req() req: Request, @Query('postId') postId: string) {
+		return this.postService.unLikePost(req, postId)
+	}
 }

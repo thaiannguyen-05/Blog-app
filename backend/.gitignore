@@ -12,7 +12,7 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-
+.2c3ae5ae6846fda5b11cce7491ad67ac461ca9f6-audit.json
 # OS
 .DS_Store
 
