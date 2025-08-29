@@ -6,6 +6,7 @@ import { CustomCacheService } from "../custom-cache/customCache.service";
 import { EditDetailDto } from "./dto/EditDetailDto";
 import { FindUserByName } from "./dto/FindUserByName";
 import { USER_CONSTANTS } from "./user.constants";
+import { LoadingAuthorPostDto } from "../post/dto/LoadingAuthorPost.dto";
 
 @Injectable()
 export class UserService {
@@ -28,6 +29,15 @@ export class UserService {
         if (isNaN(date.getTime())) return null;
 
         return date
+    }
+
+    // get blackList
+    public async getBlackList(authorId: string) {
+        const blackList = await this.prismaService.blockedUser.findMany({
+            where: { userId: authorId }
+        })
+
+        return blackList
     }
 
     // edit information
@@ -96,22 +106,6 @@ export class UserService {
         return newUser
     }
 
-    // load all author post
-    async loadAllAuthorPost(req: Request, page: number, limit: number) {
-        const userId = req.user?.id;
-        if (!userId) throw new ForbiddenException("Require accesstoken");
-        const key = USER_CONSTANTS.CACHE_KEY.KeyUserPosts(userId);
-
-        const posts = await this.customCacheService.getAllUserPosts(userId, page, limit);
-
-        if (!posts) {
-            await this.customCacheService.fallBackCacheTemporaryObject(key);
-            throw new NotFoundException("User have no available post");
-        }
-
-        return posts;
-    }
-
     // find user
     async getFrolife(userId: string) {
         // check user in cache
@@ -122,7 +116,6 @@ export class UserService {
             await this.customCacheService.fallBackCacheTemporaryObject(key)
             throw new NotFoundException("User not found")
         }
-
         return cache
     }
 
@@ -279,6 +272,37 @@ export class UserService {
 
         return {
             success: true
+        }
+    }
+
+    // block user
+    async blockUser(req: Request, addressUserId: string) {
+        // get user in cache
+        const userId = req.user?.id || 'unknow'
+        const cached = await this.customCacheService.getUserInCache(userId)
+
+        if (!cached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('User are not existed')
+        }
+
+        // get addressUser in cache
+        const addressCached = await this.customCacheService.getUserInCache(addressUserId)
+
+        if (!addressCached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(addressUserId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('Address user are not existed')
+        }
+
+        // block user
+        await this.prismaService.blockedUser.create({
+            data: { userId: addressCached.id }
+        })
+
+        return {
+            status: "successful"
         }
     }
 }

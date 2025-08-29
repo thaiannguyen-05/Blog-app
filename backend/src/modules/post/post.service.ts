@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { BadRequestException, HttpStatus, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, HttpStatus, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import { Request } from 'express';
 import { PrismaService } from "src/prisma/prisma.service";
@@ -9,6 +9,7 @@ import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { POST_CONSTANTS } from "./post.constants";
 import { USER_CONSTANTS } from "../user/user.constants";
 import { randomUUID } from "node:crypto";
+import { LoadingAuthorPostDto } from "./dto/LoadingAuthorPost.dto";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -281,5 +282,19 @@ export class PostService {
         return {
             post: behaviorWithPost
         }
+    }
+
+    // load all author post
+    async loadAllAuthorPost(authorId: string, query: LoadingAuthorPostDto) {
+        const key = USER_CONSTANTS.CACHE_KEY.KeyUserPosts(authorId);
+
+        const posts = await this.customCache.getAllUserPosts(authorId, query);
+
+        if (!posts) {
+            await this.customCache.fallBackCacheTemporaryObject(key);
+            throw new NotFoundException("User have no available post");
+        }
+
+        return posts;
     }
 }

@@ -8,6 +8,7 @@ import { GetDetailPostDto } from "./dto/get.detail.post.dto";
 import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { PostService } from "./post.service";
 import { IsCreatorPostGuard } from "./guards/is-creator.post.guard";
+import { BlackListGuard } from "../user/guard/blackList.guard";
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
@@ -69,7 +70,9 @@ export class PostController {
 	@Get('search')
 	@ApiOperation({ summary: "Search posts" })
 	@ApiQuery({ name: 'content', required: false, type: String })
+	@UseGuards(BlackListGuard)
 	@ApiResponse({ status: 200, description: "Search results" })
+
 	async searchPosts(
 		@Query('content') content: string,
 		@Query() query: GetManyPostDto
@@ -91,5 +94,17 @@ export class PostController {
 	@ApiResponse({ status: 200, description: "Post unliked" })
 	async unLikedPost(@Req() req: Request, @Query('postId') postId: string) {
 		return this.postService.unLikePost(req, postId)
+	}
+
+	@Public()
+	@Get('author-posts')
+	@ApiOperation({ summary: "Load all posts by author" })
+	@ApiQuery({ name: 'authorId', required: true, type: String })
+	@ApiResponse({ status: 200, description: "Author's posts" })
+	async loadAllAuthorPost(
+		@Query('authorId') authorId: string,
+		@Query() query: GetManyPostDto
+	) {
+		return this.postService.loadAllAuthorPost(authorId, query);
 	}
 }

@@ -11,7 +11,6 @@ export class CommentController {
 		private readonly commentService: CommentService
 	) { }
 
-
 	@Post('comment')
 	@ApiOperation({ summary: "Comment on post" })
 	@ApiQuery({ name: 'postId', required: true, type: String })
@@ -46,9 +45,6 @@ export class CommentController {
 	@ApiBody({ schema: { type: 'object', properties: { content: { type: 'string' } } } })
 	@ApiResponse({ status: 201, description: "Reply created" })
 	async repComment(@Req() req: Request, @Query('commentId') commentId: string, @Body('content') content: string) {
-		if (!content?.trim()) {
-			throw new BadRequestException("Reply content cannot be empty")
-		}
 		return this.commentService.repComment(req, commentId, content)
 	}
 }

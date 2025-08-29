@@ -1,8 +1,10 @@
-import { Body, Controller, Patch, Put, Req, Post, Query } from "@nestjs/common";
+import { Body, Controller, Patch, Put, Req, Post, Query, UseGuards, Get, Param } from "@nestjs/common";
 import { Request } from 'express';
 import { EditDetailDto } from "./dto/EditDetailDto";
 import { UserService } from "./user.service";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from "@nestjs/swagger";
+import { BlackListGuard } from "./guard/blackList.guard";
+import { FindUserByName } from './dto/FindUserByName';
 
 @ApiTags('User')
 @Controller('user')
@@ -35,6 +37,7 @@ export class UserController {
     @ApiParam({ name: 'addressUserId', type: String })
     @ApiResponse({ status: 200, description: 'Follow successful' })
     @ApiResponse({ status: 400, description: 'Bad Request' })
+    @UseGuards(BlackListGuard)
     async follow(@Req() req: Request, @Query('addressUserId') addressUserId: string) {
         return this.userService.following(req, addressUserId);
     }
@@ -46,5 +49,26 @@ export class UserController {
     @ApiResponse({ status: 400, description: 'Bad Request' })
     async unfollow(@Req() req: Request, @Query('addressUserId') addressUserId: string) {
         return this.userService.unfollowing(req, addressUserId);
+    }
+
+    // Find user by name
+    @Get('find')
+    async findUserByName(
+        @Query('name') name: string,
+        @Query() query: FindUserByName
+    ) {
+        return await this.userService.findUserByName(name, query);
+    }
+
+    // Block user
+    @Post('block')
+    async blockUser(@Req() req: Request, @Query('addressUserId') addressUserId: string) {
+        return await this.userService.blockUser(req, addressUserId);
+    }
+
+    // Get user profile (getFrolife)
+    @Get('profile')
+    async getFrolife(@Query('userId') userId: string) {
+        return await this.userService.getFrolife(userId);
     }
 }

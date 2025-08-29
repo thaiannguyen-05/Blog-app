@@ -9,6 +9,7 @@ import { USER_CONSTANTS } from "../user/user.constants";
 import { GetDetailPostDto } from "../post/dto/get.detail.post.dto";
 import { POST_CONSTANTS } from "../post/post.constants";
 import { GetManyPostDto } from "../post/dto/get.many.post.dto";
+import { LoadingAuthorPostDto } from "../post/dto/LoadingAuthorPost.dto";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -165,23 +166,45 @@ export class CustomCacheService {
         }
     }
 
-    async getAllUserPosts(mainkey: string, page: number, limit: number) {
+    async getAllUserPosts(mainkey: string, query: LoadingAuthorPostDto) {
         const key = USER_CONSTANTS.CACHE_KEY.KeyUserPosts(mainkey)
         const cache = await this.cacheManager.get(key) as Post[]
 
         if (cache) return cache
 
         // fall back
+        const { page = 1, limit = 20, cursor } = query
+
+        const whereClause: any = { userId: mainkey }
+
         const skip = (page - 1) * limit
 
-        const existingPosts = await this.prismaService.post.findMany({
-            where: { userId: mainkey },
-            skip,
-            take: limit,
-            orderBy: { createAt: 'desc' }
-        })
+        if (cursor) {
+            whereClause.id = { lt: parseInt(cursor) }
+        }
 
-        return existingPosts
+        const [posts, total] = await Promise.all([
+            this.prismaService.post.findMany({
+                where: whereClause,
+                orderBy: { createAt: 'desc' },
+                take: limit + 1,
+                skip: cursor ? 0 : skip,
+                include: {
+                    user: { select: { id: true, name: true } }
+                }
+            }),
+            this.prismaService.post.count({ where: whereClause })
+        ])
+
+        if (posts.length > 0) {
+            await this.cacheManager.set(key, posts, AUTH_CONSTANTS.TIME_LIFE_CACHE)
+        }
+
+        return {
+            posts,
+            total
+        }
+
     }
 
     async cacheLagerOfDatauser(mainkey: string, listUser: User[]) {

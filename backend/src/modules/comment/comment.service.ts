@@ -159,6 +159,10 @@ export class CommentService {
             throw new NotFoundException("Comment not found")
         }
 
+        if (!content?.trim()) {
+            throw new BadRequestException("Reply content cannot be empty")
+        }
+
         const newRepcomment = await this.prismaService.repComment.create({
             data: {
                 content: content,
