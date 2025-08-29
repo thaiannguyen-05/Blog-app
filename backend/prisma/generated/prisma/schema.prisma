@@ -223,16 +223,46 @@ model User {
   deleteAt DateTime?
 
   // relation
-  sessions     Session[]
-  codes        Code[]
-  posts        Post[]             @relation("ownPosts")
-  postLiked    BehaviorWithPost[] @relation("postLiked")
-  comments     Comment[]
-  repComments  RepComment[]
-  roles        Role[]
-  user1        PrivateChat[]      @relation("user1Chats")
-  user2        PrivateChat[]      @relation("user2Chats")
-  sentMessages PrivateMessage[]   @relation("SentMessage")
+  sessions      Session[]
+  codes         Code[]
+  posts         Post[]             @relation("ownPosts")
+  postLiked     BehaviorWithPost[] @relation("postLiked")
+  comments      Comment[]
+  repComments   RepComment[]
+  roles         Role[]
+  user1         PrivateChat[]      @relation("user1Chats")
+  user2         PrivateChat[]      @relation("user2Chats")
+  sentMessages  PrivateMessage[]   @relation("SentMessage")
+  followingUser Following[]        @relation("followingUser")
+  followers     Follower[]         @relation("followers")
+}
+
+model Following {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @unique @db.Uuid
+  user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  addressUserId String @unique @db.Uuid
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@unique([userId, addressUserId])
+}
+
+model Follower {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @unique @db.Uuid
+  user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  followerId String @unique @db.Uuid
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@unique([userId, followerId])
 }
 
 enum Gender {

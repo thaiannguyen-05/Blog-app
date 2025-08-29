@@ -191,4 +191,96 @@ export class UserService {
             }
         };
     }
+
+    // following
+    async following(req: Request, addressUserId: string) {
+        // get user in cache
+        const userId = req.user?.id || 'unknow'
+        const cached = await this.customCacheService.getUserInCache(userId)
+
+        if (!cached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('User are not existed')
+        }
+
+        // get addressUser in cache
+        const addressCached = await this.customCacheService.getUserInCache(addressUserId)
+
+        if (!addressCached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(addressUserId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('Address user are not existed')
+        }
+
+        const existedFollowing = await this.prismaService.following.findUnique({
+            where: { userId_addressUserId: { userId, addressUserId } }
+        })
+
+        if (existedFollowing) {
+            throw new BadRequestException("User is already followed")
+        }
+
+        // create relation following
+        const [newFollowing, newFollower] = await this.prismaService.$transaction([
+            this.prismaService.following.create({
+                data: { addressUserId, userId }
+            }),
+            this.prismaService.follower.create({
+                data: { followerId: userId, userId: addressUserId }
+            })
+        ]);
+
+        return {
+            newFollowing: newFollowing,
+            newFollower: newFollower
+        }
+    }
+
+    // unfollowing
+    async unfollowing(req: Request, addressUserId: string) {
+        // get user in cache
+        const userId = req.user?.id || 'unknow'
+        const cached = await this.customCacheService.getUserInCache(userId)
+
+        if (!cached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(userId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('User are not existed')
+        }
+
+        // get addressUser in cache
+        const addressCached = await this.customCacheService.getUserInCache(addressUserId)
+
+        if (!addressCached) {
+            const key = USER_CONSTANTS.CACHE_KEY.KeyUserWithId(addressUserId)
+            await this.customCacheService.fallBackCacheTemporaryObject(key)
+            throw new BadRequestException('Address user are not existed')
+        }
+
+        const existedFollowing = await this.prismaService.following.findUnique({
+            where: { userId_addressUserId: { userId, addressUserId } }
+        })
+
+        if (!existedFollowing) {
+            throw new BadRequestException("Relation is not existed")
+        }
+
+        // delete relation 
+        await this.prismaService.$transaction([
+            this.prismaService.following.delete({
+                where: { userId_addressUserId: { userId, addressUserId } }
+            }),
+            this.prismaService.follower.delete({
+                where: {
+                    userId: addressUserId,
+                    followerId: userId
+                }
+            })
+        ])
+
+        return {
+            success: true
+        }
+    }
 }

@@ -231,6 +231,22 @@ exports.Prisma.UserScalarFieldEnum = {
   deleteAt: 'deleteAt'
 };
 
+exports.Prisma.FollowingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  addressUserId: 'addressUserId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+};
+
+exports.Prisma.FollowerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  followerId: 'followerId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -273,7 +289,9 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   RepComment: 'RepComment',
   BehaviorWithPost: 'BehaviorWithPost',
-  User: 'User'
+  User: 'User',
+  Following: 'Following',
+  Follower: 'Follower'
 };
 
 /**

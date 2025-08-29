@@ -34,21 +34,29 @@ model User {
 model Following {
     id String @id @default(uuid()) @db.Uuid
 
-    userId String
+    userId String @db.Uuid @unique
     user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    addressUserId String @db.Uuid @unique
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
+
+    @@unique([userId, addressUserId])
 }
 
 model Follower {
     id String @id @default(uuid()) @db.Uuid
 
-    userId String
+    userId String @db.Uuid @unique
     user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    followerId String @db.Uuid @unique
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
+
+    @@unique([userId, followerId])
 }
 
 enum Gender {
