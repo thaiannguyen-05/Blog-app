@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, Req } from "@nestjs/common";
 import { Request } from "express";
 import { Public } from "src/common/decorator/public.decorator";
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from "@nestjs/swagger";
 import { CreatePostDto } from "./dto/create.post.dto";
 import { EditPostDto } from "./dto/edit.post.dto";
 import { GetDetailPostDto } from "./dto/get.detail.post.dto";
 import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { PostService } from "./post.service";
+@ApiTags('Post')
 @Controller('post')
 export class PostController {
 	constructor(
@@ -13,6 +15,9 @@ export class PostController {
 	) { }
 
 	@Post('create-post')
+	@ApiOperation({ summary: "Create post" })
+	@ApiBody({ type: CreatePostDto })
+	@ApiResponse({ status: 201, description: "Post created" })
 	async createPost(
 		@Req() req: Request,
 		@Body() data: CreatePostDto
@@ -21,6 +26,10 @@ export class PostController {
 	}
 
 	@Put('edit-post')
+	@ApiOperation({ summary: "Edit post" })
+	@ApiBody({ type: EditPostDto })
+	@ApiQuery({ name: 'postId', required: true, type: String })
+	@ApiResponse({ status: 200, description: "Post edited" })
 	async editPost(
 		@Req() req: Request,
 		@Body() data: EditPostDto,
@@ -30,6 +39,9 @@ export class PostController {
 	}
 
 	@Delete('delete-post')
+	@ApiOperation({ summary: "Delete post" })
+	@ApiQuery({ name: 'postId', required: true, type: String })
+	@ApiResponse({ status: 200, description: "Post deleted" })
 	async deletePost(
 		@Query('postId') postId: string,
 		@Req() req: Request
@@ -39,6 +51,10 @@ export class PostController {
 
 	@Public()
 	@Get('post')
+	@ApiOperation({ summary: "Get detail post" })
+	@ApiQuery({ name: 'postId', required: true, type: String })
+	@ApiBody({ type: GetDetailPostDto })
+	@ApiResponse({ status: 200, description: "Post detail" })
 	async getDetailPost(
 		@Query('postId') postId: string,
 		@Body() query: GetDetailPostDto
@@ -48,6 +64,9 @@ export class PostController {
 
 	@Public()
 	@Get('search')
+	@ApiOperation({ summary: "Search posts" })
+	@ApiQuery({ name: 'content', required: false, type: String })
+	@ApiResponse({ status: 200, description: "Search results" })
 	async searchPosts(
 		@Query('content') content: string,
 		@Query() query: GetManyPostDto

@@ -4,6 +4,8 @@ import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { MyLogger } from './modules/logger/my.logger.dev';
+import helmet from 'helmet';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -11,7 +13,7 @@ async function bootstrap() {
   })
 
   app.useLogger(new MyLogger())
-
+  app.use(helmet());
   app.use(cookieParser())
   app.enableCors({
     origin: "http://localhost:3000", // your frontend origin
@@ -28,6 +30,16 @@ async function bootstrap() {
       },
     },
   })
+
+  const config = new DocumentBuilder()
+    .setTitle('Blog API')
+    .setDescription('API docs for Blog project')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build()
+
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('docs', app, document)
 
   app.getHttpAdapter().getInstance().set('trust proxy', 1)
 
