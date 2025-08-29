@@ -8,6 +8,7 @@ import { GetDetailPostDto } from "./dto/get.detail.post.dto";
 import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { POST_CONSTANTS } from "./post.constants";
 import { USER_CONSTANTS } from "../user/user.constants";
+import { randomUUID } from "node:crypto";
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
 
@@ -19,6 +20,13 @@ export class PostService {
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
         private readonly customCache: CustomCacheService,
     ) { }
+
+    // find post
+    async getPostObject(postId: string) {
+        return await this.prismaService.post.findUnique({
+            where: { id: postId }
+        })
+    }
 
     // create post
     async createPost(req: Request, content: string, paths: string[]) {
@@ -33,13 +41,24 @@ export class PostService {
         }
 
         // create post
-        const newPost = await this.prismaService.post.create({
-            data: {
-                content: content,
-                urlImgs: paths,
-                userId: availableUser.id
-            }
-        })
+        const newPostId = randomUUID()
+        const [newPost, ownerPost] = await this.prismaService.$transaction([
+            this.prismaService.post.create({
+                data: {
+                    id: newPostId,
+                    content: content,
+                    urlImgs: paths,
+                    userId: availableUser.id
+                }
+            }),
+            this.prismaService.owner.create({
+                data: {
+                    nameRole: 'OWNER',
+                    objectId: newPostId,
+                    userId: availableUser.id
+                }
+            })
+        ])
 
         // cache post
         const key = `post:${newPost.id}`

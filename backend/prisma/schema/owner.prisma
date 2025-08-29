@@ -1,0 +1,11 @@
+model Owner {
+    id String @id @default(uuid()) @db.Uuid
+
+    nameRole String
+
+    userId String @db.Uuid
+
+    objectId String @db.Uuid
+
+    @@unique([userId, objectId])
+}

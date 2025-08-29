@@ -12,7 +12,7 @@ async function bootstrap() {
     // logger: false
   })
 
-  app.useLogger(new MyLogger())
+  // app.useLogger(new MyLogger())
   app.use(helmet());
   app.use(cookieParser())
   app.enableCors({

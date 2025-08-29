@@ -34,6 +34,11 @@ export type PrivateChat = $Result.DefaultSelection<Prisma.$PrivateChatPayload>
  */
 export type PrivateMessage = $Result.DefaultSelection<Prisma.$PrivateMessagePayload>
 /**
+ * Model Owner
+ * 
+ */
+export type Owner = $Result.DefaultSelection<Prisma.$OwnerPayload>
+/**
  * Model Role
  * 
  */
@@ -63,6 +68,11 @@ export type RepComment = $Result.DefaultSelection<Prisma.$RepCommentPayload>
  * 
  */
 export type BehaviorWithPost = $Result.DefaultSelection<Prisma.$BehaviorWithPostPayload>
+/**
+ * Model blockedUser
+ * 
+ */
+export type blockedUser = $Result.DefaultSelection<Prisma.$blockedUserPayload>
 /**
  * Model User
  * 
@@ -281,6 +291,16 @@ export class PrismaClient<
   get privateMessage(): Prisma.PrivateMessageDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.owner`: Exposes CRUD operations for the **Owner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Owners
+    * const owners = await prisma.owner.findMany()
+    * ```
+    */
+  get owner(): Prisma.OwnerDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.role`: Exposes CRUD operations for the **Role** model.
     * Example usage:
     * ```ts
@@ -339,6 +359,16 @@ export class PrismaClient<
     * ```
     */
   get behaviorWithPost(): Prisma.BehaviorWithPostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.blockedUser`: Exposes CRUD operations for the **blockedUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BlockedUsers
+    * const blockedUsers = await prisma.blockedUser.findMany()
+    * ```
+    */
+  get blockedUser(): Prisma.blockedUserDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -813,12 +843,14 @@ export namespace Prisma {
     Code: 'Code',
     PrivateChat: 'PrivateChat',
     PrivateMessage: 'PrivateMessage',
+    Owner: 'Owner',
     Role: 'Role',
     Permission: 'Permission',
     Post: 'Post',
     Comment: 'Comment',
     RepComment: 'RepComment',
     BehaviorWithPost: 'BehaviorWithPost',
+    blockedUser: 'blockedUser',
     User: 'User',
     Following: 'Following',
     Follower: 'Follower'
@@ -840,7 +872,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "session" | "code" | "privateChat" | "privateMessage" | "role" | "permission" | "post" | "comment" | "repComment" | "behaviorWithPost" | "user" | "following" | "follower"
+      modelProps: "session" | "code" | "privateChat" | "privateMessage" | "owner" | "role" | "permission" | "post" | "comment" | "repComment" | "behaviorWithPost" | "blockedUser" | "user" | "following" | "follower"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1137,6 +1169,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PrivateMessageCountArgs<ExtArgs>
             result: $Utils.Optional<PrivateMessageCountAggregateOutputType> | number
+          }
+        }
+      }
+      Owner: {
+        payload: Prisma.$OwnerPayload<ExtArgs>
+        fields: Prisma.OwnerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OwnerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findFirst: {
+            args: Prisma.OwnerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findMany: {
+            args: Prisma.OwnerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          create: {
+            args: Prisma.OwnerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          createMany: {
+            args: Prisma.OwnerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          delete: {
+            args: Prisma.OwnerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          update: {
+            args: Prisma.OwnerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          deleteMany: {
+            args: Prisma.OwnerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OwnerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          upsert: {
+            args: Prisma.OwnerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          aggregate: {
+            args: Prisma.OwnerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOwner>
+          }
+          groupBy: {
+            args: Prisma.OwnerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OwnerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OwnerCountArgs<ExtArgs>
+            result: $Utils.Optional<OwnerCountAggregateOutputType> | number
           }
         }
       }
@@ -1584,6 +1690,80 @@ export namespace Prisma {
           }
         }
       }
+      blockedUser: {
+        payload: Prisma.$blockedUserPayload<ExtArgs>
+        fields: Prisma.blockedUserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.blockedUserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.blockedUserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          findFirst: {
+            args: Prisma.blockedUserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.blockedUserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          findMany: {
+            args: Prisma.blockedUserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>[]
+          }
+          create: {
+            args: Prisma.blockedUserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          createMany: {
+            args: Prisma.blockedUserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.blockedUserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>[]
+          }
+          delete: {
+            args: Prisma.blockedUserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          update: {
+            args: Prisma.blockedUserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          deleteMany: {
+            args: Prisma.blockedUserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.blockedUserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.blockedUserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>[]
+          }
+          upsert: {
+            args: Prisma.blockedUserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockedUserPayload>
+          }
+          aggregate: {
+            args: Prisma.BlockedUserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBlockedUser>
+          }
+          groupBy: {
+            args: Prisma.blockedUserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BlockedUserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.blockedUserCountArgs<ExtArgs>
+            result: $Utils.Optional<BlockedUserCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1902,12 +2082,14 @@ export namespace Prisma {
     code?: CodeOmit
     privateChat?: PrivateChatOmit
     privateMessage?: PrivateMessageOmit
+    owner?: OwnerOmit
     role?: RoleOmit
     permission?: PermissionOmit
     post?: PostOmit
     comment?: CommentOmit
     repComment?: RepCommentOmit
     behaviorWithPost?: BehaviorWithPostOmit
+    blockedUser?: blockedUserOmit
     user?: UserOmit
     following?: FollowingOmit
     follower?: FollowerOmit
@@ -2207,6 +2389,7 @@ export namespace Prisma {
     sentMessages: number
     followingUser: number
     followers: number
+    blockedUsers: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2222,6 +2405,7 @@ export namespace Prisma {
     sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
     followingUser?: boolean | UserCountOutputTypeCountFollowingUserArgs
     followers?: boolean | UserCountOutputTypeCountFollowersArgs
+    blockedUsers?: boolean | UserCountOutputTypeCountBlockedUsersArgs
   }
 
   // Custom InputTypes
@@ -2317,6 +2501,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FollowerWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBlockedUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: blockedUserWhereInput
   }
 
 
@@ -6862,6 +7053,988 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PrivateMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Owner
+   */
+
+  export type AggregateOwner = {
+    _count: OwnerCountAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  export type OwnerMinAggregateOutputType = {
+    id: string | null
+    nameRole: string | null
+    userId: string | null
+    objectId: string | null
+  }
+
+  export type OwnerMaxAggregateOutputType = {
+    id: string | null
+    nameRole: string | null
+    userId: string | null
+    objectId: string | null
+  }
+
+  export type OwnerCountAggregateOutputType = {
+    id: number
+    nameRole: number
+    userId: number
+    objectId: number
+    _all: number
+  }
+
+
+  export type OwnerMinAggregateInputType = {
+    id?: true
+    nameRole?: true
+    userId?: true
+    objectId?: true
+  }
+
+  export type OwnerMaxAggregateInputType = {
+    id?: true
+    nameRole?: true
+    userId?: true
+    objectId?: true
+  }
+
+  export type OwnerCountAggregateInputType = {
+    id?: true
+    nameRole?: true
+    userId?: true
+    objectId?: true
+    _all?: true
+  }
+
+  export type OwnerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owner to aggregate.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Owners
+    **/
+    _count?: true | OwnerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OwnerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type GetOwnerAggregateType<T extends OwnerAggregateArgs> = {
+        [P in keyof T & keyof AggregateOwner]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOwner[P]>
+      : GetScalarType<T[P], AggregateOwner[P]>
+  }
+
+
+
+
+  export type OwnerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OwnerWhereInput
+    orderBy?: OwnerOrderByWithAggregationInput | OwnerOrderByWithAggregationInput[]
+    by: OwnerScalarFieldEnum[] | OwnerScalarFieldEnum
+    having?: OwnerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OwnerCountAggregateInputType | true
+    _min?: OwnerMinAggregateInputType
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type OwnerGroupByOutputType = {
+    id: string
+    nameRole: string
+    userId: string
+    objectId: string
+    _count: OwnerCountAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  type GetOwnerGroupByPayload<T extends OwnerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OwnerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OwnerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+            : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OwnerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nameRole?: boolean
+    userId?: boolean
+    objectId?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nameRole?: boolean
+    userId?: boolean
+    objectId?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nameRole?: boolean
+    userId?: boolean
+    objectId?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectScalar = {
+    id?: boolean
+    nameRole?: boolean
+    userId?: boolean
+    objectId?: boolean
+  }
+
+  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nameRole" | "userId" | "objectId", ExtArgs["result"]["owner"]>
+
+  export type $OwnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Owner"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nameRole: string
+      userId: string
+      objectId: string
+    }, ExtArgs["result"]["owner"]>
+    composites: {}
+  }
+
+  type OwnerGetPayload<S extends boolean | null | undefined | OwnerDefaultArgs> = $Result.GetResult<Prisma.$OwnerPayload, S>
+
+  type OwnerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OwnerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OwnerCountAggregateInputType | true
+    }
+
+  export interface OwnerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Owner'], meta: { name: 'Owner' } }
+    /**
+     * Find zero or one Owner that matches the filter.
+     * @param {OwnerFindUniqueArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OwnerFindUniqueArgs>(args: SelectSubset<T, OwnerFindUniqueArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Owner that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OwnerFindUniqueOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OwnerFindUniqueOrThrowArgs>(args: SelectSubset<T, OwnerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OwnerFindFirstArgs>(args?: SelectSubset<T, OwnerFindFirstArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OwnerFindFirstOrThrowArgs>(args?: SelectSubset<T, OwnerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Owners that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Owners
+     * const owners = await prisma.owner.findMany()
+     * 
+     * // Get first 10 Owners
+     * const owners = await prisma.owner.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ownerWithIdOnly = await prisma.owner.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OwnerFindManyArgs>(args?: SelectSubset<T, OwnerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Owner.
+     * @param {OwnerCreateArgs} args - Arguments to create a Owner.
+     * @example
+     * // Create one Owner
+     * const Owner = await prisma.owner.create({
+     *   data: {
+     *     // ... data to create a Owner
+     *   }
+     * })
+     * 
+     */
+    create<T extends OwnerCreateArgs>(args: SelectSubset<T, OwnerCreateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Owners.
+     * @param {OwnerCreateManyArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OwnerCreateManyArgs>(args?: SelectSubset<T, OwnerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Owners and returns the data saved in the database.
+     * @param {OwnerCreateManyAndReturnArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Owners and only return the `id`
+     * const ownerWithIdOnly = await prisma.owner.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OwnerCreateManyAndReturnArgs>(args?: SelectSubset<T, OwnerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Owner.
+     * @param {OwnerDeleteArgs} args - Arguments to delete one Owner.
+     * @example
+     * // Delete one Owner
+     * const Owner = await prisma.owner.delete({
+     *   where: {
+     *     // ... filter to delete one Owner
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OwnerDeleteArgs>(args: SelectSubset<T, OwnerDeleteArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Owner.
+     * @param {OwnerUpdateArgs} args - Arguments to update one Owner.
+     * @example
+     * // Update one Owner
+     * const owner = await prisma.owner.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OwnerUpdateArgs>(args: SelectSubset<T, OwnerUpdateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Owners.
+     * @param {OwnerDeleteManyArgs} args - Arguments to filter Owners to delete.
+     * @example
+     * // Delete a few Owners
+     * const { count } = await prisma.owner.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OwnerDeleteManyArgs>(args?: SelectSubset<T, OwnerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OwnerUpdateManyArgs>(args: SelectSubset<T, OwnerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners and returns the data updated in the database.
+     * @param {OwnerUpdateManyAndReturnArgs} args - Arguments to update many Owners.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Owners and only return the `id`
+     * const ownerWithIdOnly = await prisma.owner.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OwnerUpdateManyAndReturnArgs>(args: SelectSubset<T, OwnerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Owner.
+     * @param {OwnerUpsertArgs} args - Arguments to update or create a Owner.
+     * @example
+     * // Update or create a Owner
+     * const owner = await prisma.owner.upsert({
+     *   create: {
+     *     // ... data to create a Owner
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Owner we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OwnerUpsertArgs>(args: SelectSubset<T, OwnerUpsertArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerCountArgs} args - Arguments to filter Owners to count.
+     * @example
+     * // Count the number of Owners
+     * const count = await prisma.owner.count({
+     *   where: {
+     *     // ... the filter for the Owners we want to count
+     *   }
+     * })
+    **/
+    count<T extends OwnerCountArgs>(
+      args?: Subset<T, OwnerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OwnerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OwnerAggregateArgs>(args: Subset<T, OwnerAggregateArgs>): Prisma.PrismaPromise<GetOwnerAggregateType<T>>
+
+    /**
+     * Group by Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OwnerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OwnerGroupByArgs['orderBy'] }
+        : { orderBy?: OwnerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Owner model
+   */
+  readonly fields: OwnerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Owner.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OwnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Owner model
+   */
+  interface OwnerFieldRefs {
+    readonly id: FieldRef<"Owner", 'String'>
+    readonly nameRole: FieldRef<"Owner", 'String'>
+    readonly userId: FieldRef<"Owner", 'String'>
+    readonly objectId: FieldRef<"Owner", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Owner findUnique
+   */
+  export type OwnerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findUniqueOrThrow
+   */
+  export type OwnerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findFirst
+   */
+  export type OwnerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findFirstOrThrow
+   */
+  export type OwnerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findMany
+   */
+  export type OwnerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter, which Owners to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner create
+   */
+  export type OwnerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Owner.
+     */
+    data: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+  }
+
+  /**
+   * Owner createMany
+   */
+  export type OwnerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner createManyAndReturn
+   */
+  export type OwnerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner update
+   */
+  export type OwnerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Owner.
+     */
+    data: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+    /**
+     * Choose, which Owner to update.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner updateMany
+   */
+  export type OwnerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner updateManyAndReturn
+   */
+  export type OwnerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner upsert
+   */
+  export type OwnerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Owner to update in case it exists.
+     */
+    where: OwnerWhereUniqueInput
+    /**
+     * In case the Owner found by the `where` argument doesn't exist, create a new Owner with this data.
+     */
+    create: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+    /**
+     * In case the Owner was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+  }
+
+  /**
+   * Owner delete
+   */
+  export type OwnerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Filter which Owner to delete.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner deleteMany
+   */
+  export type OwnerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owners to delete
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner without action
+   */
+  export type OwnerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
   }
 
 
@@ -13507,6 +14680,1051 @@ export namespace Prisma {
 
 
   /**
+   * Model blockedUser
+   */
+
+  export type AggregateBlockedUser = {
+    _count: BlockedUserCountAggregateOutputType | null
+    _min: BlockedUserMinAggregateOutputType | null
+    _max: BlockedUserMaxAggregateOutputType | null
+  }
+
+  export type BlockedUserMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updateAT: Date | null
+  }
+
+  export type BlockedUserMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updateAT: Date | null
+  }
+
+  export type BlockedUserCountAggregateOutputType = {
+    id: number
+    userId: number
+    createdAt: number
+    updateAT: number
+    _all: number
+  }
+
+
+  export type BlockedUserMinAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updateAT?: true
+  }
+
+  export type BlockedUserMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updateAT?: true
+  }
+
+  export type BlockedUserCountAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updateAT?: true
+    _all?: true
+  }
+
+  export type BlockedUserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which blockedUser to aggregate.
+     */
+    where?: blockedUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockedUsers to fetch.
+     */
+    orderBy?: blockedUserOrderByWithRelationInput | blockedUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: blockedUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockedUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockedUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned blockedUsers
+    **/
+    _count?: true | BlockedUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BlockedUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BlockedUserMaxAggregateInputType
+  }
+
+  export type GetBlockedUserAggregateType<T extends BlockedUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateBlockedUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBlockedUser[P]>
+      : GetScalarType<T[P], AggregateBlockedUser[P]>
+  }
+
+
+
+
+  export type blockedUserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: blockedUserWhereInput
+    orderBy?: blockedUserOrderByWithAggregationInput | blockedUserOrderByWithAggregationInput[]
+    by: BlockedUserScalarFieldEnum[] | BlockedUserScalarFieldEnum
+    having?: blockedUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BlockedUserCountAggregateInputType | true
+    _min?: BlockedUserMinAggregateInputType
+    _max?: BlockedUserMaxAggregateInputType
+  }
+
+  export type BlockedUserGroupByOutputType = {
+    id: string
+    userId: string
+    createdAt: Date
+    updateAT: Date
+    _count: BlockedUserCountAggregateOutputType | null
+    _min: BlockedUserMinAggregateOutputType | null
+    _max: BlockedUserMaxAggregateOutputType | null
+  }
+
+  type GetBlockedUserGroupByPayload<T extends blockedUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BlockedUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BlockedUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BlockedUserGroupByOutputType[P]>
+            : GetScalarType<T[P], BlockedUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type blockedUserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updateAT?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blockedUser"]>
+
+  export type blockedUserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updateAT?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blockedUser"]>
+
+  export type blockedUserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updateAT?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blockedUser"]>
+
+  export type blockedUserSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updateAT?: boolean
+  }
+
+  export type blockedUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updateAT", ExtArgs["result"]["blockedUser"]>
+  export type blockedUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type blockedUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type blockedUserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $blockedUserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "blockedUser"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      createdAt: Date
+      updateAT: Date
+    }, ExtArgs["result"]["blockedUser"]>
+    composites: {}
+  }
+
+  type blockedUserGetPayload<S extends boolean | null | undefined | blockedUserDefaultArgs> = $Result.GetResult<Prisma.$blockedUserPayload, S>
+
+  type blockedUserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<blockedUserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BlockedUserCountAggregateInputType | true
+    }
+
+  export interface blockedUserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['blockedUser'], meta: { name: 'blockedUser' } }
+    /**
+     * Find zero or one BlockedUser that matches the filter.
+     * @param {blockedUserFindUniqueArgs} args - Arguments to find a BlockedUser
+     * @example
+     * // Get one BlockedUser
+     * const blockedUser = await prisma.blockedUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends blockedUserFindUniqueArgs>(args: SelectSubset<T, blockedUserFindUniqueArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BlockedUser that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {blockedUserFindUniqueOrThrowArgs} args - Arguments to find a BlockedUser
+     * @example
+     * // Get one BlockedUser
+     * const blockedUser = await prisma.blockedUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends blockedUserFindUniqueOrThrowArgs>(args: SelectSubset<T, blockedUserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BlockedUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserFindFirstArgs} args - Arguments to find a BlockedUser
+     * @example
+     * // Get one BlockedUser
+     * const blockedUser = await prisma.blockedUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends blockedUserFindFirstArgs>(args?: SelectSubset<T, blockedUserFindFirstArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BlockedUser that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserFindFirstOrThrowArgs} args - Arguments to find a BlockedUser
+     * @example
+     * // Get one BlockedUser
+     * const blockedUser = await prisma.blockedUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends blockedUserFindFirstOrThrowArgs>(args?: SelectSubset<T, blockedUserFindFirstOrThrowArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BlockedUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BlockedUsers
+     * const blockedUsers = await prisma.blockedUser.findMany()
+     * 
+     * // Get first 10 BlockedUsers
+     * const blockedUsers = await prisma.blockedUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const blockedUserWithIdOnly = await prisma.blockedUser.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends blockedUserFindManyArgs>(args?: SelectSubset<T, blockedUserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BlockedUser.
+     * @param {blockedUserCreateArgs} args - Arguments to create a BlockedUser.
+     * @example
+     * // Create one BlockedUser
+     * const BlockedUser = await prisma.blockedUser.create({
+     *   data: {
+     *     // ... data to create a BlockedUser
+     *   }
+     * })
+     * 
+     */
+    create<T extends blockedUserCreateArgs>(args: SelectSubset<T, blockedUserCreateArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BlockedUsers.
+     * @param {blockedUserCreateManyArgs} args - Arguments to create many BlockedUsers.
+     * @example
+     * // Create many BlockedUsers
+     * const blockedUser = await prisma.blockedUser.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends blockedUserCreateManyArgs>(args?: SelectSubset<T, blockedUserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BlockedUsers and returns the data saved in the database.
+     * @param {blockedUserCreateManyAndReturnArgs} args - Arguments to create many BlockedUsers.
+     * @example
+     * // Create many BlockedUsers
+     * const blockedUser = await prisma.blockedUser.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BlockedUsers and only return the `id`
+     * const blockedUserWithIdOnly = await prisma.blockedUser.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends blockedUserCreateManyAndReturnArgs>(args?: SelectSubset<T, blockedUserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BlockedUser.
+     * @param {blockedUserDeleteArgs} args - Arguments to delete one BlockedUser.
+     * @example
+     * // Delete one BlockedUser
+     * const BlockedUser = await prisma.blockedUser.delete({
+     *   where: {
+     *     // ... filter to delete one BlockedUser
+     *   }
+     * })
+     * 
+     */
+    delete<T extends blockedUserDeleteArgs>(args: SelectSubset<T, blockedUserDeleteArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BlockedUser.
+     * @param {blockedUserUpdateArgs} args - Arguments to update one BlockedUser.
+     * @example
+     * // Update one BlockedUser
+     * const blockedUser = await prisma.blockedUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends blockedUserUpdateArgs>(args: SelectSubset<T, blockedUserUpdateArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BlockedUsers.
+     * @param {blockedUserDeleteManyArgs} args - Arguments to filter BlockedUsers to delete.
+     * @example
+     * // Delete a few BlockedUsers
+     * const { count } = await prisma.blockedUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends blockedUserDeleteManyArgs>(args?: SelectSubset<T, blockedUserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BlockedUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BlockedUsers
+     * const blockedUser = await prisma.blockedUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends blockedUserUpdateManyArgs>(args: SelectSubset<T, blockedUserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BlockedUsers and returns the data updated in the database.
+     * @param {blockedUserUpdateManyAndReturnArgs} args - Arguments to update many BlockedUsers.
+     * @example
+     * // Update many BlockedUsers
+     * const blockedUser = await prisma.blockedUser.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BlockedUsers and only return the `id`
+     * const blockedUserWithIdOnly = await prisma.blockedUser.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends blockedUserUpdateManyAndReturnArgs>(args: SelectSubset<T, blockedUserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BlockedUser.
+     * @param {blockedUserUpsertArgs} args - Arguments to update or create a BlockedUser.
+     * @example
+     * // Update or create a BlockedUser
+     * const blockedUser = await prisma.blockedUser.upsert({
+     *   create: {
+     *     // ... data to create a BlockedUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BlockedUser we want to update
+     *   }
+     * })
+     */
+    upsert<T extends blockedUserUpsertArgs>(args: SelectSubset<T, blockedUserUpsertArgs<ExtArgs>>): Prisma__blockedUserClient<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BlockedUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserCountArgs} args - Arguments to filter BlockedUsers to count.
+     * @example
+     * // Count the number of BlockedUsers
+     * const count = await prisma.blockedUser.count({
+     *   where: {
+     *     // ... the filter for the BlockedUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends blockedUserCountArgs>(
+      args?: Subset<T, blockedUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BlockedUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BlockedUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlockedUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BlockedUserAggregateArgs>(args: Subset<T, BlockedUserAggregateArgs>): Prisma.PrismaPromise<GetBlockedUserAggregateType<T>>
+
+    /**
+     * Group by BlockedUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockedUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends blockedUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: blockedUserGroupByArgs['orderBy'] }
+        : { orderBy?: blockedUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, blockedUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlockedUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the blockedUser model
+   */
+  readonly fields: blockedUserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for blockedUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__blockedUserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the blockedUser model
+   */
+  interface blockedUserFieldRefs {
+    readonly id: FieldRef<"blockedUser", 'String'>
+    readonly userId: FieldRef<"blockedUser", 'String'>
+    readonly createdAt: FieldRef<"blockedUser", 'DateTime'>
+    readonly updateAT: FieldRef<"blockedUser", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * blockedUser findUnique
+   */
+  export type blockedUserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter, which blockedUser to fetch.
+     */
+    where: blockedUserWhereUniqueInput
+  }
+
+  /**
+   * blockedUser findUniqueOrThrow
+   */
+  export type blockedUserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter, which blockedUser to fetch.
+     */
+    where: blockedUserWhereUniqueInput
+  }
+
+  /**
+   * blockedUser findFirst
+   */
+  export type blockedUserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter, which blockedUser to fetch.
+     */
+    where?: blockedUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockedUsers to fetch.
+     */
+    orderBy?: blockedUserOrderByWithRelationInput | blockedUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for blockedUsers.
+     */
+    cursor?: blockedUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockedUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockedUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of blockedUsers.
+     */
+    distinct?: BlockedUserScalarFieldEnum | BlockedUserScalarFieldEnum[]
+  }
+
+  /**
+   * blockedUser findFirstOrThrow
+   */
+  export type blockedUserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter, which blockedUser to fetch.
+     */
+    where?: blockedUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockedUsers to fetch.
+     */
+    orderBy?: blockedUserOrderByWithRelationInput | blockedUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for blockedUsers.
+     */
+    cursor?: blockedUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockedUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockedUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of blockedUsers.
+     */
+    distinct?: BlockedUserScalarFieldEnum | BlockedUserScalarFieldEnum[]
+  }
+
+  /**
+   * blockedUser findMany
+   */
+  export type blockedUserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter, which blockedUsers to fetch.
+     */
+    where?: blockedUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockedUsers to fetch.
+     */
+    orderBy?: blockedUserOrderByWithRelationInput | blockedUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing blockedUsers.
+     */
+    cursor?: blockedUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockedUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockedUsers.
+     */
+    skip?: number
+    distinct?: BlockedUserScalarFieldEnum | BlockedUserScalarFieldEnum[]
+  }
+
+  /**
+   * blockedUser create
+   */
+  export type blockedUserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a blockedUser.
+     */
+    data: XOR<blockedUserCreateInput, blockedUserUncheckedCreateInput>
+  }
+
+  /**
+   * blockedUser createMany
+   */
+  export type blockedUserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many blockedUsers.
+     */
+    data: blockedUserCreateManyInput | blockedUserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * blockedUser createManyAndReturn
+   */
+  export type blockedUserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * The data used to create many blockedUsers.
+     */
+    data: blockedUserCreateManyInput | blockedUserCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * blockedUser update
+   */
+  export type blockedUserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a blockedUser.
+     */
+    data: XOR<blockedUserUpdateInput, blockedUserUncheckedUpdateInput>
+    /**
+     * Choose, which blockedUser to update.
+     */
+    where: blockedUserWhereUniqueInput
+  }
+
+  /**
+   * blockedUser updateMany
+   */
+  export type blockedUserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update blockedUsers.
+     */
+    data: XOR<blockedUserUpdateManyMutationInput, blockedUserUncheckedUpdateManyInput>
+    /**
+     * Filter which blockedUsers to update
+     */
+    where?: blockedUserWhereInput
+    /**
+     * Limit how many blockedUsers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * blockedUser updateManyAndReturn
+   */
+  export type blockedUserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * The data used to update blockedUsers.
+     */
+    data: XOR<blockedUserUpdateManyMutationInput, blockedUserUncheckedUpdateManyInput>
+    /**
+     * Filter which blockedUsers to update
+     */
+    where?: blockedUserWhereInput
+    /**
+     * Limit how many blockedUsers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * blockedUser upsert
+   */
+  export type blockedUserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the blockedUser to update in case it exists.
+     */
+    where: blockedUserWhereUniqueInput
+    /**
+     * In case the blockedUser found by the `where` argument doesn't exist, create a new blockedUser with this data.
+     */
+    create: XOR<blockedUserCreateInput, blockedUserUncheckedCreateInput>
+    /**
+     * In case the blockedUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<blockedUserUpdateInput, blockedUserUncheckedUpdateInput>
+  }
+
+  /**
+   * blockedUser delete
+   */
+  export type blockedUserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    /**
+     * Filter which blockedUser to delete.
+     */
+    where: blockedUserWhereUniqueInput
+  }
+
+  /**
+   * blockedUser deleteMany
+   */
+  export type blockedUserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which blockedUsers to delete
+     */
+    where?: blockedUserWhereInput
+    /**
+     * Limit how many blockedUsers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * blockedUser without action
+   */
+  export type blockedUserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -13746,6 +15964,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     followingUser?: boolean | User$followingUserArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
+    blockedUsers?: boolean | User$blockedUsersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -13811,6 +16030,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     followingUser?: boolean | User$followingUserArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
+    blockedUsers?: boolean | User$blockedUsersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -13831,6 +16051,7 @@ export namespace Prisma {
       sentMessages: Prisma.$PrivateMessagePayload<ExtArgs>[]
       followingUser: Prisma.$FollowingPayload<ExtArgs>[]
       followers: Prisma.$FollowerPayload<ExtArgs>[]
+      blockedUsers: Prisma.$blockedUserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14252,6 +16473,7 @@ export namespace Prisma {
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrivateMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     followingUser<T extends User$followingUserArgs<ExtArgs> = {}>(args?: Subset<T, User$followingUserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FollowingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    blockedUsers<T extends User$blockedUsersArgs<ExtArgs> = {}>(args?: Subset<T, User$blockedUsersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14967,6 +17189,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FollowerScalarFieldEnum | FollowerScalarFieldEnum[]
+  }
+
+  /**
+   * User.blockedUsers
+   */
+  export type User$blockedUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockedUser
+     */
+    select?: blockedUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockedUser
+     */
+    omit?: blockedUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: blockedUserInclude<ExtArgs> | null
+    where?: blockedUserWhereInput
+    orderBy?: blockedUserOrderByWithRelationInput | blockedUserOrderByWithRelationInput[]
+    cursor?: blockedUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BlockedUserScalarFieldEnum | BlockedUserScalarFieldEnum[]
   }
 
   /**
@@ -17172,6 +19418,16 @@ export namespace Prisma {
   export type PrivateMessageScalarFieldEnum = (typeof PrivateMessageScalarFieldEnum)[keyof typeof PrivateMessageScalarFieldEnum]
 
 
+  export const OwnerScalarFieldEnum: {
+    id: 'id',
+    nameRole: 'nameRole',
+    userId: 'userId',
+    objectId: 'objectId'
+  };
+
+  export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
+
+
   export const RoleScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -17241,6 +19497,16 @@ export namespace Prisma {
   };
 
   export type BehaviorWithPostScalarFieldEnum = (typeof BehaviorWithPostScalarFieldEnum)[keyof typeof BehaviorWithPostScalarFieldEnum]
+
+
+  export const BlockedUserScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updateAT: 'updateAT'
+  };
+
+  export type BlockedUserScalarFieldEnum = (typeof BlockedUserScalarFieldEnum)[keyof typeof BlockedUserScalarFieldEnum]
 
 
   export const UserScalarFieldEnum: {
@@ -17712,6 +19978,54 @@ export namespace Prisma {
     updateAt?: DateTimeWithAggregatesFilter<"PrivateMessage"> | Date | string
   }
 
+  export type OwnerWhereInput = {
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    id?: UuidFilter<"Owner"> | string
+    nameRole?: StringFilter<"Owner"> | string
+    userId?: UuidFilter<"Owner"> | string
+    objectId?: UuidFilter<"Owner"> | string
+  }
+
+  export type OwnerOrderByWithRelationInput = {
+    id?: SortOrder
+    nameRole?: SortOrder
+    userId?: SortOrder
+    objectId?: SortOrder
+  }
+
+  export type OwnerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_objectId?: OwnerUserIdObjectIdCompoundUniqueInput
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    nameRole?: StringFilter<"Owner"> | string
+    userId?: UuidFilter<"Owner"> | string
+    objectId?: UuidFilter<"Owner"> | string
+  }, "id" | "userId_objectId">
+
+  export type OwnerOrderByWithAggregationInput = {
+    id?: SortOrder
+    nameRole?: SortOrder
+    userId?: SortOrder
+    objectId?: SortOrder
+    _count?: OwnerCountOrderByAggregateInput
+    _max?: OwnerMaxOrderByAggregateInput
+    _min?: OwnerMinOrderByAggregateInput
+  }
+
+  export type OwnerScalarWhereWithAggregatesInput = {
+    AND?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    OR?: OwnerScalarWhereWithAggregatesInput[]
+    NOT?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Owner"> | string
+    nameRole?: StringWithAggregatesFilter<"Owner"> | string
+    userId?: UuidWithAggregatesFilter<"Owner"> | string
+    objectId?: UuidWithAggregatesFilter<"Owner"> | string
+  }
+
   export type RoleWhereInput = {
     AND?: RoleWhereInput | RoleWhereInput[]
     OR?: RoleWhereInput[]
@@ -18093,6 +20407,56 @@ export namespace Prisma {
     updateAt?: DateTimeWithAggregatesFilter<"BehaviorWithPost"> | Date | string
   }
 
+  export type blockedUserWhereInput = {
+    AND?: blockedUserWhereInput | blockedUserWhereInput[]
+    OR?: blockedUserWhereInput[]
+    NOT?: blockedUserWhereInput | blockedUserWhereInput[]
+    id?: UuidFilter<"blockedUser"> | string
+    userId?: UuidFilter<"blockedUser"> | string
+    createdAt?: DateTimeFilter<"blockedUser"> | Date | string
+    updateAT?: DateTimeFilter<"blockedUser"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type blockedUserOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updateAT?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type blockedUserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: blockedUserWhereInput | blockedUserWhereInput[]
+    OR?: blockedUserWhereInput[]
+    NOT?: blockedUserWhereInput | blockedUserWhereInput[]
+    createdAt?: DateTimeFilter<"blockedUser"> | Date | string
+    updateAT?: DateTimeFilter<"blockedUser"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type blockedUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updateAT?: SortOrder
+    _count?: blockedUserCountOrderByAggregateInput
+    _max?: blockedUserMaxOrderByAggregateInput
+    _min?: blockedUserMinOrderByAggregateInput
+  }
+
+  export type blockedUserScalarWhereWithAggregatesInput = {
+    AND?: blockedUserScalarWhereWithAggregatesInput | blockedUserScalarWhereWithAggregatesInput[]
+    OR?: blockedUserScalarWhereWithAggregatesInput[]
+    NOT?: blockedUserScalarWhereWithAggregatesInput | blockedUserScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"blockedUser"> | string
+    userId?: UuidWithAggregatesFilter<"blockedUser"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"blockedUser"> | Date | string
+    updateAT?: DateTimeWithAggregatesFilter<"blockedUser"> | Date | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -18122,6 +20486,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageListRelationFilter
     followingUser?: FollowingListRelationFilter
     followers?: FollowerListRelationFilter
+    blockedUsers?: BlockedUserListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18150,6 +20515,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageOrderByRelationAggregateInput
     followingUser?: FollowingOrderByRelationAggregateInput
     followers?: FollowerOrderByRelationAggregateInput
+    blockedUsers?: blockedUserOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18181,6 +20547,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageListRelationFilter
     followingUser?: FollowingListRelationFilter
     followers?: FollowerListRelationFilter
+    blockedUsers?: BlockedUserListRelationFilter
   }, "id" | "userName" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18628,6 +20995,55 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OwnerCreateInput = {
+    id?: string
+    nameRole: string
+    userId: string
+    objectId: string
+  }
+
+  export type OwnerUncheckedCreateInput = {
+    id?: string
+    nameRole: string
+    userId: string
+    objectId: string
+  }
+
+  export type OwnerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameRole?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    objectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OwnerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameRole?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    objectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OwnerCreateManyInput = {
+    id?: string
+    nameRole: string
+    userId: string
+    objectId: string
+  }
+
+  export type OwnerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameRole?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    objectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OwnerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameRole?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    objectId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type RoleCreateInput = {
     name: string
     createdAt?: Date | string
@@ -19010,6 +21426,54 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type blockedUserCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updateAT?: Date | string
+    user: UserCreateNestedOneWithoutBlockedUsersInput
+  }
+
+  export type blockedUserUncheckedCreateInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updateAT?: Date | string
+  }
+
+  export type blockedUserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBlockedUsersNestedInput
+  }
+
+  export type blockedUserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockedUserCreateManyInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updateAT?: Date | string
+  }
+
+  export type blockedUserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockedUserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -19036,6 +21500,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19064,6 +21529,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -19092,6 +21558,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19120,6 +21587,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19680,6 +22148,32 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type OwnerUserIdObjectIdCompoundUniqueInput = {
+    userId: string
+    objectId: string
+  }
+
+  export type OwnerCountOrderByAggregateInput = {
+    id?: SortOrder
+    nameRole?: SortOrder
+    userId?: SortOrder
+    objectId?: SortOrder
+  }
+
+  export type OwnerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nameRole?: SortOrder
+    userId?: SortOrder
+    objectId?: SortOrder
+  }
+
+  export type OwnerMinOrderByAggregateInput = {
+    id?: SortOrder
+    nameRole?: SortOrder
+    userId?: SortOrder
+    objectId?: SortOrder
+  }
+
   export type UserListRelationFilter = {
     every?: UserWhereInput
     some?: UserWhereInput
@@ -19966,6 +22460,27 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type blockedUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updateAT?: SortOrder
+  }
+
+  export type blockedUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updateAT?: SortOrder
+  }
+
+  export type blockedUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updateAT?: SortOrder
+  }
+
   export type EnumGenderNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
     in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
@@ -20009,6 +22524,12 @@ export namespace Prisma {
     none?: FollowerWhereInput
   }
 
+  export type BlockedUserListRelationFilter = {
+    every?: blockedUserWhereInput
+    some?: blockedUserWhereInput
+    none?: blockedUserWhereInput
+  }
+
   export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -20030,6 +22551,10 @@ export namespace Prisma {
   }
 
   export type FollowerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type blockedUserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20716,6 +23241,20 @@ export namespace Prisma {
     update?: XOR<XOR<PostUpdateToOneWithWhereWithoutUserLikedInput, PostUpdateWithoutUserLikedInput>, PostUncheckedUpdateWithoutUserLikedInput>
   }
 
+  export type UserCreateNestedOneWithoutBlockedUsersInput = {
+    create?: XOR<UserCreateWithoutBlockedUsersInput, UserUncheckedCreateWithoutBlockedUsersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBlockedUsersInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBlockedUsersNestedInput = {
+    create?: XOR<UserCreateWithoutBlockedUsersInput, UserUncheckedCreateWithoutBlockedUsersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBlockedUsersInput
+    upsert?: UserUpsertWithoutBlockedUsersInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBlockedUsersInput, UserUpdateWithoutBlockedUsersInput>, UserUncheckedUpdateWithoutBlockedUsersInput>
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -20799,6 +23338,13 @@ export namespace Prisma {
     connect?: FollowerWhereUniqueInput | FollowerWhereUniqueInput[]
   }
 
+  export type blockedUserCreateNestedManyWithoutUserInput = {
+    create?: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput> | blockedUserCreateWithoutUserInput[] | blockedUserUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: blockedUserCreateOrConnectWithoutUserInput | blockedUserCreateOrConnectWithoutUserInput[]
+    createMany?: blockedUserCreateManyUserInputEnvelope
+    connect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -20880,6 +23426,13 @@ export namespace Prisma {
     connectOrCreate?: FollowerCreateOrConnectWithoutUserInput | FollowerCreateOrConnectWithoutUserInput[]
     createMany?: FollowerCreateManyUserInputEnvelope
     connect?: FollowerWhereUniqueInput | FollowerWhereUniqueInput[]
+  }
+
+  export type blockedUserUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput> | blockedUserCreateWithoutUserInput[] | blockedUserUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: blockedUserCreateOrConnectWithoutUserInput | blockedUserCreateOrConnectWithoutUserInput[]
+    createMany?: blockedUserCreateManyUserInputEnvelope
+    connect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
   }
 
   export type NullableEnumGenderFieldUpdateOperationsInput = {
@@ -21053,6 +23606,20 @@ export namespace Prisma {
     deleteMany?: FollowerScalarWhereInput | FollowerScalarWhereInput[]
   }
 
+  export type blockedUserUpdateManyWithoutUserNestedInput = {
+    create?: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput> | blockedUserCreateWithoutUserInput[] | blockedUserUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: blockedUserCreateOrConnectWithoutUserInput | blockedUserCreateOrConnectWithoutUserInput[]
+    upsert?: blockedUserUpsertWithWhereUniqueWithoutUserInput | blockedUserUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: blockedUserCreateManyUserInputEnvelope
+    set?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    disconnect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    delete?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    connect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    update?: blockedUserUpdateWithWhereUniqueWithoutUserInput | blockedUserUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: blockedUserUpdateManyWithWhereWithoutUserInput | blockedUserUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: blockedUserScalarWhereInput | blockedUserScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -21218,6 +23785,20 @@ export namespace Prisma {
     update?: FollowerUpdateWithWhereUniqueWithoutUserInput | FollowerUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: FollowerUpdateManyWithWhereWithoutUserInput | FollowerUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: FollowerScalarWhereInput | FollowerScalarWhereInput[]
+  }
+
+  export type blockedUserUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput> | blockedUserCreateWithoutUserInput[] | blockedUserUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: blockedUserCreateOrConnectWithoutUserInput | blockedUserCreateOrConnectWithoutUserInput[]
+    upsert?: blockedUserUpsertWithWhereUniqueWithoutUserInput | blockedUserUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: blockedUserCreateManyUserInputEnvelope
+    set?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    disconnect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    delete?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    connect?: blockedUserWhereUniqueInput | blockedUserWhereUniqueInput[]
+    update?: blockedUserUpdateWithWhereUniqueWithoutUserInput | blockedUserUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: blockedUserUpdateManyWithWhereWithoutUserInput | blockedUserUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: blockedUserScalarWhereInput | blockedUserScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutFollowingUserInput = {
@@ -21548,6 +24129,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -21575,6 +24157,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -21618,6 +24201,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -21645,6 +24229,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCodesInput = {
@@ -21672,6 +24257,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCodesInput = {
@@ -21699,6 +24285,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCodesInput = {
@@ -21742,6 +24329,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCodesInput = {
@@ -21769,6 +24357,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutUser1Input = {
@@ -21796,6 +24385,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUser1Input = {
@@ -21823,6 +24413,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUser1Input = {
@@ -21855,6 +24446,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUser2Input = {
@@ -21882,6 +24474,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUser2Input = {
@@ -21957,6 +24550,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUser1Input = {
@@ -21984,6 +24578,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUser2Input = {
@@ -22022,6 +24617,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUser2Input = {
@@ -22049,6 +24645,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PrivateMessageUpsertWithWhereUniqueWithoutChatInput = {
@@ -22196,6 +24793,7 @@ export namespace Prisma {
     user2?: PrivateChatCreateNestedManyWithoutUser2Input
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -22223,6 +24821,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -22352,6 +24951,7 @@ export namespace Prisma {
     user2?: PrivateChatUpdateManyWithoutUser2NestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -22379,6 +24979,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRolesInput = {
@@ -22406,6 +25007,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -22433,6 +25035,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -22593,6 +25196,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -22620,6 +25224,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -22717,6 +25322,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -22744,6 +25350,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutPostInput = {
@@ -22856,6 +25463,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -22883,6 +25491,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -22987,6 +25596,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -23014,6 +25624,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RepCommentUpsertWithWhereUniqueWithoutCommentInput = {
@@ -23069,6 +25680,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRepCommentsInput = {
@@ -23096,6 +25708,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRepCommentsInput = {
@@ -23162,6 +25775,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRepCommentsInput = {
@@ -23189,6 +25803,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithoutRepCommentsInput = {
@@ -23245,6 +25860,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostLikedInput = {
@@ -23272,6 +25888,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostLikedInput = {
@@ -23344,6 +25961,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostLikedInput = {
@@ -23371,6 +25989,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutUserLikedInput = {
@@ -23406,6 +26025,134 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type UserCreateWithoutBlockedUsersInput = {
+    id?: string
+    name?: string | null
+    gender?: $Enums.Gender | null
+    dateOfBirth?: Date | string | null
+    isActive?: boolean
+    userName: string
+    avtUrl?: string | null
+    email: string
+    hashingPassword: string
+    lastSeen?: Date | string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    deleteAt?: Date | string | null
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    codes?: CodeCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutUserInput
+    postLiked?: BehaviorWithPostCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+    repComments?: RepCommentCreateNestedManyWithoutSenderInput
+    roles?: RoleCreateNestedManyWithoutUsersInput
+    user1?: PrivateChatCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
+    followingUser?: FollowingCreateNestedManyWithoutUserInput
+    followers?: FollowerCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBlockedUsersInput = {
+    id?: string
+    name?: string | null
+    gender?: $Enums.Gender | null
+    dateOfBirth?: Date | string | null
+    isActive?: boolean
+    userName: string
+    avtUrl?: string | null
+    email: string
+    hashingPassword: string
+    lastSeen?: Date | string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    deleteAt?: Date | string | null
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    codes?: CodeUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutUserInput
+    postLiked?: BehaviorWithPostUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    repComments?: RepCommentUncheckedCreateNestedManyWithoutSenderInput
+    roles?: RoleUncheckedCreateNestedManyWithoutUsersInput
+    user1?: PrivateChatUncheckedCreateNestedManyWithoutUser1Input
+    user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
+    sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
+    followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
+    followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBlockedUsersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBlockedUsersInput, UserUncheckedCreateWithoutBlockedUsersInput>
+  }
+
+  export type UserUpsertWithoutBlockedUsersInput = {
+    update: XOR<UserUpdateWithoutBlockedUsersInput, UserUncheckedUpdateWithoutBlockedUsersInput>
+    create: XOR<UserCreateWithoutBlockedUsersInput, UserUncheckedCreateWithoutBlockedUsersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBlockedUsersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBlockedUsersInput, UserUncheckedUpdateWithoutBlockedUsersInput>
+  }
+
+  export type UserUpdateWithoutBlockedUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    codes?: CodeUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutUserNestedInput
+    postLiked?: BehaviorWithPostUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUpdateManyWithoutSenderNestedInput
+    roles?: RoleUpdateManyWithoutUsersNestedInput
+    user1?: PrivateChatUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
+    followingUser?: FollowingUpdateManyWithoutUserNestedInput
+    followers?: FollowerUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBlockedUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userName?: StringFieldUpdateOperationsInput | string
+    avtUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    hashingPassword?: StringFieldUpdateOperationsInput | string
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    codes?: CodeUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
+    postLiked?: BehaviorWithPostUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    repComments?: RepCommentUncheckedUpdateManyWithoutSenderNestedInput
+    roles?: RoleUncheckedUpdateManyWithoutUsersNestedInput
+    user1?: PrivateChatUncheckedUpdateManyWithoutUser1NestedInput
+    user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
+    sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
+    followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
+    followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -23746,6 +26493,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type blockedUserCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updateAT?: Date | string
+  }
+
+  export type blockedUserUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updateAT?: Date | string
+  }
+
+  export type blockedUserCreateOrConnectWithoutUserInput = {
+    where: blockedUserWhereUniqueInput
+    create: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput>
+  }
+
+  export type blockedUserCreateManyUserInputEnvelope = {
+    data: blockedUserCreateManyUserInput | blockedUserCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -24014,6 +26783,32 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"Follower"> | Date | string
   }
 
+  export type blockedUserUpsertWithWhereUniqueWithoutUserInput = {
+    where: blockedUserWhereUniqueInput
+    update: XOR<blockedUserUpdateWithoutUserInput, blockedUserUncheckedUpdateWithoutUserInput>
+    create: XOR<blockedUserCreateWithoutUserInput, blockedUserUncheckedCreateWithoutUserInput>
+  }
+
+  export type blockedUserUpdateWithWhereUniqueWithoutUserInput = {
+    where: blockedUserWhereUniqueInput
+    data: XOR<blockedUserUpdateWithoutUserInput, blockedUserUncheckedUpdateWithoutUserInput>
+  }
+
+  export type blockedUserUpdateManyWithWhereWithoutUserInput = {
+    where: blockedUserScalarWhereInput
+    data: XOR<blockedUserUpdateManyMutationInput, blockedUserUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type blockedUserScalarWhereInput = {
+    AND?: blockedUserScalarWhereInput | blockedUserScalarWhereInput[]
+    OR?: blockedUserScalarWhereInput[]
+    NOT?: blockedUserScalarWhereInput | blockedUserScalarWhereInput[]
+    id?: UuidFilter<"blockedUser"> | string
+    userId?: UuidFilter<"blockedUser"> | string
+    createdAt?: DateTimeFilter<"blockedUser"> | Date | string
+    updateAT?: DateTimeFilter<"blockedUser"> | Date | string
+  }
+
   export type UserCreateWithoutFollowingUserInput = {
     id?: string
     name?: string | null
@@ -24039,6 +26834,7 @@ export namespace Prisma {
     user2?: PrivateChatCreateNestedManyWithoutUser2Input
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followers?: FollowerCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingUserInput = {
@@ -24066,6 +26862,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followers?: FollowerUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingUserInput = {
@@ -24109,6 +26906,7 @@ export namespace Prisma {
     user2?: PrivateChatUpdateManyWithoutUser2NestedInput
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingUserInput = {
@@ -24136,6 +26934,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFollowersInput = {
@@ -24163,6 +26962,7 @@ export namespace Prisma {
     user2?: PrivateChatCreateNestedManyWithoutUser2Input
     sentMessages?: PrivateMessageCreateNestedManyWithoutSenderInput
     followingUser?: FollowingCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowersInput = {
@@ -24190,6 +26990,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedCreateNestedManyWithoutUser2Input
     sentMessages?: PrivateMessageUncheckedCreateNestedManyWithoutSenderInput
     followingUser?: FollowingUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: blockedUserUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowersInput = {
@@ -24233,6 +27034,7 @@ export namespace Prisma {
     user2?: PrivateChatUpdateManyWithoutUser2NestedInput
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -24260,6 +27062,7 @@ export namespace Prisma {
     user2?: PrivateChatUncheckedUpdateManyWithoutUser2NestedInput
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PrivateMessageCreateManyChatInput = {
@@ -24371,6 +27174,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUpdateManyWithoutUserNestedInput
     followers?: FollowerUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -24398,6 +27202,7 @@ export namespace Prisma {
     sentMessages?: PrivateMessageUncheckedUpdateManyWithoutSenderNestedInput
     followingUser?: FollowingUncheckedUpdateManyWithoutUserNestedInput
     followers?: FollowerUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: blockedUserUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRolesInput = {
@@ -24655,6 +27460,12 @@ export namespace Prisma {
     followerId: string
     createdAt?: Date | string
     updateAt?: Date | string
+  }
+
+  export type blockedUserCreateManyUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updateAT?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -24983,6 +27794,24 @@ export namespace Prisma {
     followerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockedUserUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockedUserUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockedUserUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAT?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

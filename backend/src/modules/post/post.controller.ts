@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { Public } from "src/common/decorator/public.decorator";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from "@nestjs/swagger";
@@ -7,6 +7,7 @@ import { EditPostDto } from "./dto/edit.post.dto";
 import { GetDetailPostDto } from "./dto/get.detail.post.dto";
 import { GetManyPostDto } from "./dto/get.many.post.dto";
 import { PostService } from "./post.service";
+import { IsCreatorPostGuard } from "./guards/is-creator.post.guard";
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
@@ -30,6 +31,7 @@ export class PostController {
 	@ApiBody({ type: EditPostDto })
 	@ApiQuery({ name: 'postId', required: true, type: String })
 	@ApiResponse({ status: 200, description: "Post edited" })
+	@UseGuards(IsCreatorPostGuard)
 	async editPost(
 		@Req() req: Request,
 		@Body() data: EditPostDto,
@@ -42,6 +44,7 @@ export class PostController {
 	@ApiOperation({ summary: "Delete post" })
 	@ApiQuery({ name: 'postId', required: true, type: String })
 	@ApiResponse({ status: 200, description: "Post deleted" })
+	@UseGuards(IsCreatorPostGuard)
 	async deletePost(
 		@Query('postId') postId: string,
 		@Req() req: Request

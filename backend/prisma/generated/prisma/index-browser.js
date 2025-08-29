@@ -162,6 +162,13 @@ exports.Prisma.PrivateMessageScalarFieldEnum = {
   updateAt: 'updateAt'
 };
 
+exports.Prisma.OwnerScalarFieldEnum = {
+  id: 'id',
+  nameRole: 'nameRole',
+  userId: 'userId',
+  objectId: 'objectId'
+};
+
 exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -213,6 +220,13 @@ exports.Prisma.BehaviorWithPostScalarFieldEnum = {
   postId: 'postId',
   createdAt: 'createdAt',
   updateAt: 'updateAt'
+};
+
+exports.Prisma.BlockedUserScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updateAT: 'updateAT'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -283,12 +297,14 @@ exports.Prisma.ModelName = {
   Code: 'Code',
   PrivateChat: 'PrivateChat',
   PrivateMessage: 'PrivateMessage',
+  Owner: 'Owner',
   Role: 'Role',
   Permission: 'Permission',
   Post: 'Post',
   Comment: 'Comment',
   RepComment: 'RepComment',
   BehaviorWithPost: 'BehaviorWithPost',
+  blockedUser: 'blockedUser',
   User: 'User',
   Following: 'Following',
   Follower: 'Follower'

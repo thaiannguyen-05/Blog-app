@@ -29,15 +29,16 @@ model User {
     sentMessages  PrivateMessage[]   @relation("SentMessage")
     followingUser Following[]        @relation("followingUser")
     followers     Follower[]         @relation("followers")
+    blockedUsers  blockedUser[]        @relation("blackList")
 }
 
 model Following {
     id String @id @default(uuid()) @db.Uuid
 
-    userId String @db.Uuid @unique
+    userId String @unique @db.Uuid
     user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    addressUserId String @db.Uuid @unique
+    addressUserId String @unique @db.Uuid
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
@@ -48,10 +49,10 @@ model Following {
 model Follower {
     id String @id @default(uuid()) @db.Uuid
 
-    userId String @db.Uuid @unique
+    userId String @unique @db.Uuid
     user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    followerId String @db.Uuid @unique
+    followerId String @unique @db.Uuid
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt

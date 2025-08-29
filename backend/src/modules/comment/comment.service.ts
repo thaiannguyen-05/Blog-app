@@ -1,6 +1,7 @@
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { Cache } from "cache-manager";
+import { randomUUID } from "crypto";
 import { Request } from "express";
 import { Comment, Post } from "prisma/generated/prisma";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -27,6 +28,13 @@ export class CommentService {
         const exitingPost = await this.prismaService.post.findUnique({ where: { id: postId } })
 
         return exitingPost
+    }
+
+    // get only object comment
+    async getComment(commentId: string) {
+        return await this.prismaService.comment.findUnique({
+            where: { id: commentId }
+        })
     }
 
     // get comment
@@ -57,13 +65,25 @@ export class CommentService {
             throw new BadRequestException("Comment content cannot be empty")
         }
 
-        const newComment = await this.prismaService.comment.create({
-            data: {
-                content: content,
-                postId: postId,
-                userId: req.user?.id || "unknow"
-            }
-        })
+        // create comment
+        const newCommentId = randomUUID()
+        const [newComment, owner] = await this.prismaService.$transaction([
+            this.prismaService.comment.create({
+                data: {
+                    id: newCommentId,
+                    content: content,
+                    postId: postId,
+                    userId: req.user?.id || "unknow"
+                }
+            }),
+            this.prismaService.owner.create({
+                data: {
+                    nameRole: 'ADMIN',
+                    userId: req.user?.id || "unknow",
+                    objectId: postId
+                }
+            })
+        ])
 
         const keyPost = `post:${postId}`
 

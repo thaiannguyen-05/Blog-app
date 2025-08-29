@@ -7,8 +7,6 @@ import { EditDetailDto } from "./dto/EditDetailDto";
 import { FindUserByName } from "./dto/FindUserByName";
 import { USER_CONSTANTS } from "./user.constants";
 
-const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
-
 @Injectable()
 export class UserService {
 
