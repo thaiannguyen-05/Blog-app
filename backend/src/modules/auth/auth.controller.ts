@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Query, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Patch, Post, Query, Req, Res } from "@nestjs/common";
 import { Request, Response } from 'express';
 import { Cookies } from "src/modules/auth/decorator/cookie.decorator";
 import { Public } from "src/common/decorator/public.decorator";
@@ -87,5 +87,14 @@ export class AuthController {
         @Cookies("sesison_id") sessionId?: string
     ) {
         return this.authService.refreshToken(res, refreshToken, sessionId)
+    }
+
+    @Post('logout-all-device')
+    @ApiOperation({ summary: "Logout from all devices" })
+    @ApiCookieAuth()
+    @ApiResponse({ status: 200, description: "Logged out from all devices" })
+    @ApiResponse({ status: 401, description: "Unauthorized" })
+    async logoutAllOfDevice(@Req() req: Request) {
+        return this.authService.logoutAllOfDevice(req)
     }
 }

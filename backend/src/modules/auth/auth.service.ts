@@ -179,7 +179,7 @@ export class AuthService {
         await this.cacheManager.del(`account:${data.email}`)
 
         // validate password
-        const isMatched = verify(availableAccount.hashingPassword,data.password)
+        const isMatched = verify(availableAccount.hashingPassword, data.password)
         if (!isMatched) {
             throw new BadRequestException("Password is not corrected")
         }
@@ -397,6 +397,35 @@ export class AuthService {
         return {
             message: 'refreshed',
             data: null
+        }
+    }
+
+    // logout full device
+    async logoutAllOfDevice(req: Request) {
+        // check available account
+        const userId = req.user?.id || 'unknow'
+
+        const listSession = await this.prismaService.session.findMany({
+            where: { userId: userId }
+        })
+
+        if (!listSession) {
+            return { success: 'Done' }
+        }
+
+        const listSessionId = listSession.map(sesison => sesison.id)
+
+        //delete refresh_token
+
+        listSessionId.map(async (sessionId) => {
+            await this.prismaService.session.update({
+                where: { id: sessionId },
+                data: { hashingRefreshToken: null }
+            })
+        })
+
+        return {
+            success: 'Done'
         }
     }
 } 
