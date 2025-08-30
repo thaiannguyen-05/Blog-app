@@ -13,6 +13,7 @@ import { RegisterDto } from "./dto/register.dto";
 import { TokenService } from "./token.service";
 import { Session } from "prisma/generated/prisma";
 import { LoginDto } from "./dto/login.dto";
+import { SoftDeleteAccountDto } from "./dto/softDeleteAccount.dto";
 
 @Injectable()
 export class AuthService {
@@ -87,9 +88,16 @@ export class AuthService {
     // register
     public async register(data: RegisterDto) {
         // 1.check available account
-        const availableAccount = await this.customCacheService.getUserInCache(data.email)
+        const availableAccount = await this.prismaService.user.findFirst({
+            where: {
+                OR: [
+                    { email: data.email },
+                    { userName: data.userName }
+                ]
+            }
+        })
 
-        if (availableAccount) throw new BadRequestException('Account already exists')
+        if (availableAccount) throw new BadRequestException('Email or UserName is used')
 
         // 2.hahsing password
         const hashingPassword = await this.hasing(data.password)
@@ -160,19 +168,26 @@ export class AuthService {
           `)
     }
 
-    // delete account by email
-    public async deleteAccountByEmail(email: string) {
+    // delete soft account by email
+    public async deleteAccountByEmail(data: SoftDeleteAccountDto) {
         // check availableAccount
-        const availableAccount = await this.customCacheService.getUserInCache(email)
+        const availableAccount = await this.customCacheService.getUserInCache(data.email)
 
         if (!availableAccount) throw new NotFoundException("Account is not exiting")
 
         // del cache
-        await this.cacheManager.del(`account:${email}`)
+        await this.cacheManager.del(`account:${data.email}`)
+
+        // validate password
+        const isMatched = verify(availableAccount.hashingPassword,data.password)
+        if (!isMatched) {
+            throw new BadRequestException("Password is not corrected")
+        }
 
         // delete account from database
-        await this.prismaService.user.delete({
-            where: { email: email }
+        await this.prismaService.user.update({
+            where: { email: data.email },
+            data: { deleteAt: new Date() }
         })
 
         return {
@@ -247,6 +262,14 @@ export class AuthService {
         // 4.create session
         const session = await this.createSession(availableAccount, res, hardWareUser.ip, hardWareUser.userAgent)
 
+        // recover account if account has been deleted
+        if (availableAccount.deleteAt) {
+            await this.prismaService.user.update({
+                where: { id: availableAccount.id },
+                data: { deleteAt: null }
+            })
+        }
+
         const { hashingPassword, ...userWithoutPassword } = availableAccount
 
         return {
@@ -294,7 +317,7 @@ export class AuthService {
         })
 
         if (!availableAccount) throw new NotFoundException("User not found")
-        
+
         // validate password
         const isMatch = await verify(availableAccount?.hashingPassword, data.oldPassword)
 

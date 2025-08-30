@@ -7,6 +7,7 @@ import { ChangePasswordDto } from "./dto/changePassword.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiBody, ApiCookieAuth } from "@nestjs/swagger";
+import { SoftDeleteAccountDto } from "./dto/softDeleteAccount.dto";
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,13 +27,13 @@ export class AuthController {
         return this.authService.verifyAccount(email, res)
     }
 
-    @Delete('delete-account')
+    @Post('soft-delete-account')
     @ApiOperation({ summary: "Delete account by email" })
     @ApiQuery({ name: 'email', required: true, type: String })
     @ApiResponse({ status: 200, description: "Account deleted" })
     @ApiResponse({ status: 404, description: "Account not found" })
-    async deleteAccount(@Query('email') email: string) {
-        return this.authService.deleteAccountByEmail(email)
+    async deleteAccount(@Body() data: SoftDeleteAccountDto) {
+        return this.authService.deleteAccountByEmail(data)
     }
 
     @Public()
