@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ChatGateway } from './chat.gateway';
-import { ChatGatewayService } from './chat.gateway.service';
-import { ChatService } from './chat.service';
+import { ChatGatewayService } from './service/chat.gateway.service';
+import { ConversationService } from './service/connversation.service';
+import { MessgaeService } from './service/message.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -16,6 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			})
 		}),
 	],
-	providers: [ChatGateway, ChatService, ChatGatewayService]
+	providers: [ChatGatewayService, ConversationService, MessgaeService],
+	exports: [ChatGatewayService, ConversationService, MessgaeService]
 })
-export class ChatModule { }
+export class ChatExampleModule { }

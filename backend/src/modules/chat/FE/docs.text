@@ -1,0 +1,16 @@
+When you already have an accessToken (from login response or refresh flow), pass it in the handshake:
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000", {
+  auth: {
+    token: sessionStorage.getItem("access_token") // or localStorage
+  }
+});
+
+socket.on("connect", () => {
+  console.log("Connected as user", socket.id);
+});
+
+socket.on("connect_error", (err) => {
+  console.error("Socket auth failed:", err.message);
+});

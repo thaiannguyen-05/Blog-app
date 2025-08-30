@@ -48,14 +48,14 @@ export class CustomCacheService {
 
         if (cached) return cached
 
-        let whereCondition: any = {};
+        let whereCondition: any = {}
 
         if (isUUID(mainkey)) {
             whereCondition = { id: mainkey };
         } else if (this.isEmail(mainkey)) {
             whereCondition = { email: mainkey };
         } else {
-            throw new Error("mainkey must be a valid UUID or email");
+            whereCondition = { userName: mainkey }
         }
 
         // fall back 

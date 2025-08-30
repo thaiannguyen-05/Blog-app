@@ -1,62 +1,84 @@
 import { Logger } from "@nestjs/common";
-import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
-import { Server, Socket } from 'socket.io';
-import { PrismaService } from "src/prisma/prisma.service";
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server, Socket } from "socket.io";
+import { AuthService } from "../auth/auth.service";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { PayLoad } from "../auth/auth.interface";
+import { ChatGatewayService } from "./service/chat.gateway.service";
 import { CHAT_CONSTANTS } from "./chat.constants";
-import { ChatGatewayService } from "./chat.gateway.service";
-import { ChatService } from "./chat.service";
-import { CreateMessageDto } from "./dto/create.message.dto";
+import { MessgaeService } from "./service/message.service";
+import { ConversationService } from "./service/connversation.service";
+
 @WebSocketGateway({
 	cors: {
-		origin: "http://localhost:3000",
-		credentials: true,
-	},
+		origin: '*',
+		credentials: true
+	}
 })
+
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+
+	constructor(
+		private readonly jwtService: JwtService,
+		private readonly authService: AuthService,
+		private readonly chatGatewayService: ChatGatewayService,
+		private readonly messageService: MessgaeService,
+		private readonly conversationService: ConversationService // Thêm vào constructor
+	) { }
+
 	private readonly logger = new Logger(ChatGateway.name)
 
 	@WebSocketServer()
 	server: Server
 
-	constructor(
-		private readonly prismaService: PrismaService,
-		private readonly chatGatewayService: ChatGatewayService,
-		private readonly chatService: ChatService
-	) { }
-
 	afterInit(server: Server) {
-		this.logger.log("Private chat Connected")
+		this.logger.log("Server socket connected")
+		server.use((socket: Socket, next) => {
+			const token = socket.handshake.auth?.token
+			if (!token) {
+				return next(new Error("Accesstoken required"))
+			}
+
+			try {
+				const payload: PayLoad = this.jwtService.verify(token)
+				if (!payload.sub) return null
+
+				socket.handshake.auth.userId = payload.sub
+				next()
+			} catch (error) {
+				return next(new Error("Unauthorized"));
+			}
+		})
 	}
 
 	async handleConnection(client: Socket) {
 		try {
 			const userId = client.handshake.auth.userId
-			const token = client.handshake.auth.token
+			const token = client.handshake.auth.accessToken
 
-			// validate auth
 			if (!userId || !token) {
 				this.logger.warn("Unauthor connected")
-				client.disconnect()
-				return
+				return client.disconnect()
 			}
 
-			// verify user and token
-			const user = await this.chatService.validateUser(userId, token)
-			if (!user) {
-				this.logger.warn(`❌ Invalid user or token: ${userId}`)
-				client.disconnect()
-				return
+			// validate user 
+			const user = await this.authService.validate(token)
+			if (user.id !== userId) {
+				this.logger.warn(`Invalid user or token: ${userId}`)
+				return client.disconnect()
 			}
 
-			client.data.userId = userId
 			client.data.user = user
+			client.data.userId = user.id
 
-			// set status user
-			this.chatService.setUserOnline(userId, true)
+			// set status
+			await this.chatGatewayService.setUserOnline(user.id, true)
 
-			// join 
-			client.join(CHAT_CONSTANTS.KEY.PersonalRoom(userId))
+			// join
+			await client.join(CHAT_CONSTANTS.PERSONAL_ROOM(user.id))
 
+			// notification
 			this.server.emit('userStatusChanged', {
 				userId,
 				status: 'online',
@@ -71,128 +93,120 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 	async handleDisconnect(client: Socket) {
 		try {
 			const userId = client.handshake.auth.userId
-			const user = client.handshake.auth.user
 
 			if (userId) {
-				this.logger.log(`❌ User disconnected: ${user?.fullname || userId}`)
-
-				// set user offline
-				await this.chatService.setUserOnline(userId, false)
+				// set status
+				await this.chatGatewayService.setUserOnline(userId, false)
 
 				// notification
-				this.server.emit('userStatusChanged', {
+				await client.emit('userStatusChanged', {
 					userId,
 					status: 'offline',
 					lastSeen: new Date()
 				})
 			}
 		} catch (error) {
-			this.logger.error(`Error in handleDisconnect:`, error)
+			this.logger.error('Error handel', error)
 		}
 	}
 
 	@SubscribeMessage('joinChat')
-	async onJoinChat(
-		@MessageBody() data: { chatId: string },
-		@ConnectedSocket() client: Socket
+	async joinConversation(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string }
 	) {
-		try {
-			const { chatId } = data
-			const userId = client.data.userId
-			const user = client.data.user
-
-			if (!chatId) throw new WsException('Access denied to this chat')
-
-			const hasAccess = await this.chatService.verifyChatAccess(userId, chatId)
-			if (!hasAccess) throw new WsException("Access denied to this chat")
-
-			// leave chat rooms
-			const rooms = Array.from(client.rooms)
-			rooms.forEach(room => {
-				if (room.startsWith('chat:')) {
-					client.leave(room)
-				}
-			})
-
-			await this.chatGatewayService.handleJoinRoom(client, user, chatId)
-
-			this.logger.log(`User ${userId} joined chat ${chatId}`)
-
-			await this.chatService.markMessagesAsRead(chatId, userId)
-
-			return {
-				success: true,
-				message: 'Join chat successfully',
-				chatId
-			}
-		} catch (error) {
-			this.logger.error(`Error joining chat:`, error);
-			throw new WsException(error.message || 'Failed to join chat')
-		}
+		return await this.chatGatewayService.joinConversation(client, data.conversationId)
 	}
 
-	@SubscribeMessage('markAsRead')
-	async onMarkAsRead(
-		@MessageBody() data: { chatId: string },
-		@ConnectedSocket() client: Socket
+	@SubscribeMessage('send-message')
+	async sendMessage(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string, content: string }
 	) {
-		try {
-			const { chatId } = data
-			const userId = client.data.userId
-
-			await this.chatService.markMessagesAsRead(chatId, userId)
-
-			client.to(CHAT_CONSTANTS.KEY.Room(chatId)).emit('messagesRead', {
-				chatId,
-				readBy: userId,
-				timestamp: new Date()
-			})
-
-			return { success: true }
-		} catch (error) {
-			this.logger.error(`Error marking messages as read:`, error);
-			throw new WsException('Failed to mark messages as read');
-		}
+		// Tạo DTO cho message
+		const dto = { content: data.content };
+		const req = { user: client.data.user } as any;
+		return await this.messageService.createMessage(req, dto, data.conversationId);
 	}
 
-	@SubscribeMessage('message')
-	async handleMessage(
-		@MessageBody() dto: CreateMessageDto,
-		@ConnectedSocket() client: Socket
+	@SubscribeMessage('edit-message')
+	async editMessage(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string, messageId: string, content: string }
 	) {
-		try {
-			const userId = client.data.userId
-
-			const hasAccess = await this.chatService.verifyChatAccess(userId, dto.chatId)
-			if (!hasAccess) throw new WsException("Access denied to this chat")
-
-			const newMessage = await this.chatService.createMessage(userId, dto)
-
-			this.server.to(CHAT_CONSTANTS.KEY.Room(dto.chatId)).emit('newMessage', newMessage)
-
-			this.logger.log(`📨 Message sent in chat ${dto.chatId} by user ${userId}`)
-
-			return {
-				success: true,
-				message: 'Message sent successfully',
-				data: newMessage
-			}
-		} catch (error) {
-			this.logger.error(`Error sending message:`, error);
-			throw new WsException(error.message || 'Failed to send message')
-		}
+		const dto = { messageId: data.messageId, content: data.content };
+		const req = { user: client.data.user } as any;
+		return await this.messageService.editMessage(req, dto, data.conversationId);
 	}
 
-	async broadcastToUser(userId: string, event: string, data: any) {
-		this.server.to(`user:${userId}`).emit(event, data);
+	@SubscribeMessage('delete-message')
+	async deleteMessage(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string, messageId: string }
+	) {
+		const dto = { messageId: data.messageId };
+		const req = { user: client.data.user } as any;
+		return await this.messageService.deleteMessage(req, dto, data.conversationId);
 	}
 
-	async broadcastToChat(chatId: string, event: string, data: any) {
-		this.server.to(`chat:${chatId}`).emit(event, data);
+	@SubscribeMessage('find-message')
+	async findMessage(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string, content?: string, page?: number, limit?: number, cursor?: string }
+	) {
+		// Tạo DTO cho truy vấn tìm kiếm
+		const dto = {
+			content: data.content ?? '',
+			page: data.page ?? 1,
+			limit: data.limit ?? 20,
+			cursor: data.cursor
+		};
+		const req = { user: client.data.user } as any;
+		return await this.messageService.findMessage(req, dto, data.conversationId);
 	}
 
-	async broadcastNewMessage(message: any) {
-		this.server.to(`chat:${message.chatId}`).emit('newMessage', message);
+	@SubscribeMessage('load-all-message')
+	async loadAllMessage(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string, page?: number, limit?: number, cursor?: string }
+	) {
+		const req = { user: client.data.user } as any;
+		return await this.messageService.loadAllMessage(req, data, data.conversationId);
 	}
 
+	@SubscribeMessage('create-room')
+	async createRoom(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { friendId: string }
+	) {
+		const req = { user: client.data.user } as any;
+		return await this.conversationService.createConversation(req, data.friendId);
+	}
+
+	@SubscribeMessage('get-room')
+	async getRoom(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { friendId: string }
+	) {
+		const req = { user: client.data.user } as any;
+		return await this.conversationService.getConversation(req, data.friendId);
+	}
+
+	@SubscribeMessage('delete-room')
+	async deleteRoom(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { conversationId: string }
+	) {
+		const req = { user: client.data.user } as any;
+		return await this.conversationService.delConversation(req, data.conversationId);
+	}
+
+	@SubscribeMessage('load-all-room')
+	async loadAllRoom(
+		@ConnectedSocket() client: Socket,
+		@MessageBody() data: { page?: number, limit?: number, cursor?: string }
+	) {
+		const req = { user: client.data.user } as any;
+		return await this.conversationService.loadingConversation(req, data);
+	}
 }
