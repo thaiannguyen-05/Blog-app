@@ -29,16 +29,18 @@ enum TypeOfCode {
   PHONE
 }
 
-model PrivateChat {
+model Conversation {
   id            String    @id @default(uuid()) @db.Uuid
-  user1Id       String    @db.Uuid
-  user2Id       String    @db.Uuid
+  creatorId     String    @db.Uuid
+  friendId      String    @db.Uuid
   lastMessage   String?
   lastMessageAt DateTime?
 
   // save index
   user1LastReadIndex Int @default(0)
   user2LastReadIndex Int @default(0)
+
+  socketId String @unique
 
   //total message
   totalMessage Int @default(0)
@@ -47,23 +49,24 @@ model PrivateChat {
   updateAt  DateTime @updatedAt
 
   // relation
-  user1          User             @relation("user1Chats", fields: [user1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user2          User             @relation("user2Chats", fields: [user2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user1          User             @relation("user1Chats", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user2          User             @relation("user2Chats", fields: [friendId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   privateMessage PrivateMessage[]
 
-  @@unique([user1Id, user2Id])
-  @@index([user1Id])
-  @@index([user2Id])
+  @@unique([creatorId, friendId])
+  @@index([creatorId])
+  @@index([friendId])
   @@index([lastMessageAt])
   @@map("private_chats")
 }
 
 model PrivateMessage {
-  id       String @id @default(uuid()) @db.Uuid
-  content  String
-  chatId   String @db.Uuid
-  senderId String @db.Uuid
+  id             String @id @default(uuid()) @db.Uuid
+  content        String
+  conversationId String @db.Uuid
 
+  senderId     String @db.Uuid
+  receiverId   String @db.Uuid
   messageIndex Int
 
   replyToId String?          @db.Uuid
@@ -74,11 +77,11 @@ model PrivateMessage {
   updateAt  DateTime @updatedAt
 
   // relation
-  chat   PrivateChat @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sender User        @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chat   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sender User         @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@unique([chatId, messageIndex])
-  @@index([chatId, messageIndex])
+  @@unique([conversationId, messageIndex])
+  @@index([conversationId, messageIndex])
   @@index([senderId])
   @@index([replyToId])
   @@map("private_messages")
@@ -94,26 +97,6 @@ model Owner {
   objectId String @db.Uuid
 
   @@unique([userId, objectId])
-}
-
-// RBAC role basic access control + ABAC Attribute-based Access Control
-
-model Role {
-  id         Int          @id @default(autoincrement())
-  name       String       @unique
-  createdAt  DateTime     @default(now())
-  updateAt   DateTime     @updatedAt
-  users      User[]
-  permission Permission[]
-}
-
-model Permission {
-  id          Int      @id @default(autoincrement())
-  key         String   @unique
-  description String
-  createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  roles       Role[]
 }
 
 // This is your Prisma schema file,
@@ -253,9 +236,8 @@ model User {
   postLiked     BehaviorWithPost[] @relation("postLiked")
   comments      Comment[]
   repComments   RepComment[]
-  roles         Role[]
-  user1         PrivateChat[]      @relation("user1Chats")
-  user2         PrivateChat[]      @relation("user2Chats")
+  user1         Conversation[]     @relation("user1Chats")
+  user2         Conversation[]     @relation("user2Chats")
   sentMessages  PrivateMessage[]   @relation("SentMessage")
   followingUser Following[]        @relation("followingUser")
   followers     Follower[]         @relation("followers")

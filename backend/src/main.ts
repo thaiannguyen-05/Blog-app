@@ -12,12 +12,25 @@ async function bootstrap() {
     // logger: false
   })
 
-  // app.useLogger(new MyLogger())
-  app.use(helmet());
+  app.useLogger(new MyLogger())
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+      },
+    },
+  }));
   app.use(cookieParser())
   app.enableCors({
-    origin: "http://localhost:3000", // your frontend origin
+    origin: process.env.NODE_ENV === 'production'
+      ? ['https://yourdomain.com']
+      : ['http://localhost:3000'],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   app.connectMicroservice<MicroserviceOptions>({

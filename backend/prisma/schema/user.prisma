@@ -23,9 +23,8 @@ model User {
     postLiked     BehaviorWithPost[] @relation("postLiked")
     comments      Comment[]
     repComments   RepComment[]
-    roles         Role[]
-    user1         PrivateChat[]      @relation("user1Chats")
-    user2         PrivateChat[]      @relation("user2Chats")
+    user1         Conversation[]      @relation("user1Chats")
+    user2         Conversation[]      @relation("user2Chats")
     sentMessages  PrivateMessage[]   @relation("SentMessage")
     followingUser Following[]        @relation("followingUser")
     followers     Follower[]         @relation("followers")

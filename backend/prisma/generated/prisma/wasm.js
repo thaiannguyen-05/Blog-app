@@ -138,14 +138,15 @@ exports.Prisma.CodeScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.PrivateChatScalarFieldEnum = {
+exports.Prisma.ConversationScalarFieldEnum = {
   id: 'id',
-  user1Id: 'user1Id',
-  user2Id: 'user2Id',
+  creatorId: 'creatorId',
+  friendId: 'friendId',
   lastMessage: 'lastMessage',
   lastMessageAt: 'lastMessageAt',
   user1LastReadIndex: 'user1LastReadIndex',
   user2LastReadIndex: 'user2LastReadIndex',
+  socketId: 'socketId',
   totalMessage: 'totalMessage',
   createdAt: 'createdAt',
   updateAt: 'updateAt'
@@ -154,8 +155,9 @@ exports.Prisma.PrivateChatScalarFieldEnum = {
 exports.Prisma.PrivateMessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  chatId: 'chatId',
+  conversationId: 'conversationId',
   senderId: 'senderId',
+  receiverId: 'receiverId',
   messageIndex: 'messageIndex',
   replyToId: 'replyToId',
   createdAt: 'createdAt',
@@ -167,21 +169,6 @@ exports.Prisma.OwnerScalarFieldEnum = {
   nameRole: 'nameRole',
   userId: 'userId',
   objectId: 'objectId'
-};
-
-exports.Prisma.RoleScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updateAt: 'updateAt'
-};
-
-exports.Prisma.PermissionScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  description: 'description',
-  createdAt: 'createdAt',
-  updateAt: 'updateAt'
 };
 
 exports.Prisma.PostScalarFieldEnum = {
@@ -295,11 +282,9 @@ exports.Gender = exports.$Enums.Gender = {
 exports.Prisma.ModelName = {
   Session: 'Session',
   Code: 'Code',
-  PrivateChat: 'PrivateChat',
+  Conversation: 'Conversation',
   PrivateMessage: 'PrivateMessage',
   Owner: 'Owner',
-  Role: 'Role',
-  Permission: 'Permission',
   Post: 'Post',
   Comment: 'Comment',
   RepComment: 'RepComment',
