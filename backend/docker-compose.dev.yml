@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: blog-postgres-dev
+    environment:
+      POSTGRES_DB: backendblogapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: andev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Redis Cache
+  redis-dev:
+    image: redis:7-alpine
+    container_name: blog-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    restart: unless-stopped
+
+  # RabbitMQ
+  rabbitmq-dev:
+    image: rabbitmq:3-management-alpine
+    container_name: blog-rabbitmq-dev
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_dev_data:/var/lib/rabbitmq
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:
+  rabbitmq_dev_data:

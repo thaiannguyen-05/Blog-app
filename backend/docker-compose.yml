@@ -1,38 +1,26 @@
 version: '3.8'
 
 services:
-  # Main NestJS App
-  app:
-    build: .
-    container_name: blog-app
-    ports:
-      - "4000:4000"
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=postgresql://bloguser:blogpass@postgres:5432/blogapp
-      - REDIS_URL=redis://redis:6379
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-    volumes:
-      - ./uploads:/app/uploads
-    depends_on:
-      - postgres
-      - redis
-      - rabbitmq
-    restart: unless-stopped
-
-  # PostgreSQL Database
+  # PostgreSQL Database - PHẢI START TRƯỚC
   postgres:
     image: postgres:15-alpine
     container_name: blog-postgres
     environment:
-      POSTGRES_DB: blogapp
-      POSTGRES_USER: bloguser
-      POSTGRES_PASSWORD: blogpass
+      POSTGRES_DB: backendblogapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: andev
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d backendblogapp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   # Redis Cache
   redis:
@@ -43,6 +31,11 @@ services:
     volumes:
       - redis_data:/data
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
   # RabbitMQ
   rabbitmq:
@@ -56,6 +49,33 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Main NestJS App - START SAU KHI DB READY
+  app:
+    build: .
+    container_name: blog-app
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:andev@postgres:5432/backendblogapp
+      - REDIS_URL=redis://redis:6379
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
