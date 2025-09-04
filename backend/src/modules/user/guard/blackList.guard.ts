@@ -13,7 +13,8 @@ export class BlackListGuard implements CanActivate {
 	async canActivate(context: ExecutionContext) {
 		// get user in request
 		const request = context.switchToHttp().getRequest()
-		const { user, name }: { user: User; name: string } = request
+		const user: User = request.user
+		const name: string = request.query?.name || request.params?.name
 		if (!user) return true
 
 		const userId = user.id
@@ -27,7 +28,7 @@ export class BlackListGuard implements CanActivate {
 
 		const has = blackList.map(user => user.id === blockedUser?.id)
 
-		if(has) {
+		if (has) {
 			throw new NotFoundException("Nothing information found")
 		} else {
 			return true

@@ -16,24 +16,21 @@ export class IsAuthorComment implements CanActivate {
 	) {
 		// get user and object in request
 		const request = context.switchToHttp().getRequest()
-		const { user, params }: { user: User; params: { id: string } } = request
+		const user: User = request.user
+		const commentId: string = request.query?.commentId || request.params?.commentId
 
-		if (!user || !params) {
-			throw new BadRequestException("Somethings went wrong")
-		}
+		if (!user || !commentId) throw new BadRequestException("Data not in request")
 
-		const userId = user.id
-		const objectId = params.id
 
 		// get object
-		const comment = await this.commentService.getComment(objectId)
-		const owner = await this.commonFunc.getOwn(userId, objectId)
+		const comment = await this.commentService.getComment(commentId)
+		const owner = await this.commonFunc.getOwn(user.id, commentId)
 
 		if (owner?.nameRole !== "ADMIN") {
 			throw new BadRequestException("Somethings went wrong")
 		}
 
-		if (owner?.userId === userId) {
+		if (owner?.userId === user.id) {
 			return true
 		} else {
 			throw new ForbiddenException("You are not author")
