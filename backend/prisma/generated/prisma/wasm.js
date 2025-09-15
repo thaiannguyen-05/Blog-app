@@ -179,7 +179,8 @@ exports.Prisma.PostScalarFieldEnum = {
   userId: 'userId',
   createAt: 'createAt',
   updateAt: 'updateAt',
-  deleteAt: 'deleteAt'
+  deleteAt: 'deleteAt',
+  numberViews: 'numberViews'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {

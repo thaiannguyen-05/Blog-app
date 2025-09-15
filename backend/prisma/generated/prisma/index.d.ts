@@ -7808,8 +7808,18 @@ export namespace Prisma {
 
   export type AggregatePost = {
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
+  }
+
+  export type PostAvgAggregateOutputType = {
+    numberViews: number | null
+  }
+
+  export type PostSumAggregateOutputType = {
+    numberViews: bigint | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -7820,6 +7830,7 @@ export namespace Prisma {
     createAt: Date | null
     updateAt: Date | null
     deleteAt: Date | null
+    numberViews: bigint | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -7830,6 +7841,7 @@ export namespace Prisma {
     createAt: Date | null
     updateAt: Date | null
     deleteAt: Date | null
+    numberViews: bigint | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -7841,9 +7853,18 @@ export namespace Prisma {
     createAt: number
     updateAt: number
     deleteAt: number
+    numberViews: number
     _all: number
   }
 
+
+  export type PostAvgAggregateInputType = {
+    numberViews?: true
+  }
+
+  export type PostSumAggregateInputType = {
+    numberViews?: true
+  }
 
   export type PostMinAggregateInputType = {
     id?: true
@@ -7853,6 +7874,7 @@ export namespace Prisma {
     createAt?: true
     updateAt?: true
     deleteAt?: true
+    numberViews?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -7863,6 +7885,7 @@ export namespace Prisma {
     createAt?: true
     updateAt?: true
     deleteAt?: true
+    numberViews?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -7874,6 +7897,7 @@ export namespace Prisma {
     createAt?: true
     updateAt?: true
     deleteAt?: true
+    numberViews?: true
     _all?: true
   }
 
@@ -7915,6 +7939,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PostMinAggregateInputType
@@ -7945,6 +7981,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PostCountAggregateInputType | true
+    _avg?: PostAvgAggregateInputType
+    _sum?: PostSumAggregateInputType
     _min?: PostMinAggregateInputType
     _max?: PostMaxAggregateInputType
   }
@@ -7958,7 +7996,10 @@ export namespace Prisma {
     createAt: Date
     updateAt: Date
     deleteAt: Date | null
+    numberViews: bigint | null
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
   }
@@ -7986,6 +8027,7 @@ export namespace Prisma {
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
+    numberViews?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
     userLiked?: boolean | Post$userLikedArgs<ExtArgs>
@@ -8001,6 +8043,7 @@ export namespace Prisma {
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
+    numberViews?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -8013,6 +8056,7 @@ export namespace Prisma {
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
+    numberViews?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -8025,9 +8069,10 @@ export namespace Prisma {
     createAt?: boolean
     updateAt?: boolean
     deleteAt?: boolean
+    numberViews?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "status" | "urlImgs" | "userId" | "createAt" | "updateAt" | "deleteAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "status" | "urlImgs" | "userId" | "createAt" | "updateAt" | "deleteAt" | "numberViews", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
@@ -8057,6 +8102,7 @@ export namespace Prisma {
       createAt: Date
       updateAt: Date
       deleteAt: Date | null
+      numberViews: bigint | null
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -8491,6 +8537,7 @@ export namespace Prisma {
     readonly createAt: FieldRef<"Post", 'DateTime'>
     readonly updateAt: FieldRef<"Post", 'DateTime'>
     readonly deleteAt: FieldRef<"Post", 'DateTime'>
+    readonly numberViews: FieldRef<"Post", 'BigInt'>
   }
     
 
@@ -16951,7 +16998,8 @@ export namespace Prisma {
     userId: 'userId',
     createAt: 'createAt',
     updateAt: 'updateAt',
-    deleteAt: 'deleteAt'
+    deleteAt: 'deleteAt',
+    numberViews: 'numberViews'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -17140,6 +17188,20 @@ export namespace Prisma {
    * Reference to a field of type 'StatusPost[]'
    */
   export type ListEnumStatusPostFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusPost[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -17542,6 +17604,7 @@ export namespace Prisma {
     createAt?: DateTimeFilter<"Post"> | Date | string
     updateAt?: DateTimeFilter<"Post"> | Date | string
     deleteAt?: DateTimeNullableFilter<"Post"> | Date | string | null
+    numberViews?: BigIntNullableFilter<"Post"> | bigint | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     userLiked?: BehaviorWithPostListRelationFilter
@@ -17556,6 +17619,7 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
+    numberViews?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
     userLiked?: BehaviorWithPostOrderByRelationAggregateInput
@@ -17573,6 +17637,7 @@ export namespace Prisma {
     createAt?: DateTimeFilter<"Post"> | Date | string
     updateAt?: DateTimeFilter<"Post"> | Date | string
     deleteAt?: DateTimeNullableFilter<"Post"> | Date | string | null
+    numberViews?: BigIntNullableFilter<"Post"> | bigint | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     userLiked?: BehaviorWithPostListRelationFilter
@@ -17587,9 +17652,12 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
+    numberViews?: SortOrderInput | SortOrder
     _count?: PostCountOrderByAggregateInput
+    _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
     _min?: PostMinOrderByAggregateInput
+    _sum?: PostSumOrderByAggregateInput
   }
 
   export type PostScalarWhereWithAggregatesInput = {
@@ -17604,6 +17672,7 @@ export namespace Prisma {
     createAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     deleteAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
+    numberViews?: BigIntNullableWithAggregatesFilter<"Post"> | bigint | number | null
   }
 
   export type CommentWhereInput = {
@@ -18455,6 +18524,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     user: UserCreateNestedOneWithoutPostsInput
     comments?: CommentCreateNestedManyWithoutPostInput
     userLiked?: BehaviorWithPostCreateNestedManyWithoutPostInput
@@ -18469,6 +18539,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     userLiked?: BehaviorWithPostUncheckedCreateNestedManyWithoutPostInput
   }
@@ -18481,6 +18552,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
     userLiked?: BehaviorWithPostUpdateManyWithoutPostNestedInput
@@ -18495,6 +18567,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     userLiked?: BehaviorWithPostUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -18508,6 +18581,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
   }
 
   export type PostUpdateManyMutationInput = {
@@ -18518,6 +18592,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -18529,6 +18604,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentCreateInput = {
@@ -19483,6 +19559,17 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
   export type CommentListRelationFilter = {
     every?: CommentWhereInput
     some?: CommentWhereInput
@@ -19512,6 +19599,11 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
+    numberViews?: SortOrder
+  }
+
+  export type PostAvgOrderByAggregateInput = {
+    numberViews?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -19522,6 +19614,7 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
+    numberViews?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -19532,6 +19625,11 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     deleteAt?: SortOrder
+    numberViews?: SortOrder
+  }
+
+  export type PostSumOrderByAggregateInput = {
+    numberViews?: SortOrder
   }
 
   export type EnumStatusPostWithAggregatesFilter<$PrismaModel = never> = {
@@ -19542,6 +19640,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumStatusPostFilter<$PrismaModel>
     _max?: NestedEnumStatusPostFilter<$PrismaModel>
+  }
+
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type PostScalarRelationFilter = {
@@ -20134,6 +20248,14 @@ export namespace Prisma {
   export type PostUpdateurlImgsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type UserUpdateOneRequiredWithoutPostsNestedInput = {
@@ -21115,6 +21237,17 @@ export namespace Prisma {
     not?: NestedEnumStatusPostFilter<$PrismaModel> | $Enums.StatusPost
   }
 
+  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
   export type NestedEnumStatusPostWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.StatusPost | EnumStatusPostFieldRefInput<$PrismaModel>
     in?: $Enums.StatusPost[] | ListEnumStatusPostFieldRefInput<$PrismaModel>
@@ -21123,6 +21256,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumStatusPostFilter<$PrismaModel>
     _max?: NestedEnumStatusPostFilter<$PrismaModel>
+  }
+
+  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -22268,6 +22428,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     user: UserCreateNestedOneWithoutPostsInput
     userLiked?: BehaviorWithPostCreateNestedManyWithoutPostInput
   }
@@ -22281,6 +22442,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     userLiked?: BehaviorWithPostUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -22393,6 +22555,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
     userLiked?: BehaviorWithPostUpdateManyWithoutPostNestedInput
   }
@@ -22406,6 +22569,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     userLiked?: BehaviorWithPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -22745,6 +22909,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     user: UserCreateNestedOneWithoutPostsInput
     comments?: CommentCreateNestedManyWithoutPostInput
   }
@@ -22758,6 +22923,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -22850,6 +23016,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
@@ -22863,6 +23030,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -23050,6 +23218,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     comments?: CommentCreateNestedManyWithoutPostInput
     userLiked?: BehaviorWithPostCreateNestedManyWithoutPostInput
   }
@@ -23062,6 +23231,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     userLiked?: BehaviorWithPostUncheckedCreateNestedManyWithoutPostInput
   }
@@ -23420,6 +23590,7 @@ export namespace Prisma {
     createAt?: DateTimeFilter<"Post"> | Date | string
     updateAt?: DateTimeFilter<"Post"> | Date | string
     deleteAt?: DateTimeNullableFilter<"Post"> | Date | string | null
+    numberViews?: BigIntNullableFilter<"Post"> | bigint | number | null
   }
 
   export type BehaviorWithPostUpsertWithWhereUniqueWithoutUserInput = {
@@ -24077,6 +24248,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     deleteAt?: Date | string | null
+    numberViews?: bigint | number | null
   }
 
   export type BehaviorWithPostCreateManyUserInput = {
@@ -24216,6 +24388,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUpdateManyWithoutPostNestedInput
     userLiked?: BehaviorWithPostUpdateManyWithoutPostNestedInput
   }
@@ -24228,6 +24401,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     userLiked?: BehaviorWithPostUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -24240,6 +24414,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    numberViews?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type BehaviorWithPostUpdateWithoutUserInput = {

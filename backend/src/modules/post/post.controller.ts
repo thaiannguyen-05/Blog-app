@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { Public } from "src/common/decorator/public.decorator";
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiParam } from "@nestjs/swagger";
 import { CreatePostDto } from "./dto/create.post.dto";
 import { EditPostDto } from "./dto/edit.post.dto";
 import { GetDetailPostDto } from "./dto/get.detail.post.dto";
@@ -15,6 +15,24 @@ export class PostController {
 	constructor(
 		private readonly postService: PostService
 	) { }
+
+	@Public()
+	@Patch(':id/view')
+	@ApiOperation({ summary: 'Increase post view count' })
+	@ApiParam({ name: 'id', required: true, type: String, description: 'Post ID' })
+	@ApiResponse({ status: 200, description: 'View count increased' })
+	async increamentView(@Param('id') postId: string) {
+		return this.postService.increamentView(postId)
+	}
+
+	@Public()
+	@Get(':id/views')
+	@ApiOperation({ summary: 'Get post view count' })
+	@ApiParam({ name: 'id', required: true, type: String, description: 'Post ID' })
+	@ApiResponse({ status: 200, description: 'Current view count' })
+	async getViews(@Param('id') postId: string) {
+		return this.postService.getViewsPost(postId)
+	}
 
 	@Post('create-post')
 	@ApiOperation({ summary: "Create post" })

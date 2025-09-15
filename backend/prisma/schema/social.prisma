@@ -13,6 +13,8 @@ model Post {
     updateAt DateTime  @updatedAt
     deleteAt DateTime?
 
+    numberViews BigInt? @default(0)
+
     // relation
     comments Comment[]
 

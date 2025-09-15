@@ -3,6 +3,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Global, Module } from '@nestjs/common';
 import { CacheableMemory, Keyv } from 'cacheable';
 import { CustomCacheService } from './customCache.service';
+import Redis from 'ioredis';
 @Global()
 @Module({
     imports: [
@@ -19,7 +20,12 @@ import { CustomCacheService } from './customCache.service';
             },
         }),
     ],
-    providers: [CustomCacheService],
-    exports: [CustomCacheService, CacheModule]
+    providers: [CustomCacheService,
+        {
+            provide: 'IORedis',
+            useFactory: () => new Redis({ host: 'localhost', port: 6379 }),
+        },
+    ],
+    exports: [CustomCacheService, CacheModule, 'IORedis']
 })
 export class CustomCacheModule { }

@@ -10,8 +10,7 @@ import { POST_CONSTANTS } from "./post.constants";
 import { USER_CONSTANTS } from "../user/user.constants";
 import { randomUUID } from "node:crypto";
 import { LoadingAuthorPostDto } from "./dto/LoadingAuthorPost.dto";
-
-const TIME_LIFE_CACHE = 10 * 24 * 60 * 60
+import Redis from "ioredis";
 
 @Injectable()
 export class PostService {
@@ -20,7 +19,21 @@ export class PostService {
         private readonly prismaService: PrismaService,
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
         private readonly customCache: CustomCacheService,
+        @Inject('IORedis') private redis: Redis
     ) { }
+
+    // increment view post
+    async increamentView(postId: string) {
+        const key = POST_CONSTANTS.CACHE_KEY.ViewPostKey(postId)
+        return await this.redis.incr(key)
+    }
+
+    // get views post
+    async getViewsPost(postId: string) {
+        const key = POST_CONSTANTS.CACHE_KEY.ViewPostKey(postId)
+        const views = await this.redis.get(key)
+        return Number(views) || 0
+    }
 
     // find post
     async getPostObject(postId: string) {
@@ -63,7 +76,7 @@ export class PostService {
 
         // cache post
         const key = `post:${newPost.id}`
-        await this.cacheManager.set(key, newPost, TIME_LIFE_CACHE)
+        await this.cacheManager.set(key, newPost, POST_CONSTANTS.TIME_LIFE_CACHE)
         return newPost
     }
 
@@ -107,7 +120,7 @@ export class PostService {
         })
 
         // change cache
-        await this.cacheManager.set(key, newPost, TIME_LIFE_CACHE)
+        await this.cacheManager.set(key, newPost, POST_CONSTANTS.TIME_LIFE_CACHE)
 
         return newPost
     }

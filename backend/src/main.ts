@@ -8,9 +8,7 @@ import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    // logger: false
-  })
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   app.useLogger(new MyLogger())
   app.use(helmet({
