@@ -1,5 +1,3 @@
-sudo lsof -i :6379
-sudo systemctl stop redis-server
+pnpm run dev:db:up
 
-docker rm -f redis
-docker rm -f redis rabbitmq
+pnpm run start:dev
