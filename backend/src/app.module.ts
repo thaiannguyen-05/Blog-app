@@ -20,17 +20,23 @@ import { FilesModule } from './modules/files/files.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { ScheduleModule } from '@nestjs/schedule';
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, EmailModule, CustomCacheModule, CommentModule,
+  imports: [
+    AuthModule,
+    UserModule,
+    PrismaModule,
+    EmailModule,
+    CustomCacheModule,
+    CommentModule,
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       graphiql: process.env.NODE_ENV !== 'production',
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
-      installSubscriptionHandlers: true,// ho tro realtime socket
-      context: ({ req }) => ({ req })
+      installSubscriptionHandlers: true, // ho tro realtime socket
+      context: ({ req }) => ({ req }),
     }),
     ThrottlerModule.forRoot({
       throttlers: [
@@ -56,4 +62,4 @@ import { ScheduleModule } from '@nestjs/schedule';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

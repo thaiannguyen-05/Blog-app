@@ -1,25 +1,22 @@
-import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { User } from "prisma/generated/prisma";
-import { ConversationService } from "../service/connversation.service";
-
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { User } from 'prisma/generated/prisma';
+import { ConversationService } from '../service/connversation.service';
 
 @Injectable()
 export class IsCreatorConversation implements CanActivate {
-	constructor(
-		private readonly conversationService: ConversationService
-	) { }
+  constructor(private readonly conversationService: ConversationService) {}
 
-	async canActivate(context: ExecutionContext): Promise<boolean> {
-		// get request from http
-		const request = context.switchToHttp().getRequest()
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    // get request from http
+    const request = context.switchToHttp().getRequest();
 
-		// get user from request
-		const { user, conversationId }: { user: User, conversationId: string } = request
+    // get user from request
+    const { user, conversationId }: { user: User; conversationId: string } = request;
 
-		const userId = user.id
+    const userId = user.id;
 
-		if (!conversationId || !userId) throw new BadRequestException("Something went wrong")
+    if (!conversationId || !userId) throw new BadRequestException('Something went wrong');
 
-		return await this.conversationService.isCreatorConversation(userId, conversationId)
-	}
+    return await this.conversationService.isCreatorConversation(userId, conversationId);
+  }
 }

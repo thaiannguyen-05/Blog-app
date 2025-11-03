@@ -279,7 +279,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/andev/work_space/blog-app/backend/prisma/generated/prisma",
+      "value": "/home/andev/work_space/Blog-app/backend/prisma/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -293,7 +293,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/andev/work_space/blog-app/backend/prisma/schema/schema.prisma",
+    "sourceFilePath": "/home/andev/work_space/Blog-app/backend/prisma/schema/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -307,6 +307,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

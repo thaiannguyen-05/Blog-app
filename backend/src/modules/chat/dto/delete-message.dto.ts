@@ -1,3 +1,3 @@
 export class DeleteMessageDto {
-	messageId: string
+  messageId: string;
 }

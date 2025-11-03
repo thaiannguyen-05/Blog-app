@@ -6,26 +6,27 @@ import { CustomCacheService } from './customCache.service';
 import Redis from 'ioredis';
 @Global()
 @Module({
-    imports: [
-        CacheModule.registerAsync({
-            useFactory: async () => {
-                return {
-                    stores: [
-                        new Keyv({
-                            store: new CacheableMemory({ ttl: 60000, lruSize: 5000 }),
-                        }),
-                        createKeyv('redis://localhost:6379'),
-                    ],
-                };
-            },
-        }),
-    ],
-    providers: [CustomCacheService,
-        {
-            provide: 'IORedis',
-            useFactory: () => new Redis({ host: 'localhost', port: 6379 }),
-        },
-    ],
-    exports: [CustomCacheService, CacheModule, 'IORedis']
+  imports: [
+    CacheModule.registerAsync({
+      useFactory: async () => {
+        return {
+          stores: [
+            new Keyv({
+              store: new CacheableMemory({ ttl: 60000, lruSize: 5000 }),
+            }),
+            createKeyv('redis://localhost:6379'),
+          ],
+        };
+      },
+    }),
+  ],
+  providers: [
+    CustomCacheService,
+    {
+      provide: 'IORedis',
+      useFactory: () => new Redis({ host: 'localhost', port: 6379 }),
+    },
+  ],
+  exports: [CustomCacheService, CacheModule, 'IORedis'],
 })
-export class CustomCacheModule { }
+export class CustomCacheModule {}

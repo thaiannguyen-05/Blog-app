@@ -4,9 +4,9 @@ import { PostController } from './post.controller';
 import { PostService } from './post.service';
 
 @Module({
-    imports: [CustomCacheModule],
-    controllers: [PostController],
-    providers: [PostService],
-    exports: [PostService]
+  imports: [CustomCacheModule],
+  controllers: [PostController],
+  providers: [PostService],
+  exports: [PostService],
 })
 export class PostModule {}

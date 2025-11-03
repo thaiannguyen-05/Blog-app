@@ -5,9 +5,9 @@ import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 
 @Module({
-    imports: [CustomCacheModule],
-    controllers: [UserController],
-    providers: [UserService, UserResolver],
-    exports: [UserService]
+  imports: [CustomCacheModule],
+  controllers: [UserController],
+  providers: [UserService, UserResolver],
+  exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

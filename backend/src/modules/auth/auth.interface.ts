@@ -1,17 +1,20 @@
-import { User } from "prisma/generated/prisma";
+import { User } from 'prisma/generated/prisma';
 
 export interface UserWithPassword extends User {
-	// This interface includes all User fields including hashingPassword
-	// No additional properties needed as User already contains the password field
-}
-
-// Alternative: If you want to be more explicit about the password field
-export interface UserWithPasswordExplicit extends User {
-	hashingPassword: string; // Explicitly showing the password field
+  hashingPassword: string;
 }
 
 export interface PayLoad {
-	sub: string,
-	email: string,
-	timestamp: Date
+  sub: string;
+  email: string;
+  timestamp: Date;
 }
+
+export interface JwtPayload {
+  sub: string;
+  email: string;
+  iat?: number;
+  exp?: number;
+}
+
+export type UserWithPasswordExplicit = User & { hashingPassword: string };

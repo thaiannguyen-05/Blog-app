@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CustomCacheModule } from '../custom-cache/customCache.module';
@@ -9,19 +9,21 @@ import { AuthCookieStrategy } from 'src/modules/auth/strategy/auth-cookie.strate
 import { TokenService } from './token.service';
 
 @Module({
-    imports: [
-        CustomCacheModule, EmailModule, CustomCacheModule,
-        JwtModule.registerAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: async (configService: ConfigService) => ({
-                secret: configService.getOrThrow<string>("JWT_SECRET"),
-                signOptions: { expiresIn: '1d'}
-            })
-        }),
-    ],
-    controllers: [AuthController],
-    providers: [AuthService, AuthCookieStrategy, TokenService],
-    exports: [AuthService]
+  imports: [
+    CustomCacheModule,
+    EmailModule,
+    CustomCacheModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.getOrThrow<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1d' },
+      }),
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, AuthCookieStrategy, TokenService],
+  exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}
