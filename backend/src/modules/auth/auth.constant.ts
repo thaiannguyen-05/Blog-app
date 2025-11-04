@@ -29,14 +29,21 @@ export class AuthConstantsService {
     return 60 * 60 * 1000; // 1 hour
   }
 
+  get MAX_AGE_LOGIN_TOKEN() {
+    return 5 * 60 * 1000;
+  }
+
   CACHE_KEY = {
     KeyUserWithId: (mainkey: string) => `account:${mainkey}`,
     KeyUserWithEmail: (mainkey: string) => `account:${mainkey}`,
   };
 
+  VERIFY_LINK(email: string) {
+    return `http://localhost:4000/auth/verify-account?email=${email}`;
+  }
+
   get COOKIE_CONFIG() {
     const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
-
     return {
       SESSION: {
         httpOnly: true,
@@ -56,5 +63,17 @@ export class AuthConstantsService {
         path: '/',
       },
     };
+  }
+
+  VERIFY_SUCCESS_RESPONSE() {
+    return `
+                <html>
+                  <head><title>Verify Success</title></head>
+                  <body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
+                    <h2 style="color: green">Email verified successfully!</h2>
+                    <p>You can now login to your account.</p>
+                  </body>
+                </html>
+              `;
   }
 }

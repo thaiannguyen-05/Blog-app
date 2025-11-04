@@ -12,16 +12,16 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import { Request, Response } from 'express';
-import { CustomCacheService } from '../custom-cache/customCache.service';
-import { ChangePasswordDto } from './dto/changePassword.dto';
-import { RegisterDto } from './dto/register.dto';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { TokenService } from './token.service';
-import { LoginDto } from './dto/login.dto';
-import { SoftDeleteAccountDto } from './dto/softDeleteAccount.dto';
-import { PrismaService } from '../../prisma/prisma.service';
-import { ExmailProducerService } from '../../email/email.producer';
-import { AuthConstantsService } from './auth.constant';
-import { Session } from '../../../prisma/generated/prisma';
+import { ExmailProducerService } from '../../../email/email.producer';
+import { CustomCacheService } from '../../custom-cache/customCache.service';
+import { AuthConstantsService } from '../auth.constant';
+import { Session } from '../../../../prisma/generated/prisma';
+import { RegisterDto } from '../dto/register.dto';
+import { SoftDeleteAccountDto } from '../dto/softDeleteAccount.dto';
+import { LoginDto } from '../dto/login.dto';
+import { ChangePasswordDto } from '../dto/changePassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -81,7 +81,6 @@ export class AuthService {
       const exitingUser = await this.prismaService.user.findUnique({
         where: { id: payload.sub },
       });
-
       if (!exitingUser) throw new NotFoundException('User not found');
 
       return exitingUser;
@@ -94,7 +93,7 @@ export class AuthService {
   }
 
   // register
-  public async register(data: RegisterDto) {
+  async register(data: RegisterDto) {
     // 1.check available account
     const availableAccount = await this.prismaService.user.findFirst({
       where: {
@@ -119,10 +118,9 @@ export class AuthService {
 
     // 4.cache account
     await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`);
-
-    const verifyLink = `http://localhost:4000/auth/verify-account?email=${data.email}`;
+    const verifyLink = this.authConstantService.VERIFY_LINK(data.email);
     // 5.send email nofification verify account
-    await this.emailProducer.sendNotificationRegister({
+    this.emailProducer.sendNotificationRegister({
       to: newAccount.email,
       verifyLink,
     });
@@ -140,10 +138,9 @@ export class AuthService {
   }
 
   // verify account
-  public async verifyAccount(email: string, res: Response) {
+  async verifyAccount(email: string, res: Response) {
     // 1.check available account
     const availableAccount = await this.customCacheService.getUserInCache(email);
-
     if (!availableAccount) throw new NotFoundException('Account is not exiting');
 
     if (availableAccount.isActive) throw new BadRequestException('Account already exited');
@@ -162,19 +159,11 @@ export class AuthService {
     const key = this.authConstantService.CACHE_KEY.KeyUserWithEmail(email);
     await this.customCacheService.updateCache(key, newAccount);
 
-    return res.send(`
-            <html>
-              <head><title>Verify Success</title></head>
-              <body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
-                <h2 style="color: green">Email verified successfully!</h2>
-                <p>You can now login to your account.</p>
-              </body>
-            </html>
-          `);
+    return res.send(this.authConstantService.VERIFY_SUCCESS_RESPONSE());
   }
 
   // delete soft account by email
-  public async deleteAccountByEmail(data: SoftDeleteAccountDto) {
+  async deleteAccountByEmail(data: SoftDeleteAccountDto) {
     // check availableAccount
     const availableAccount = await this.customCacheService.getUserInCache(data.email);
 
@@ -245,7 +234,18 @@ export class AuthService {
   }
 
   // login
-  public async login(data: LoginDto, res: Response) {
+  async login(data: LoginDto, res: Response) {
+    // check inti verify token
+    const jwt = await res.req.body.login_token;
+
+    const payload = await this.jwtService.verifyAsync(jwt, {
+      secret: this.configService.getOrThrow<string>('JWT_SECRET'),
+    });
+
+    if (payload.otp !== data.token) {
+      return { success: false, message: 'Invalid OTP' };
+    }
+
     // 1.check available user / login with userName or email
     const availableAccount = await this.prismaService.user.findFirst({
       where: {
@@ -253,11 +253,10 @@ export class AuthService {
       },
       omit: { hashingPassword: false },
     });
-
     if (!availableAccount) throw new NotFoundException('Acount is not existing');
 
     if (!availableAccount.isActive) {
-      const verifyLink = `http://localhost:4000/auth/verify-account?email=${availableAccount.email}`;
+      const verifyLink = this.authConstantService.VERIFY_LINK(data.accessor);
 
       await this.emailProducer.sendNotificationRegister({
         to: availableAccount.email,
@@ -303,7 +302,7 @@ export class AuthService {
   }
 
   // logout
-  public async logout(res: Response, sesisonId?: string) {
+  async logout(res: Response, sesisonId?: string) {
     // get sessionId in the req
     const sid = res.req.cookies?.session_id || sesisonId;
 
@@ -331,7 +330,7 @@ export class AuthService {
   }
 
   // change password
-  public async changePassword(req: Request, data: ChangePasswordDto) {
+  async changePassword(req: Request, data: ChangePasswordDto) {
     // check available account
     const availableAccount = await this.prismaService.user.findUnique({
       where: { id: req.user?.id },
@@ -440,7 +439,6 @@ export class AuthService {
     const listSessionId = listSession.map((sesison) => sesison.id);
 
     //delete refresh_token
-
     listSessionId.map(async (sessionId) => {
       await this.prismaService.session.update({
         where: { id: sessionId },

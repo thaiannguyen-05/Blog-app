@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CustomCacheModule } from '../custom-cache/customCache.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TokenService } from './token.service';
 import { EmailModule } from '../../email/email.module';
 import { AuthCookieStrategy } from './strategy/auth-cookie.strategy';
 import { AuthConstantsService } from './auth.constant';
+import { AuthService } from './service/auth.service';
+import { TokenService } from './service/token.service';
 
 @Module({
   imports: [

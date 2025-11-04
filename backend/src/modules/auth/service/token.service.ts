@@ -1,10 +1,12 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PayLoad } from './auth.interface';
-import { randomUUID } from 'node:crypto';
+import { randomInt, randomUUID } from 'node:crypto';
 import { AuthService } from './auth.service';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
+import { PayLoad } from '../auth.interface';
+import { Response } from 'express';
+import { AuthConstantsService } from '../auth.constant';
 
 @Injectable()
 export class TokenService {
@@ -14,6 +16,7 @@ export class TokenService {
     private readonly prismaService: PrismaService,
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
+    private readonly authConstantService: AuthConstantsService,
   ) {}
 
   // generate tokens
@@ -82,5 +85,30 @@ export class TokenService {
         userIp: ip,
       },
     });
+  }
+
+  // generate login token
+  async generateLoginToken(res: Response) {
+    // genrate 6 tokens
+    const token = String(randomInt(0, 1000000)).padStart(6, '0');
+
+    const jwt = await this.jwtService.signAsync(
+      { otp: token },
+      {
+        secret: this.configService.getOrThrow<string>('JWT_SECRET'),
+        expiresIn: '5m', // token hết hạn sau 5 phút
+      },
+    );
+
+    res.cookie('login_token', jwt, {
+      httpOnly: true,
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
+      maxAge: this.authConstantService.MAX_AGE_LOGIN_TOKEN,
+    });
+
+    return {
+      message: 'OTP token generated',
+      otp: token,
+    };
   }
 }

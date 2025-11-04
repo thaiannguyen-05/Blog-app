@@ -25,7 +25,7 @@ export class PostService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly customCache: CustomCacheService,
     @Inject('IORedis') private redis: Redis,
-  ) { }
+  ) {}
 
   // increment view post
   async increamentView(postId: string) {

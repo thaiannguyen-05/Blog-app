@@ -1,6 +1,5 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { AuthService } from './auth.service';
 import { ChangePasswordDto } from './dto/changePassword.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -15,6 +14,7 @@ import {
 import { SoftDeleteAccountDto } from './dto/softDeleteAccount.dto';
 import { Public } from '../../common/decorator/public.decorator';
 import { Cookies } from './decorator/cookie.decorator';
+import { AuthService } from './service/auth.service';
 
 @ApiTags('Auth')
 @Controller('auth')
