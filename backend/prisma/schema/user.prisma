@@ -1,62 +1,69 @@
 model User {
-    id          String    @id @default(uuid()) @db.Uuid
-    name        String?
-    gender      Gender?
-    dateOfBirth DateTime?
-    isActive    Boolean   @default(false)
+  id              String             @map("id")               @id @default(uuid()) @db.Uuid
+  name            String?            @map("name")             @db.VarChar(255)
+  gender          Gender?            @map("gender")
+  dateOfBirth     DateTime?          @map("date_of_birth")    @db.Date
+  isActive        Boolean            @map("is_active")        @default(false)
 
-    userName        String  @unique
-    avtUrl          String?
-    email           String  @unique
-    hashingPassword String
+  userName        String             @map("user_name")        @unique @db.VarChar(100)
+  avtUrl          String?            @map("avt_url")          @db.VarChar(500)
+  email           String             @map("email")            @unique @db.VarChar(255)
+  hashingPassword String             @map("hashing_password") @db.VarChar(255)
 
-    lastSeen DateTime?
+  lastSeen        DateTime?          @map("last_seen")        @db.Timestamptz()
 
-    createAt DateTime  @default(now())
-    updateAt DateTime  @updatedAt
-    deleteAt DateTime?
+  createdAt       DateTime           @map("created_at")       @default(now()) @db.Timestamptz()
+  updatedAt       DateTime           @map("updated_at")       @updatedAt @db.Timestamptz()
+  deletedAt       DateTime?          @map("deleted_at")       @db.Timestamptz()
 
-    // relation
-    sessions      Session[]
-    codes         Code[]
-    posts         Post[]             @relation("ownPosts")
-    postLiked     BehaviorWithPost[] @relation("postLiked")
-    comments      Comment[]
-    repComments   RepComment[]
-    user1         Conversation[]      @relation("user1Chats")
-    user2         Conversation[]      @relation("user2Chats")
-    sentMessages  PrivateMessage[]   @relation("SentMessage")
-    followingUser Following[]        @relation("followingUser")
-    followers     Follower[]         @relation("followers")
-    blockedUsers  blockedUser[]        @relation("blackList")
+  //              relation
+  sessions        Session[]
+  codes           Code[]
+  posts           Post[]             @relation("ownPosts")
+  postLiked       BehaviorWithPost[] @relation("postLiked")
+  comments        Comment[]
+  repComments     RepComment[]
+  user1           Conversation[]     @relation("user1Chats")
+  user2           Conversation[]     @relation("user2Chats")
+  sentMessages    PrivateMessage[]   @relation("SentMessage")
+  followingUser   Following[]        @relation("followingUser")
+  followers       Follower[]         @relation("followers")
+  blockedUsers    BlockedUser[]      @relation("blackList")
+
+  @@index([name])
+  @@index([email])
+  @@index([userName])
+  @@map("user")
 }
 
 model Following {
-    id String @id @default(uuid()) @db.Uuid
+  id            String   @map("id")              @id @default(uuid()) @db.Uuid
 
-    userId String @unique @db.Uuid
-    user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String   @map("user_id")         @db.Uuid
+  user          User     @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    addressUserId String @unique @db.Uuid
+  addressUserId String   @map("address_user_id") @db.Uuid
 
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+  createdAt     DateTime @map("created_at")      @default(now()) @db.Timestamptz()
+  updatedAt     DateTime @map("updated_at")      @updatedAt @db.Timestamptz()
 
-    @@unique([userId, addressUserId])
+  @@unique([userId, addressUserId])
+  @@map("following")
 }
 
 model Follower {
-    id String @id @default(uuid()) @db.Uuid
+  id         String   @map("id")          @id @default(uuid()) @db.Uuid
 
-    userId String @unique @db.Uuid
-    user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     String   @map("user_id")     @db.Uuid
+  user       User     @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    followerId String @unique @db.Uuid
+  followerId String   @map("follower_id") @db.Uuid
 
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+  createdAt  DateTime @map("created_at")  @default(now()) @db.Timestamptz()
+  updatedAt  DateTime @map("updated_at")  @updatedAt @db.Timestamptz()
 
-    @@unique([userId, followerId])
+  @@unique([userId, followerId])
+  @@map("follower")
 }
 
 enum Gender {

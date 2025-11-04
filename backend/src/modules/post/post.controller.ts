@@ -12,7 +12,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { Public } from 'src/common/decorator/public.decorator';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create.post.dto';
 import { EditPostDto } from './dto/edit.post.dto';
@@ -21,6 +20,7 @@ import { GetManyPostDto } from './dto/get.many.post.dto';
 import { PostService } from './post.service';
 import { IsCreatorPostGuard } from './guards/is-creator.post.guard';
 import { BlackListGuard } from '../user/guard/blackList.guard';
+import { Public } from '../../common/decorator/public.decorator';
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
@@ -59,7 +59,7 @@ export class PostController {
   @ApiBody({ type: CreatePostDto })
   @ApiResponse({ status: 201, description: 'Post created' })
   async createPost(@Req() req: Request, @Body() data: CreatePostDto) {
-    return this.postService.createPost(req, data.content, data.paths || []);
+    return this.postService.createPost(req, data.content, data.title, data.paths);
   }
 
   @Put('edit-post')

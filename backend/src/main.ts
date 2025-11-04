@@ -10,7 +10,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.useLogger(new MyLogger());
+  // app.useLogger(new MyLogger());
   app.use(
     helmet({
       contentSecurityPolicy: {

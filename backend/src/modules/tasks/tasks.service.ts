@@ -1,9 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { KeyObject } from 'crypto';
 import Redis from 'ioredis';
-import { PrismaService } from 'src/prisma/prisma.service';
-
+import { PrismaService } from '../../prisma/prisma.service';
 const FIFTEEN_DAYS = 24 * 60 * 60 * 15; // 15days
 
 @Injectable()
@@ -20,7 +18,7 @@ export class TaskService {
     // delete account after deleted 15days
     await this.prismaService.user.deleteMany({
       where: {
-        deleteAt: {
+        deletedAt: {
           lt: String(FIFTEEN_DAYS),
         },
       },

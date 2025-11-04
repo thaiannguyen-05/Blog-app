@@ -1,15 +1,15 @@
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { AUTH_CONSTANTS } from '../auth/auth.constant';
 import { isUUID } from 'class-validator';
-import { Post, User } from 'prisma/generated/prisma';
 import { USER_CONSTANTS } from '../user/user.constants';
 import { GetDetailPostDto } from '../post/dto/get.detail.post.dto';
 import { POST_CONSTANTS } from '../post/post.constants';
 import { GetManyPostDto } from '../post/dto/get.many.post.dto';
 import { LoadingAuthorPostDto } from '../post/dto/LoadingAuthorPost.dto';
 import { UserWithPasswordExplicit } from '../auth/auth.interface';
+import { PrismaService } from '../../prisma/prisma.service';
+import { Post, User } from '../../../prisma/generated/prisma';
+import { AuthConstantsService } from '../auth/auth.constant';
 
 const TIME_LIFE_CACHE = 10 * 24 * 60 * 60;
 
@@ -18,6 +18,7 @@ export class CustomCacheService {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly prismaService: PrismaService,
+    private readonly authConstants: AuthConstantsService,
   ) {}
 
   // validate email
@@ -67,12 +68,12 @@ export class CustomCacheService {
 
   // cache temporary
   async fallBackCacheTemporaryObject(key: string) {
-    await this.cacheManager.set(key, null, AUTH_CONSTANTS.MAX_AGE_CACHE_TEMPORARY);
+    await this.cacheManager.set(key, null, this.authConstants.MAX_AGE_CACHE_TEMPORARY);
   }
 
   // update cache
   async updateCache(key: string, object: any) {
-    await this.cacheManager.set(key, object, AUTH_CONSTANTS.MAX_AGE_CACHE);
+    await this.cacheManager.set(key, object, this.authConstants.MAX_AGE_CACHE);
   }
 
   // get post
@@ -99,7 +100,7 @@ export class CustomCacheService {
           select: { id: true, name: true, email: true },
         },
         comments: {
-          orderBy: { createAt: 'desc' },
+          orderBy: { createdAt: 'desc' },
           take: limit + 1, // Limit initial comments
           skip: cursor ? 0 : skip,
           include: {
@@ -144,7 +145,7 @@ export class CustomCacheService {
     const [posts, total] = await Promise.all([
       this.prismaService.post.findMany({
         where: whereClause,
-        orderBy: { createAt: 'desc' },
+        orderBy: { createdAt: 'desc' },
         take: limit + 1,
         skip: cursor ? 0 : skip,
         include: {
@@ -155,7 +156,7 @@ export class CustomCacheService {
     ]);
 
     if (posts.length > 0) {
-      await this.cacheManager.set(key, posts, AUTH_CONSTANTS.TIME_LIFE_CACHE);
+      await this.cacheManager.set(key, posts, this.authConstants.TIME_LIFE_CACHE);
     }
 
     return {
@@ -184,7 +185,7 @@ export class CustomCacheService {
     const [posts, total] = await Promise.all([
       this.prismaService.post.findMany({
         where: whereClause,
-        orderBy: { createAt: 'desc' },
+        orderBy: { createdAt: 'desc' },
         take: limit + 1,
         skip: cursor ? 0 : skip,
         include: {
@@ -195,7 +196,7 @@ export class CustomCacheService {
     ]);
 
     if (posts.length > 0) {
-      await this.cacheManager.set(key, posts, AUTH_CONSTANTS.TIME_LIFE_CACHE);
+      await this.cacheManager.set(key, posts, this.authConstants.TIME_LIFE_CACHE);
     }
 
     return {

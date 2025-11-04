@@ -5,8 +5,8 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { User } from 'prisma/generated/prisma';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
+import { User } from '../../../../prisma/generated/prisma';
 
 @Injectable()
 export class IsAccessConversation implements CanActivate {
@@ -24,7 +24,7 @@ export class IsAccessConversation implements CanActivate {
 
     const hasAccess = await this.prismaService.conversation.findFirst({
       where: {
-        OR: [{ creatorId: userId }, { friendId: userId }],
+        OR: [{ user1Id: userId }, { user2Id: userId }],
       },
     });
 

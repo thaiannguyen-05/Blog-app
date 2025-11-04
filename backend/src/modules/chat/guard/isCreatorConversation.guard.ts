@@ -1,6 +1,6 @@
 import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { User } from 'prisma/generated/prisma';
 import { ConversationService } from '../service/connversation.service';
+import { User } from '../../../../prisma/generated/prisma';
 
 @Injectable()
 export class IsCreatorConversation implements CanActivate {

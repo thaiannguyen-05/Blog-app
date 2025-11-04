@@ -1,30 +1,43 @@
 model Session {
-    id String @id @default(uuid()) @db.Uuid
+  id                  String    @map("id")                   @id @default(uuid()) @db.Uuid
+  hashingRefreshToken String?   @map("hashing_refreshtoken") @db.VarChar(255)
+  userAgent           String    @map("user_agent")           @unique @db.VarChar(1000)
+  userIp              String?   @map("user_ip")              @db.VarChar(100)
+  createdAt           DateTime  @map("created_at")           @default(now()) @db.Timestamptz()
+  updatedAt           DateTime  @map("updated_at")           @updatedAt @db.Timestamptz()
 
-    hashingRefreshToken String?
+  loginedAt           DateTime? @map("logined_at")           @db.Timestamptz()
+  logoutedAt          DateTime? @map("logouted_at")          @db.Timestamptz()
 
-    userId String @db.Uuid
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  //                  relation
+  userId              String    @map("user_id")              @db.Uuid
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    userIp    String?
-    userAgent String? @unique
-    loginAt   DateTime?
-    logout    DateTime?
-
-    createAt DateTime @default(now())
+  @@index([userId])
+  @@map("session")
 }
 
 model Code {
-    id String @id @default(uuid()) @db.Uuid
+  id        String   @map("id")         @id @default(uuid()) @db.Uuid
+  code      String   @map("code")       @db.VarChar(10)
+  type      CodeType @map("type")
+  expiresAt DateTime @map("expires_at") @db.Timestamptz()
+  isUsed    Boolean  @map("is_used")    @default(false)
 
-    tokens     String?
-    typeOfCode TypeOfCode
+  createdAt DateTime @map("created_at") @default(now()) @db.Timestamptz()
+  updatedAt DateTime @map("updated_at") @updatedAt @db.Timestamptz()
 
-    userId String @db.Uuid
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  //        relation
+  userId    String   @map("user_id")    @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+  @@index([code, type])
+  @@map("code")
 }
 
-enum TypeOfCode {
-    EMAIL
-    PHONE
+enum CodeType {
+    VERIFY_EMAIL
+    RESET_PASSWORD
+    CHANGE_EMAIL
 }

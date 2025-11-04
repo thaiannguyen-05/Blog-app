@@ -4,13 +4,13 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateMessageDto } from '../dto/create-message.dto';
 import { Request } from 'express';
 import { DeleteMessageDto } from '../dto/delete-message.dto';
 import { FindMessageDto } from '../dto/find-message.dto';
 import { LoadAllMessageDto } from '../dto/loading-all-message.dto';
 import { UpdateMessageDto } from '../dto/edit-message.dto';
+import { PrismaService } from '../../../prisma/prisma.service';
 @Injectable()
 export class MessgaeService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -31,20 +31,13 @@ export class MessgaeService {
     // total messages
     const totalMessage = conversation.totalMessage;
 
-    // checkout id
-    let receiverId;
-    userId === conversation.creatorId
-      ? (receiverId = conversation.friendId)
-      : (receiverId = userId);
-
     // create message
-    const [newMessage, newConversation] = await this.prismaService.$transaction([
+    const [newMessage] = await this.prismaService.$transaction([
       this.prismaService.privateMessage.create({
         data: {
           content: dto.content,
           conversationId,
           senderId: userId,
-          receiverId: receiverId,
           messageIndex: totalMessage + 1,
         },
       }),
@@ -81,7 +74,7 @@ export class MessgaeService {
     if (!message) throw new NotFoundException('Message not available');
 
     // check isAuthor message
-    if (userId !== message.senderId || userId !== message.receiverId) {
+    if (userId !== message.senderId) {
       throw new ForbiddenException('You are not author message');
     }
 
@@ -123,12 +116,12 @@ export class MessgaeService {
     if (!message) throw new NotFoundException('Message not available');
 
     // check isAuthor message
-    if (userId !== message.senderId && userId !== message.receiverId) {
+    if (userId !== message.senderId) {
       throw new ForbiddenException('You are not author message');
     }
 
     // delete message and update total message
-    const [deletedMessage, newConversation] = await this.prismaService.$transaction([
+    await this.prismaService.$transaction([
       this.prismaService.privateMessage.delete({
         where: { id: dto.messageId },
       }),
@@ -152,12 +145,12 @@ export class MessgaeService {
     // check available conversation
     const conversation = await this.prismaService.conversation.findUnique({
       where: { id: conversationId },
-      include: { privateMessage: true },
+      include: { messages: true },
     });
 
     if (!conversation) throw new NotFoundException('Conversation not found');
 
-    if (conversation.privateMessage.length < 0) {
+    if (conversation.messages.length < 0) {
       return { data: null };
     }
 
@@ -209,12 +202,12 @@ export class MessgaeService {
     // check available conversation
     const conversation = await this.prismaService.conversation.findUnique({
       where: { id: conversationId },
-      include: { privateMessage: true },
+      include: { messages: true },
     });
 
     if (!conversation) throw new NotFoundException('Conversation not found');
 
-    if (conversation.privateMessage.length < 0) {
+    if (conversation.messages.length < 0) {
       return { data: null };
     }
 

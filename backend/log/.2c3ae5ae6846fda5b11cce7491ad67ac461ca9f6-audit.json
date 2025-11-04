@@ -9,6 +9,16 @@
             "date": 1762192204218,
             "name": "log/nest-log-2025-11-04-00.log",
             "hash": "6664fa217dc1d62a5d60686a7003124276d1df9d26a9b64a830c754e0e9a9d95"
+        },
+        {
+            "date": 1762218279548,
+            "name": "log/nest-log-2025-11-04-08.log",
+            "hash": "06353f3c91535f730c32d49d41fcd9087f2f7a2dfcf435bb49bcb12cbf00fbb1"
+        },
+        {
+            "date": 1762221902058,
+            "name": "log/nest-log-2025-11-04-09.log",
+            "hash": "f0719466faa56ce51f6abe7c0e177ed0098b1e7ac36deb4a0e9ef9f732be71da"
         }
     ],
     "hashType": "sha256"

@@ -1,9 +1,10 @@
 import { createKeyv } from '@keyv/redis';
 import { CacheModule } from '@nestjs/cache-manager';
-import { Global, Module } from '@nestjs/common';
+import { forwardRef, Global, Module } from '@nestjs/common';
 import { CacheableMemory, Keyv } from 'cacheable';
-import { CustomCacheService } from './customCache.service';
 import Redis from 'ioredis';
+import { CustomCacheService } from './customCache.service';
+import { AuthModule } from '../auth/auth.module';
 @Global()
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import Redis from 'ioredis';
         };
       },
     }),
+    forwardRef(() => AuthModule),
   ],
   providers: [
     CustomCacheService,

@@ -1,8 +1,6 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   BadRequestException,
-  ForbiddenException,
-  HttpStatus,
   Inject,
   Injectable,
   NotFoundException,
@@ -10,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Request } from 'express';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CustomCacheService } from '../custom-cache/customCache.service';
 import { GetDetailPostDto } from './dto/get.detail.post.dto';
 import { GetManyPostDto } from './dto/get.many.post.dto';
@@ -19,6 +16,7 @@ import { USER_CONSTANTS } from '../user/user.constants';
 import { randomUUID } from 'node:crypto';
 import { LoadingAuthorPostDto } from './dto/LoadingAuthorPost.dto';
 import Redis from 'ioredis';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class PostService {
@@ -27,7 +25,7 @@ export class PostService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly customCache: CustomCacheService,
     @Inject('IORedis') private redis: Redis,
-  ) {}
+  ) { }
 
   // increment view post
   async increamentView(postId: string) {
@@ -50,7 +48,7 @@ export class PostService {
   }
 
   // create post
-  async createPost(req: Request, content: string, paths: string[]) {
+  async createPost(req: Request, content: string, title: string, paths: string[]) {
     const userId = req.user?.id || 'unknow';
 
     const availableUser = await this.customCache.getUserInCache(userId);
@@ -63,12 +61,13 @@ export class PostService {
 
     // create post
     const newPostId = randomUUID();
-    const [newPost, ownerPost] = await this.prismaService.$transaction([
+    const [newPost] = await this.prismaService.$transaction([
       this.prismaService.post.create({
         data: {
           id: newPostId,
-          content: content,
-          urlImgs: paths,
+          title: title,
+          description: content,
+          imgUrl: paths,
           userId: availableUser.id,
         },
       }),
@@ -107,13 +106,13 @@ export class PostService {
     }
 
     // tao array linkPaths
-    let urlImgs: string[] = exitingPost.urlImgs || [];
+    let urlImgs: string[] = exitingPost.imgUrl;
 
     if (Array.isArray(filePaths) && filePaths.length > 0) {
       urlImgs = urlImgs.concat(filePaths);
     }
 
-    const data = { urlImgs: urlImgs, content: newContent };
+    const data = { imgUrl: urlImgs, description: newContent };
 
     // del cache
     const key = `post:${postId}`;
@@ -226,7 +225,7 @@ export class PostService {
       where: { userId_postId: { userId, postId } },
     });
 
-    if (currentBehavior?.isLiked) {
+    if (currentBehavior?.behaviorIs) {
       throw new BadRequestException('Post already liked');
     }
 
@@ -234,12 +233,12 @@ export class PostService {
     const behaviorWithPost = await this.prismaService.behaviorWithPost.upsert({
       where: { userId_postId: { userId, postId } },
       update: {
-        isLiked: true,
+        behaviorIs: 'LIKE',
       },
       create: {
         postId,
         userId,
-        isLiked: true,
+        behaviorIs: 'LIKE',
       },
     });
     // update cache
@@ -279,7 +278,7 @@ export class PostService {
       where: { userId_postId: { userId, postId } },
     });
 
-    if (!currentBehavior?.isLiked) {
+    if (!currentBehavior?.behaviorIs) {
       throw new BadRequestException('Post already unLiked');
     }
 
@@ -287,12 +286,12 @@ export class PostService {
     const behaviorWithPost = await this.prismaService.behaviorWithPost.upsert({
       where: { userId_postId: { userId, postId } },
       update: {
-        isLiked: false,
+        behaviorIs: 'DISLIKE',
       },
       create: {
         postId,
         userId,
-        isLiked: false,
+        behaviorIs: 'DISLIKE',
       },
     });
 

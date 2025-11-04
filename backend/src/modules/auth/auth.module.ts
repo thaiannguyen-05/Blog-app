@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CustomCacheModule } from '../custom-cache/customCache.module';
-import { EmailModule } from 'src/email/email.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthCookieStrategy } from 'src/modules/auth/strategy/auth-cookie.strategy';
 import { TokenService } from './token.service';
+import { EmailModule } from '../../email/email.module';
+import { AuthCookieStrategy } from './strategy/auth-cookie.strategy';
+import { AuthConstantsService } from './auth.constant';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { TokenService } from './token.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthCookieStrategy, TokenService],
-  exports: [AuthService],
+  providers: [AuthService, AuthCookieStrategy, TokenService, AuthConstantsService],
+  exports: [AuthService, AuthConstantsService],
 })
 export class AuthModule {}

@@ -1,5 +1,4 @@
-import { Owner } from 'prisma/generated/prisma';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 export class CommonFunc {
   constructor(private readonly prismaService: PrismaService) {}

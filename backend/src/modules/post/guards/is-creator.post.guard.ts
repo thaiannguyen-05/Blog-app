@@ -1,15 +1,14 @@
 import {
-  BadRequestException,
   CanActivate,
   ExecutionContext,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from 'prisma/generated/prisma';
+import { CommonFunc } from '../../../common/func/func.common';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { PostService } from '../post.service';
-import { CommonFunc } from 'src/common/func/func.common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from '../../../../prisma/generated/prisma';
 
 @Injectable()
 export class IsCreatorPostGuard implements CanActivate {

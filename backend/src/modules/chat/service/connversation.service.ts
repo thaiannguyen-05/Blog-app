@@ -5,10 +5,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Request } from 'express';
 import { CHAT_CONSTANTS } from '../chat.constants';
 import { LoadAllConversationDto } from '../dto/loading-all-conversation.dto';
+import { PrismaService } from '../../../prisma/prisma.service';
 @Injectable()
 export class ConversationService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -23,7 +23,7 @@ export class ConversationService {
     if (!conversation) throw new NotFoundException('Conversation is not available');
 
     // check iscreator
-    return conversation.creatorId === userId ? true : false;
+    return conversation.user1Id === userId ? true : false;
   }
 
   // conversation(room)
@@ -36,7 +36,7 @@ export class ConversationService {
     // check available
     const conversation = await this.prismaService.conversation.findUnique({
       where: {
-        creatorId_friendId: { creatorId: creatorId, friendId: friendId },
+        user1Id_user2Id: { user1Id: creatorId, user2Id: friendId },
       },
     });
 
@@ -50,9 +50,9 @@ export class ConversationService {
 
     return await this.prismaService.conversation.create({
       data: {
-        creatorId: creatorId,
-        friendId: friendId,
-        socketId: socketId,
+        conversationId: socketId,
+        user1Id: creatorId,
+        user2Id: friendId,
       },
     });
   }
@@ -66,7 +66,7 @@ export class ConversationService {
 
     // find conversation
     const availableConversation = await this.prismaService.conversation.findUnique({
-      where: { creatorId_friendId: { creatorId, friendId } },
+      where: { user1Id_user2Id: { user1Id: creatorId, user2Id: friendId } },
     });
 
     if (!availableConversation) {

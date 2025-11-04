@@ -1,90 +1,98 @@
 model Session {
-  id String @id @default(uuid()) @db.Uuid
+  id                  String   @id @default(uuid()) @map("id") @db.Uuid
+  hashingRefreshToken String?  @map("hashing_refreshtoken") @db.VarChar(255)
+  userAgent           String   @unique @map("user_agent") @db.VarChar(1000)
+  userIp              String?  @map("user_ip") @db.VarChar(100)
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt           DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-  hashingRefreshToken String?
+  loginedAt  DateTime? @map("logined_at") @db.Timestamptz()
+  logoutedAt DateTime? @map("logouted_at") @db.Timestamptz()
 
-  userId String @db.Uuid
+  //                  relation
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  userIp    String?
-  userAgent String?   @unique
-  loginAt   DateTime?
-  logout    DateTime?
-
-  createAt DateTime @default(now())
+  @@index([userId])
+  @@map("session")
 }
 
 model Code {
-  id String @id @default(uuid()) @db.Uuid
+  id        String   @id @default(uuid()) @map("id") @db.Uuid
+  code      String   @map("code") @db.VarChar(10)
+  type      CodeType @map("type")
+  expiresAt DateTime @map("expires_at") @db.Timestamptz()
+  isUsed    Boolean  @default(false) @map("is_used")
 
-  tokens     String?
-  typeOfCode TypeOfCode
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-  userId String @db.Uuid
+  //        relation
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+  @@index([code, type])
+  @@map("code")
 }
 
-enum TypeOfCode {
-  EMAIL
-  PHONE
+enum CodeType {
+  VERIFY_EMAIL
+  RESET_PASSWORD
+  CHANGE_EMAIL
 }
 
 model Conversation {
-  id            String    @id @default(uuid()) @db.Uuid
-  creatorId     String    @db.Uuid
-  friendId      String    @db.Uuid
-  lastMessage   String?
-  lastMessageAt DateTime?
+  id             String  @id @default(uuid()) @map("id") @db.Uuid
+  conversationId String  @unique @map("conversation_id") @db.VarChar(100)
+  isGroup        Boolean @default(false) @map("is_group")
+  groupName      String? @map("group_name") @db.VarChar(255)
 
-  // save index
-  user1LastReadIndex Int @default(0)
-  user2LastReadIndex Int @default(0)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
 
-  socketId String @unique
+  //             relation
+  user1Id String @map("user1_id") @db.Uuid
+  user1   User   @relation(name: "user1Chats", fields: [user1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  //total message
-  totalMessage Int @default(0)
+  user2Id String @map("user2_id") @db.Uuid
+  user2   User   @relation(name: "user2Chats", fields: [user2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  messages PrivateMessage[]
 
-  // relation
-  user1          User             @relation("user1Chats", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user2          User             @relation("user2Chats", fields: [friendId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  privateMessage PrivateMessage[]
+  lastMessageAt DateTime @updatedAt
+  totalMessage  Int      @default(0)
 
-  @@unique([creatorId, friendId])
-  @@index([creatorId])
-  @@index([friendId])
-  @@index([lastMessageAt])
-  @@map("private_chats")
+  @@unique([user1Id, user2Id])
+  @@index([conversationId])
+  @@map("conversation")
 }
 
 model PrivateMessage {
-  id             String @id @default(uuid()) @db.Uuid
-  content        String
-  conversationId String @db.Uuid
+  id        String  @id @default(uuid()) @map("id") @db.Uuid
+  content   String  @map("content") @db.Text
+  isRead    Boolean @default(false) @map("is_read")
+  imageUrl  String? @map("image_url") @db.VarChar(500)
+  replyToId String? @map("reply_to_id") @db.Uuid
 
-  senderId     String @db.Uuid
-  receiverId   String @db.Uuid
-  messageIndex Int
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
 
-  replyToId String?          @db.Uuid
-  replyTo   PrivateMessage?  @relation("MessageReply", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  replies   PrivateMessage[] @relation("MessageReply")
+  //             relation
+  senderId String @map("sender_id") @db.Uuid
+  sender   User   @relation(name: "SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  conversationId String       @map("conversation_id") @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  // relation
-  chat   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sender User         @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  messageIndex Int @default(0)
 
-  @@unique([conversationId, messageIndex])
-  @@index([conversationId, messageIndex])
   @@index([senderId])
-  @@index([replyToId])
-  @@map("private_messages")
+  @@index([conversationId])
+  @@index([createdAt])
+  @@map("private_message")
 }
 
 model Owner {
@@ -97,6 +105,56 @@ model Owner {
   objectId String @db.Uuid
 
   @@unique([userId, objectId])
+}
+
+model Topic {
+  id          String  @id @default(uuid()) @map("id") @db.Uuid
+  name        String  @unique @map("name") @db.VarChar(255)
+  description String? @map("description") @db.Text
+  imgUrl      String? @map("img_url") @db.VarChar(500)
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+
+  //          relation
+  postTopics PostTopic[]
+
+  @@index([name])
+  @@map("topic")
+}
+
+model PostTopic {
+  id String @id @default(uuid()) @map("id") @db.Uuid
+
+  postId String @map("post_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  topicId String @map("topic_id") @db.Uuid
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@unique([postId, topicId])
+  @@index([postId])
+  @@index([topicId])
+  @@map("post_topic")
+}
+
+model RecommendPost {
+  id String @id @default(uuid()) @map("id") @db.Uuid
+
+  postId String @map("post_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  score     Float    @map("score") @db.DoublePrecision
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@index([postId])
+  @@index([score])
+  @@map("recommend_post")
 }
 
 // This is your Prisma schema file,
@@ -116,122 +174,133 @@ datasource db {
 }
 
 model Post {
-  id String @id @default(uuid()) @db.Uuid
+  id          String   @id @default(uuid()) @map("id") @db.Uuid
+  title       String   @map("title") @db.VarChar(500)
+  description String?  @map("description") @db.Text
+  imgUrl      String[] @map("img_url") @db.VarChar(500)
+  isPublic    Boolean  @default(true) @map("is_public")
 
-  content String
-  status  StatusPost @default(PUBLIC)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
 
-  urlImgs String[]
+  //                relation
+  userId            String             @map("user_id") @db.Uuid
+  user              User               @relation(name: "ownPosts", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postLiked         BehaviorWithPost[]
+  comments          Comment[]
+  postTopics        PostTopic[]
+  postRecommendPost RecommendPost[]
 
-  userId String @db.Uuid
-  user   User   @relation(name: "ownPosts", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  numberViews Int @default(0)
 
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
-  deleteAt DateTime?
-
-  numberViews BigInt? @default(0)
-
-  // relation
-  comments Comment[]
-
-  userLiked BehaviorWithPost[] @relation("userLiked")
-
-  // Add indexes for better performance
   @@index([userId])
-  @@index([createAt])
-  @@index([status])
-  @@index([userId, createAt])
-}
-
-model Comment {
-  id      String @id @default(uuid()) @db.Uuid
-  content String
-
-  postId String @db.Uuid
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-
-  // relation
-  repComments RepComment[]
-
-  // Add indexes
-  @@index([postId])
-  @@index([userId])
-  @@index([createAt])
-}
-
-model RepComment {
-  id      String @id @default(uuid()) @db.Uuid
-  content String
-
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-
-  senderID String @db.Uuid
-  sender   User   @relation(fields: [senderID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  commentId String  @db.Uuid
-  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  @@index([title])
+  @@map("post")
 }
 
 model BehaviorWithPost {
-  id String @id @default(uuid()) @db.Uuid
+  id         String       @id @default(uuid()) @map("id") @db.Uuid
+  behaviorIs BehaviorType @map("behavior_is")
 
-  isLiked Boolean @default(false)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-  userId String @unique @db.Uuid
+  //         relation
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(name: "postLiked", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  postId String @unique @db.Uuid
-  post   Post   @relation(name: "userLiked", fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  postId String @map("post_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([userId, postId])
+  @@index([userId])
+  @@index([postId])
+  @@map("behavior_with_post")
 }
 
-model blockedUser {
-  id String @id @default(uuid()) @db.Uuid
+model Comment {
+  id      String @id @default(uuid()) @map("id") @db.Uuid
+  content String @map("content") @db.Text
 
-  userId String @unique @db.Uuid
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+
+  //          relation
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  postId String @map("post_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  repComments RepComment[]
+
+  @@index([userId])
+  @@index([postId])
+  @@map("comment")
+}
+
+model RepComment {
+  id      String @id @default(uuid()) @map("id") @db.Uuid
+  content String @map("content") @db.Text
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+
+  //        relation
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  commentId String  @map("comment_id") @db.Uuid
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+  @@index([commentId])
+  @@map("rep_comment")
+}
+
+model BlockedUser {
+  id String @id @default(uuid()) @map("id") @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(name: "blackList", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updateAT  DateTime @updatedAt
+  blockedUserId String @map("blocked_user_id") @db.Uuid
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@unique([userId, blockedUserId])
+  @@index([userId])
+  @@map("blocked_user")
 }
 
-enum StatusPost {
-  PUBLIC
-  PRIVATE
-  ARCHIVE
+enum BehaviorType {
+  LIKE
+  DISLIKE
 }
 
 model User {
-  id          String    @id @default(uuid()) @db.Uuid
-  name        String?
-  gender      Gender?
-  dateOfBirth DateTime?
-  isActive    Boolean   @default(false)
+  id          String    @id @default(uuid()) @map("id") @db.Uuid
+  name        String?   @map("name") @db.VarChar(255)
+  gender      Gender?   @map("gender")
+  dateOfBirth DateTime? @map("date_of_birth") @db.Date
+  isActive    Boolean   @default(false) @map("is_active")
 
-  userName        String  @unique
-  avtUrl          String?
-  email           String  @unique
-  hashingPassword String
+  userName        String  @unique @map("user_name") @db.VarChar(100)
+  avtUrl          String? @map("avt_url") @db.VarChar(500)
+  email           String  @unique @map("email") @db.VarChar(255)
+  hashingPassword String  @map("hashing_password") @db.VarChar(255)
 
-  lastSeen DateTime?
+  lastSeen DateTime? @map("last_seen") @db.Timestamptz()
 
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
-  deleteAt DateTime?
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
 
-  // relation
+  //              relation
   sessions      Session[]
   codes         Code[]
   posts         Post[]             @relation("ownPosts")
@@ -243,35 +312,42 @@ model User {
   sentMessages  PrivateMessage[]   @relation("SentMessage")
   followingUser Following[]        @relation("followingUser")
   followers     Follower[]         @relation("followers")
-  blockedUsers  blockedUser[]      @relation("blackList")
+  blockedUsers  BlockedUser[]      @relation("blackList")
+
+  @@index([name])
+  @@index([email])
+  @@index([userName])
+  @@map("user")
 }
 
 model Following {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @map("id") @db.Uuid
 
-  userId String @unique @db.Uuid
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(name: "followingUser", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  addressUserId String @unique @db.Uuid
+  addressUserId String @map("address_user_id") @db.Uuid
 
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
   @@unique([userId, addressUserId])
+  @@map("following")
 }
 
 model Follower {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @map("id") @db.Uuid
 
-  userId String @unique @db.Uuid
+  userId String @map("user_id") @db.Uuid
   user   User   @relation(name: "followers", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  followerId String @unique @db.Uuid
+  followerId String @map("follower_id") @db.Uuid
 
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
   @@unique([userId, followerId])
+  @@map("follower")
 }
 
 enum Gender {

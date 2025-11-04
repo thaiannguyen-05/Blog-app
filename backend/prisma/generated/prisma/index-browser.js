@@ -123,45 +123,52 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   hashingRefreshToken: 'hashingRefreshToken',
-  userId: 'userId',
-  userIp: 'userIp',
   userAgent: 'userAgent',
-  loginAt: 'loginAt',
-  logout: 'logout',
-  createAt: 'createAt'
+  userIp: 'userIp',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  loginedAt: 'loginedAt',
+  logoutedAt: 'logoutedAt',
+  userId: 'userId'
 };
 
 exports.Prisma.CodeScalarFieldEnum = {
   id: 'id',
-  tokens: 'tokens',
-  typeOfCode: 'typeOfCode',
+  code: 'code',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  isUsed: 'isUsed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   userId: 'userId'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
   id: 'id',
-  creatorId: 'creatorId',
-  friendId: 'friendId',
-  lastMessage: 'lastMessage',
-  lastMessageAt: 'lastMessageAt',
-  user1LastReadIndex: 'user1LastReadIndex',
-  user2LastReadIndex: 'user2LastReadIndex',
-  socketId: 'socketId',
-  totalMessage: 'totalMessage',
+  conversationId: 'conversationId',
+  isGroup: 'isGroup',
+  groupName: 'groupName',
   createdAt: 'createdAt',
-  updateAt: 'updateAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  user1Id: 'user1Id',
+  user2Id: 'user2Id',
+  lastMessageAt: 'lastMessageAt',
+  totalMessage: 'totalMessage'
 };
 
 exports.Prisma.PrivateMessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  conversationId: 'conversationId',
-  senderId: 'senderId',
-  receiverId: 'receiverId',
-  messageIndex: 'messageIndex',
+  isRead: 'isRead',
+  imageUrl: 'imageUrl',
   replyToId: 'replyToId',
   createdAt: 'createdAt',
-  updateAt: 'updateAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  senderId: 'senderId',
+  conversationId: 'conversationId',
+  messageIndex: 'messageIndex'
 };
 
 exports.Prisma.OwnerScalarFieldEnum = {
@@ -171,50 +178,80 @@ exports.Prisma.OwnerScalarFieldEnum = {
   objectId: 'objectId'
 };
 
+exports.Prisma.TopicScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  imgUrl: 'imgUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.PostTopicScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  topicId: 'topicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RecommendPostScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  score: 'score',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
-  content: 'content',
-  status: 'status',
-  urlImgs: 'urlImgs',
+  title: 'title',
+  description: 'description',
+  imgUrl: 'imgUrl',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   userId: 'userId',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  deleteAt: 'deleteAt',
   numberViews: 'numberViews'
+};
+
+exports.Prisma.BehaviorWithPostScalarFieldEnum = {
+  id: 'id',
+  behaviorIs: 'behaviorIs',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  postId: 'postId'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  postId: 'postId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   userId: 'userId',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
+  postId: 'postId'
 };
 
 exports.Prisma.RepCommentScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  senderID: 'senderID',
-  commentId: 'commentId'
-};
-
-exports.Prisma.BehaviorWithPostScalarFieldEnum = {
-  id: 'id',
-  isLiked: 'isLiked',
-  userId: 'userId',
-  postId: 'postId',
   createdAt: 'createdAt',
-  updateAt: 'updateAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  userId: 'userId',
+  commentId: 'commentId'
 };
 
 exports.Prisma.BlockedUserScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  blockedUserId: 'blockedUserId',
   createdAt: 'createdAt',
-  updateAT: 'updateAT'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -228,9 +265,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   hashingPassword: 'hashingPassword',
   lastSeen: 'lastSeen',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  deleteAt: 'deleteAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.FollowingScalarFieldEnum = {
@@ -238,7 +275,7 @@ exports.Prisma.FollowingScalarFieldEnum = {
   userId: 'userId',
   addressUserId: 'addressUserId',
   createdAt: 'createdAt',
-  updateAt: 'updateAt'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FollowerScalarFieldEnum = {
@@ -246,7 +283,7 @@ exports.Prisma.FollowerScalarFieldEnum = {
   userId: 'userId',
   followerId: 'followerId',
   createdAt: 'createdAt',
-  updateAt: 'updateAt'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -263,15 +300,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.TypeOfCode = exports.$Enums.TypeOfCode = {
-  EMAIL: 'EMAIL',
-  PHONE: 'PHONE'
+exports.CodeType = exports.$Enums.CodeType = {
+  VERIFY_EMAIL: 'VERIFY_EMAIL',
+  RESET_PASSWORD: 'RESET_PASSWORD',
+  CHANGE_EMAIL: 'CHANGE_EMAIL'
 };
 
-exports.StatusPost = exports.$Enums.StatusPost = {
-  PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
-  ARCHIVE: 'ARCHIVE'
+exports.BehaviorType = exports.$Enums.BehaviorType = {
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
 };
 
 exports.Gender = exports.$Enums.Gender = {
@@ -286,11 +323,14 @@ exports.Prisma.ModelName = {
   Conversation: 'Conversation',
   PrivateMessage: 'PrivateMessage',
   Owner: 'Owner',
+  Topic: 'Topic',
+  PostTopic: 'PostTopic',
+  RecommendPost: 'RecommendPost',
   Post: 'Post',
+  BehaviorWithPost: 'BehaviorWithPost',
   Comment: 'Comment',
   RepComment: 'RepComment',
-  BehaviorWithPost: 'BehaviorWithPost',
-  blockedUser: 'blockedUser',
+  BlockedUser: 'BlockedUser',
   User: 'User',
   Following: 'Following',
   Follower: 'Follower'

@@ -1,4 +1,4 @@
-import { User } from 'prisma/generated/prisma';
+import { User } from '../../../prisma/generated/prisma';
 
 export interface UserWithPassword extends User {
   hashingPassword: string;

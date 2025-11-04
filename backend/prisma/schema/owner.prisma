@@ -1,11 +1,61 @@
 model Owner {
-    id String @id @default(uuid()) @db.Uuid
+  id       String  @id @default(uuid()) @db.Uuid
 
-    nameRole String
+  nameRole String
 
-    userId String @db.Uuid
+  userId   String  @db.Uuid
 
-    objectId String @db.Uuid
+  objectId String  @db.Uuid
 
-    @@unique([userId, objectId])
+  @@unique([userId, objectId])
+}
+
+model Topic {
+  id          String      @map("id")          @id @default(uuid()) @db.Uuid
+  name        String      @map("name")        @unique @db.VarChar(255)
+  description String?     @map("description") @db.Text
+  imgUrl      String?     @map("img_url")     @db.VarChar(500)
+
+  createdAt   DateTime    @map("created_at")  @default(now()) @db.Timestamptz()
+  updatedAt   DateTime    @map("updated_at")  @updatedAt @db.Timestamptz()
+  deletedAt   DateTime?   @map("deleted_at")  @db.Timestamptz()
+
+  //          relation
+  postTopics  PostTopic[]
+
+  @@index([name])
+  @@map("topic")
+}
+
+model PostTopic {
+  id        String   @map("id")         @id @default(uuid()) @db.Uuid
+
+  postId    String   @map("post_id")    @db.Uuid
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  topicId   String   @map("topic_id")   @db.Uuid
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @map("created_at") @default(now()) @db.Timestamptz()
+  updatedAt DateTime @map("updated_at") @updatedAt @db.Timestamptz()
+
+  @@unique([postId, topicId])
+  @@index([postId])
+  @@index([topicId])
+  @@map("post_topic")
+}
+
+model RecommendPost {
+  id        String   @map("id")         @id @default(uuid()) @db.Uuid
+
+  postId    String   @map("post_id")    @db.Uuid
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  score     Float    @map("score")      @db.DoublePrecision
+  createdAt DateTime @map("created_at") @default(now()) @db.Timestamptz()
+  updatedAt DateTime @map("updated_at") @updatedAt @db.Timestamptz()
+
+  @@index([postId])
+  @@index([score])
+  @@map("recommend_post")
 }

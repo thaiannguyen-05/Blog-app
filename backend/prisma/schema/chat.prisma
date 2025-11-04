@@ -1,57 +1,51 @@
 model Conversation {
-    id            String    @id @default(uuid()) @db.Uuid
-    creatorId       String    @db.Uuid
-    friendId       String    @db.Uuid
-    lastMessage   String?
-    lastMessageAt DateTime?
+  id             String           @map("id")              @id @default(uuid()) @db.Uuid
+  conversationId String           @map("conversation_id") @unique @db.VarChar(100)
+  isGroup        Boolean          @map("is_group")        @default(false)
+  groupName      String?          @map("group_name")      @db.VarChar(255)
 
-    // save index
-    user1LastReadIndex Int @default(0)
-    user2LastReadIndex Int @default(0)
+  createdAt      DateTime         @map("created_at")      @default(now()) @db.Timestamptz()
+  updatedAt      DateTime         @map("updated_at")      @updatedAt @db.Timestamptz()
+  deletedAt      DateTime?        @map("deleted_at")      @db.Timestamptz()
 
-    socketId String @unique
+  //             relation
+  user1Id        String           @map("user1_id")        @db.Uuid
+  user1          User             @relation(name: "user1Chats", fields: [user1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    //total message
-    totalMessage Int @default(0)
+  user2Id        String           @map("user2_id")        @db.Uuid
+  user2          User             @relation(name: "user2Chats", fields: [user2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+  messages       PrivateMessage[]
 
-    // relation
-    user1          User             @relation("user1Chats", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    user2          User             @relation("user2Chats", fields: [friendId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    privateMessage PrivateMessage[]
+  lastMessageAt  DateTime                                 @updatedAt
+  totalMessage   Int                                      @default(0)
 
-    @@unique([creatorId, friendId])
-    @@index([creatorId])
-    @@index([friendId])
-    @@index([lastMessageAt])
-    @@map("private_chats")
+  @@unique([user1Id, user2Id])
+  @@index([conversationId])
+  @@map("conversation")
 }
 
 model PrivateMessage {
-    id       String @id @default(uuid()) @db.Uuid
-    content  String
-    conversationId   String @db.Uuid
+  id             String       @map("id")              @id @default(uuid()) @db.Uuid
+  content        String       @map("content")         @db.Text
+  isRead         Boolean      @map("is_read")         @default(false)
+  imageUrl       String?      @map("image_url")       @db.VarChar(500)
+  replyToId      String?      @map("reply_to_id")     @db.Uuid
 
-    senderId String @db.Uuid
-    receiverId String @db.Uuid
-    messageIndex Int
+  createdAt      DateTime     @map("created_at")      @default(now()) @db.Timestamptz()
+  updatedAt      DateTime     @map("updated_at")      @updatedAt @db.Timestamptz()
+  deletedAt      DateTime?    @map("deleted_at")      @db.Timestamptz()
 
-    replyToId String?          @db.Uuid
-    replyTo   PrivateMessage?  @relation("MessageReply", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    replies   PrivateMessage[] @relation("MessageReply")
+  //             relation
+  senderId       String       @map("sender_id")       @db.Uuid
+  sender         User         @relation(name: "SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+  conversationId String       @map("conversation_id") @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    // relation
-    chat   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    sender User        @relation("SentMessage", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-    @@unique([conversationId, messageIndex])
-    @@index([conversationId, messageIndex])
-    @@index([senderId])
-    @@index([replyToId])
-    @@map("private_messages")
+  messageIndex   Int @default(0)
+  @@index([senderId])
+  @@index([conversationId])
+  @@index([createdAt])
+  @@map("private_message")
 }

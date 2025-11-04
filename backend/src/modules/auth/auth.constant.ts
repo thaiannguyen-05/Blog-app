@@ -1,37 +1,60 @@
-export const AUTH_CONSTANTS = {
-  TIME_LIFE_CACHE: 10 * 24 * 60 * 60, // 10h
-  TIME_LIFE_SESSION: 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
-  TIME_LIFE_ACCESS_TOKEN: 1000 * 60 * 60, // 1h
-  TIME_LIFE_REFRESH_TOKEN: 24 * 60 * 60 * 7, // 7d
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-  // cache key
-  CACHE_KEY: {
+@Injectable()
+export class AuthConstantsService {
+  constructor(private readonly configService: ConfigService) {}
+
+  get TIME_LIFE_CACHE() {
+    return 10 * 24 * 60 * 60; // 10 days
+  }
+
+  get TIME_LIFE_SESSION() {
+    return 10 * 365 * 24 * 60 * 60 * 1000; // 10 years
+  }
+
+  get TIME_LIFE_ACCESS_TOKEN() {
+    return this.configService.get<number>('JWT_ACCESS_EXPIRES_IN', 1000 * 60 * 60); // 1h
+  }
+
+  get TIME_LIFE_REFRESH_TOKEN() {
+    return this.configService.get<number>('JWT_REFRESH_EXPIRES_IN', 24 * 60 * 60 * 7); // 7d
+  }
+
+  get MAX_AGE_CACHE_TEMPORARY() {
+    return 60 * 1000; // 60 seconds
+  }
+
+  get MAX_AGE_CACHE() {
+    return 60 * 60 * 1000; // 1 hour
+  }
+
+  CACHE_KEY = {
     KeyUserWithId: (mainkey: string) => `account:${mainkey}`,
     KeyUserWithEmail: (mainkey: string) => `account:${mainkey}`,
-  },
+  };
 
-  // Cache expiration times
-  MAX_AGE_CACHE_TEMPORARY: 60 * 1000, // 60 seconds
-  MAX_AGE_CACHE: 60 * 60 * 1000, // 1 hour
+  get COOKIE_CONFIG() {
+    const isProduction = this.configService.get<string>('NODE_ENV') === 'production';
 
-  // Cookie configuration
-  COOKIE_CONFIG: {
-    SESSION: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
-    },
-    REFRESH_TOKEN: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
-      path: '/',
-    },
-    ACCESS_TOKEN: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
-      path: '/',
-    },
-  },
-};
+    return {
+      SESSION: {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: 'lax' as const,
+      },
+      REFRESH_TOKEN: {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: 'lax' as const,
+        path: '/',
+      },
+      ACCESS_TOKEN: {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: 'lax' as const,
+        path: '/',
+      },
+    };
+  }
+}

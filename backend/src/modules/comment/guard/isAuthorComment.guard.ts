@@ -6,8 +6,8 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CommentService } from '../comment.service';
-import { User } from 'prisma/generated/prisma';
-import { CommonFunc } from 'src/common/func/func.common';
+import { CommonFunc } from '../../../common/func/func.common';
+import { User } from '../../../../prisma/generated/prisma';
 
 @Injectable()
 export class IsAuthorComment implements CanActivate {

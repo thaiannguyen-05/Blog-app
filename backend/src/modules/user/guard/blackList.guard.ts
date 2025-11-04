@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
-import { User } from 'prisma/generated/prisma';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { UserService } from '../user.service';
+import { PrismaService } from '../../../prisma/prisma.service';
+import { User } from '../../../../prisma/generated/prisma';
 
 @Injectable()
 export class BlackListGuard implements CanActivate {

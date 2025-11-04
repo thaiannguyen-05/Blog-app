@@ -1,10 +1,10 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { PayLoad } from './auth.interface';
 import { randomUUID } from 'node:crypto';
 import { AuthService } from './auth.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class TokenService {
@@ -53,7 +53,7 @@ export class TokenService {
     sessionId = sessionId || randomUUID();
 
     // 2.Try to find existing session by sessionId first, not userAgent
-    const existingSession = await this.prismaService.session.findUnique({
+    const existingSession = await this.prismaService.session.findFirst({
       where: { userAgent },
     });
 

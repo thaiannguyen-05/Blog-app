@@ -1,4 +1,5 @@
 import { Logger } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import {
   ConnectedSocket,
   MessageBody,
@@ -10,14 +11,12 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { AuthService } from '../auth/auth.service';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
 import { PayLoad } from '../auth/auth.interface';
-import { ChatGatewayService } from './service/chat.gateway.service';
+import { AuthService } from '../auth/auth.service';
 import { CHAT_CONSTANTS } from './chat.constants';
-import { MessgaeService } from './service/message.service';
+import { ChatGatewayService } from './service/chat.gateway.service';
 import { ConversationService } from './service/connversation.service';
+import { MessgaeService } from './service/message.service';
 
 @WebSocketGateway({
   cors: {

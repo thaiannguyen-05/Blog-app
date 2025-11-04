@@ -1,14 +1,4 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Delete,
-  Patch,
-  Post,
-  Query,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { Request } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery } from '@nestjs/swagger';
@@ -42,12 +32,8 @@ export class CommentController {
   })
   @ApiResponse({ status: 200, description: 'Comment edited' })
   @UseGuards(IsAuthorComment)
-  async editComment(
-    @Req() req: Request,
-    @Query('commentId') commentId: string,
-    @Body('newContent') newContent: string,
-  ) {
-    return this.commentService.editComment(req, commentId, newContent);
+  async editComment(@Query('commentId') commentId: string, @Body('newContent') newContent: string) {
+    return this.commentService.editComment(commentId, newContent);
   }
 
   @Delete('delete-comment')
@@ -55,8 +41,8 @@ export class CommentController {
   @ApiQuery({ name: 'commentId', required: true, type: String })
   @ApiResponse({ status: 200, description: 'Comment deleted' })
   @UseGuards(IsAuthorComment)
-  async deleteComment(@Req() req: Request, @Query('commentId') commentId: string) {
-    return this.commentService.deleteComment(req, commentId);
+  async deleteComment(Request, @Query('commentId') commentId: string) {
+    return this.commentService.deleteComment(commentId);
   }
 
   @Post('rep-comment')

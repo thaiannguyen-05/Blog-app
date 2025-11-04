@@ -3,8 +3,8 @@ import { BadRequestException, Inject, Injectable, NotFoundException } from '@nes
 import { Cache } from 'cache-manager';
 import { randomUUID } from 'crypto';
 import { Request } from 'express';
-import { Comment, Post } from 'prisma/generated/prisma';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Comment, Post } from '../../../prisma/generated/prisma';
+import { PrismaService } from '../../prisma/prisma.service';
 
 type CommentWithRep = Comment & { repComments: Comment[] };
 
@@ -21,7 +21,6 @@ export class CommentService {
   private async getPostOrThrow(postId: string) {
     const keyPost = `post:${postId}`; // key
     const cache = (await this.cachemanager.get(keyPost)) as Post;
-
     if (cache) return cache;
 
     // fall back
@@ -49,7 +48,9 @@ export class CommentService {
     // fall back
     const exitingComment = await this.prismaService.comment.findUnique({
       where: { id: commentId },
-      include: { repComments: true },
+      include: {
+        repComments: true,
+      },
     });
 
     return exitingComment;
@@ -58,7 +59,6 @@ export class CommentService {
   // add comment
   async comment(req: Request, postId: string, content: string) {
     const exitingPost = await this.getPostOrThrow(postId);
-
     if (!exitingPost) throw new NotFoundException('Post not found');
 
     if (!content?.trim()) {
@@ -67,7 +67,7 @@ export class CommentService {
 
     // create comment
     const newCommentId = randomUUID();
-    const [newComment, owner] = await this.prismaService.$transaction([
+    const [newComment] = await this.prismaService.$transaction([
       this.prismaService.comment.create({
         data: {
           id: newCommentId,
@@ -97,7 +97,7 @@ export class CommentService {
   }
 
   // edit comment
-  async editComment(req: Request, commentId: string, newContent: string) {
+  async editComment(commentId: string, newContent: string) {
     const existingComment = await this.getCommentOrThrow(commentId);
 
     if (!existingComment) throw new NotFoundException('Comment not found');
@@ -122,7 +122,7 @@ export class CommentService {
   }
 
   // delete comment
-  async deleteComment(req: Request, commentId: string) {
+  async deleteComment(commentId: string) {
     const exitingComment = await this.getCommentOrThrow(commentId);
 
     if (!exitingComment) throw new NotFoundException('Comment not found');
@@ -163,7 +163,7 @@ export class CommentService {
     const newRepcomment = await this.prismaService.repComment.create({
       data: {
         content: content,
-        senderID: req.user?.id || 'unknow',
+        userId: req.user?.id,
         commentId: exitingComment.id,
       },
     });

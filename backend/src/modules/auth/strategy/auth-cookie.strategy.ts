@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-custom';
-import { AuthService } from 'src/modules/auth/auth.service';
 import { Request } from 'express';
+import { AuthService } from '../auth.service';
 @Injectable()
 export class AuthCookieStrategy extends PassportStrategy(Strategy, 'auth-cookie') {
   constructor(private readonly authService: AuthService) {

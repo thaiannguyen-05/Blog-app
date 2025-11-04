@@ -12,16 +12,16 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import { Request, Response } from 'express';
-import { ExmailProducerService } from 'src/email/email.producer';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CustomCacheService } from '../custom-cache/customCache.service';
-import { AUTH_CONSTANTS } from './auth.constant';
 import { ChangePasswordDto } from './dto/changePassword.dto';
 import { RegisterDto } from './dto/register.dto';
 import { TokenService } from './token.service';
-import { Session } from 'prisma/generated/prisma';
 import { LoginDto } from './dto/login.dto';
 import { SoftDeleteAccountDto } from './dto/softDeleteAccount.dto';
+import { PrismaService } from '../../prisma/prisma.service';
+import { ExmailProducerService } from '../../email/email.producer';
+import { AuthConstantsService } from './auth.constant';
+import { Session } from '../../../prisma/generated/prisma';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +33,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
     private readonly emailProducer: ExmailProducerService,
     private readonly customCacheService: CustomCacheService,
+    private readonly authConstantService: AuthConstantsService,
   ) {}
 
   // hashing password
@@ -158,7 +159,7 @@ export class AuthService {
     });
 
     // 4.update cache
-    const key = AUTH_CONSTANTS.CACHE_KEY.KeyUserWithEmail(email);
+    const key = this.authConstantService.CACHE_KEY.KeyUserWithEmail(email);
     await this.customCacheService.updateCache(key, newAccount);
 
     return res.send(`
@@ -191,7 +192,7 @@ export class AuthService {
     // delete account from database
     await this.prismaService.user.update({
       where: { email: data.email },
-      data: { deleteAt: new Date() },
+      data: { deletedAt: new Date() },
     });
 
     return {
@@ -228,16 +229,16 @@ export class AuthService {
     // 5. set maxage
     res
       .cookie('session_id', session.id, {
-        maxAge: AUTH_CONSTANTS.TIME_LIFE_SESSION,
-        ...AUTH_CONSTANTS.COOKIE_CONFIG,
+        maxAge: this.authConstantService.TIME_LIFE_SESSION,
+        ...this.authConstantService.COOKIE_CONFIG,
       })
       .cookie('access_token', tokens.accessToken, {
-        maxAge: AUTH_CONSTANTS.TIME_LIFE_ACCESS_TOKEN,
-        ...AUTH_CONSTANTS.COOKIE_CONFIG,
+        maxAge: this.authConstantService.TIME_LIFE_ACCESS_TOKEN,
+        ...this.authConstantService.COOKIE_CONFIG,
       })
       .cookie('refresh_token', tokens.refreshToken, {
-        maxAge: AUTH_CONSTANTS.TIME_LIFE_REFRESH_TOKEN,
-        ...AUTH_CONSTANTS.COOKIE_CONFIG,
+        maxAge: this.authConstantService.TIME_LIFE_REFRESH_TOKEN,
+        ...this.authConstantService.COOKIE_CONFIG,
       });
 
     return { session, tokens };
@@ -283,10 +284,10 @@ export class AuthService {
     );
 
     // recover account if account has been deleted
-    if (availableAccount.deleteAt) {
+    if (availableAccount.deletedAt) {
       await this.prismaService.user.update({
         where: { id: availableAccount.id },
-        data: { deleteAt: null },
+        data: { deletedAt: null },
       });
     }
 
@@ -315,7 +316,7 @@ export class AuthService {
         data: { hashingRefreshToken: null },
       });
     } catch (error) {
-      console.error('Error clearing session', error);
+      throw error('Error clearing session', error);
     }
 
     // clear accesstoken and refreshtoken
@@ -401,7 +402,7 @@ export class AuthService {
     const hashingRefreshToken = await this.hasing(tokens.refreshToken);
 
     // update session
-    const newSession = await this.prismaService.session.update({
+    await this.prismaService.session.update({
       where: { id: sessionId },
       data: { hashingRefreshToken: hashingRefreshToken },
     });
@@ -409,12 +410,12 @@ export class AuthService {
     // set new cookies
     res
       .cookie('refresh_token', tokens.refreshToken, {
-        maxAge: AUTH_CONSTANTS.TIME_LIFE_REFRESH_TOKEN,
-        ...AUTH_CONSTANTS.COOKIE_CONFIG,
+        maxAge: this.authConstantService.TIME_LIFE_REFRESH_TOKEN,
+        ...this.authConstantService.COOKIE_CONFIG,
       })
       .cookie('access_token', tokens.accessToken, {
-        maxAge: AUTH_CONSTANTS.TIME_LIFE_ACCESS_TOKEN,
-        ...AUTH_CONSTANTS.COOKIE_CONFIG,
+        maxAge: this.authConstantService.TIME_LIFE_ACCESS_TOKEN,
+        ...this.authConstantService.COOKIE_CONFIG,
       });
 
     return {

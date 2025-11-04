@@ -9,4 +9,6 @@ export class CreatePostDto {
 
   @IsArray({ message: 'Paths must be an array.' })
   paths: string[];
+
+  title: string;
 }

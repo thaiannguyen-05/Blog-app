@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 import { Socket } from 'socket.io';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class ChatGatewayService implements OnModuleDestroy {
@@ -23,7 +23,7 @@ export class ChatGatewayService implements OnModuleDestroy {
     this.redis = new Redis(redisUrl);
 
     this.redis.on('error', (error) => {
-      console.log('Redis connection error:', error);
+      this.logger.warn('Redis connection error:', error);
     });
   }
 
@@ -47,7 +47,7 @@ export class ChatGatewayService implements OnModuleDestroy {
 
       if (!availableConversation) throw new NotFoundException('Conversation not found');
 
-      const socketId = availableConversation.socketId;
+      const socketId = availableConversation.conversationId;
 
       // join conversation
       await client.join(socketId);

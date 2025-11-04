@@ -7,12 +7,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CustomCacheService } from '../custom-cache/customCache.service';
 import { EditDetailDto } from './dto/EditDetailDto';
 import { FindUserByName } from './dto/FindUserByName';
 import { USER_CONSTANTS } from './user.constants';
-import { LoadingAuthorPostDto } from '../post/dto/LoadingAuthorPost.dto';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -236,7 +235,7 @@ export class UserService {
   // unfollowing
   async unfollowing(req: Request, addressUserId: string) {
     // get user in cache
-    const userId = req.user?.id || 'unknow';
+    const userId = req.user?.id;
     const cached = await this.customCacheService.getUserInCache(userId);
 
     if (!cached) {
@@ -269,8 +268,7 @@ export class UserService {
       }),
       this.prismaService.follower.delete({
         where: {
-          userId: addressUserId,
-          followerId: userId,
+          userId_followerId: { userId: addressUserId, followerId: userId },
         },
       }),
     ]);
@@ -303,7 +301,7 @@ export class UserService {
 
     // block user
     await this.prismaService.blockedUser.create({
-      data: { userId: addressCached.id },
+      data: { userId: userId, blockedUserId: addressCached.id },
     });
 
     return {
