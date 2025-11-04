@@ -54,6 +54,7 @@
     "argon2": "^0.43.1",
     "cache-manager": "^7.1.0",
     "cache-manager-redis-store": "^3.0.1",
+    "cache-manager-redis-yet": "^5.1.5",
     "cacheable": "^1.10.3",
     "chalk": "^5.6.0",
     "class-transformer": "^0.5.1",

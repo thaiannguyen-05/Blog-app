@@ -12,20 +12,19 @@ import { EmailModule } from './email/email.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthCookieGuard } from './modules/auth/guard/auth-cookie.guard';
 import { CommentModule } from './modules/comment/comment.module';
-import { CustomCacheModule } from './modules/custom-cache/customCache.module';
 import { LoggerModule } from './modules/logger/logger.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { FilesModule } from './modules/files/files.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { RedisModule } from './modules/rediscache/rediscache.module';
 @Module({
   imports: [
     AuthModule,
     UserModule,
     PrismaModule,
     EmailModule,
-    CustomCacheModule,
     CommentModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -51,6 +50,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     LoggerModule,
     FilesModule,
     TasksModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [

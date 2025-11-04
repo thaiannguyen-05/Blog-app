@@ -1,9 +1,7 @@
-import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
-  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -12,28 +10,29 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import { Request, Response } from 'express';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { TokenService } from './token.service';
-import { ExmailProducerService } from '../../../email/email.producer';
-import { CustomCacheService } from '../../custom-cache/customCache.service';
-import { AuthConstantsService } from '../auth.constant';
 import { Session } from '../../../../prisma/generated/prisma';
+import { ExmailProducerService } from '../../../email/email.producer';
+import { PrismaService } from '../../../prisma/prisma.service';
+import { RedisConstant } from '../../rediscache/redis.constants.redis';
+import { RedisService } from '../../rediscache/rediscache.service';
+import { AuthConstantsService } from '../auth.constant';
+import { ChangePasswordDto } from '../dto/changePassword.dto';
+import { LoginDto } from '../dto/login.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { SoftDeleteAccountDto } from '../dto/softDeleteAccount.dto';
-import { LoginDto } from '../dto/login.dto';
-import { ChangePasswordDto } from '../dto/changePassword.dto';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly tokenService: TokenService,
     private readonly emailProducer: ExmailProducerService,
-    private readonly customCacheService: CustomCacheService,
     private readonly authConstantService: AuthConstantsService,
+    private readonly redisService: RedisService,
+    private readonly redisConstant: RedisConstant,
   ) {}
 
   // hashing password
@@ -92,6 +91,17 @@ export class AuthService {
     }
   }
 
+  async getUserInCache(accessor: string) {}
+
+  async getUser(accessor: string) {
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        OR: [{ userName: accessor }, { email: accessor }],
+      },
+    });
+    return user;
+  }
+
   // register
   async register(data: RegisterDto) {
     // 1.check available account
@@ -117,7 +127,8 @@ export class AuthService {
     });
 
     // 4.cache account
-    await this.customCacheService.fallBackCacheTemporaryObject(`account:${data.email}`);
+    const accountKey = this.redisConstant.ACCOUNT_KEY(data.email);
+    await this.redisService.fallBackCacheTemporaryObject(accountKey);
     const verifyLink = this.authConstantService.VERIFY_LINK(data.email);
     // 5.send email nofification verify account
     this.emailProducer.sendNotificationRegister({
@@ -140,24 +151,17 @@ export class AuthService {
   // verify account
   async verifyAccount(email: string, res: Response) {
     // 1.check available account
-    const availableAccount = await this.customCacheService.getUserInCache(email);
+    const availableAccount = await this.getUser(email);
     if (!availableAccount) throw new NotFoundException('Account is not exiting');
 
     if (availableAccount.isActive) throw new BadRequestException('Account already exited');
 
-    // 2.del cached
-    await this.cacheManager.del(`account:${email}`);
-
     // 3.update account
-    const newAccount = await this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: { email: email },
       data: { isActive: true },
       omit: { hashingPassword: false },
     });
-
-    // 4.update cache
-    const key = this.authConstantService.CACHE_KEY.KeyUserWithEmail(email);
-    await this.customCacheService.updateCache(key, newAccount);
 
     return res.send(this.authConstantService.VERIFY_SUCCESS_RESPONSE());
   }
@@ -165,12 +169,8 @@ export class AuthService {
   // delete soft account by email
   async deleteAccountByEmail(data: SoftDeleteAccountDto) {
     // check availableAccount
-    const availableAccount = await this.customCacheService.getUserInCache(data.email);
-
+    const availableAccount = await this.getUser(data.email);
     if (!availableAccount) throw new NotFoundException('Account is not exiting');
-
-    // del cache
-    await this.cacheManager.del(`account:${data.email}`);
 
     // validate password
     const isMatched = verify(availableAccount.hashingPassword, data.password);
@@ -344,20 +344,13 @@ export class AuthService {
 
     if (!isMatch) throw new BadRequestException('Password incorrect');
 
-    // del cache
-    const key = `account:${availableAccount.id}`;
-    await this.cacheManager.del(key);
-
     const hashingNewPassword = await this.hasing(data.newPassword);
 
     // update new password
-    const newUser = await this.prismaService.user.update({
+    await this.prismaService.user.update({
       where: { id: availableAccount.id },
       data: { hashingPassword: hashingNewPassword },
     });
-
-    // update cache
-    await this.cacheManager.set(key, newUser);
 
     // send notification
     await this.emailProducer.sendChangePasswordEmail({

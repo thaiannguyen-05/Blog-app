@@ -7,7 +7,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { CustomCacheService } from '../custom-cache/customCache.service';
 import { EditDetailDto } from './dto/EditDetailDto';
 import { FindUserByName } from './dto/FindUserByName';
 import { USER_CONSTANTS } from './user.constants';
@@ -18,7 +17,6 @@ export class UserService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     private readonly prismaService: PrismaService,
-    private readonly customCacheService: CustomCacheService,
   ) {}
 
   // trans data
