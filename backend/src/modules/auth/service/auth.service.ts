@@ -91,8 +91,6 @@ export class AuthService {
     }
   }
 
-  async getUserInCache(accessor: string) {}
-
   async getUser(accessor: string) {
     const user = await this.prismaService.user.findFirst({
       where: {

@@ -26,7 +26,9 @@ export class IsAuthorComment implements CanActivate {
 
     // get object
     const comment = await this.commentService.getComment(commentId);
-    const owner = await this.commonFunc.getOwn(user.id, commentId);
+    if (!comment) throw new BadRequestException('Comment not found');
+
+    const owner = await this.commonFunc.getOwn(user.id, comment.id);
 
     if (owner?.nameRole !== 'ADMIN') {
       throw new BadRequestException('Somethings went wrong');

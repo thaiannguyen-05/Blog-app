@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Request } from 'express';
-import { CustomCacheService } from '../custom-cache/customCache.service';
 import { GetDetailPostDto } from './dto/get.detail.post.dto';
 import { GetManyPostDto } from './dto/get.many.post.dto';
 import { POST_CONSTANTS } from './post.constants';
@@ -23,7 +22,6 @@ export class PostService {
   constructor(
     private readonly prismaService: PrismaService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    private readonly customCache: CustomCacheService,
     @Inject('IORedis') private redis: Redis,
   ) {}
 
@@ -47,11 +45,17 @@ export class PostService {
     });
   }
 
+  async getUser(userId: string) {
+    return await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
+  }
+
   // create post
   async createPost(req: Request, content: string, title: string, paths: string[]) {
     const userId = req.user?.id || 'unknow';
 
-    const availableUser = await this.customCache.getUserInCache(userId);
+    const availableUser = await this.getUser(userId);
 
     if (!availableUser) throw new NotFoundException('user not found');
 
@@ -80,9 +84,6 @@ export class PostService {
       }),
     ]);
 
-    // cache post
-    const key = `post:${newPost.id}`;
-    await this.cacheManager.set(key, newPost, POST_CONSTANTS.TIME_LIFE_CACHE);
     return newPost;
   }
 
@@ -97,12 +98,6 @@ export class PostService {
 
     if (!newContent?.trim()) {
       throw new BadRequestException('Post content cannot be empty');
-    }
-
-    // check validate author post
-    if (req.user?.id !== exitingPost.userId) {
-      await this.customCache.fallBackCacheTemporaryObject(`post:${postId}`);
-      throw new UnauthorizedException('You are not author post');
     }
 
     // tao array linkPaths
@@ -134,10 +129,8 @@ export class PostService {
   async deletePost(postId: string, req: Request) {
     const userId = req.user?.id || 'unknown';
 
-    const exitingUser = await this.customCache.getUserInCache(userId);
-
+    const exitingUser = await this.getUser(userId);
     if (!exitingUser) {
-      await this.customCache.fallBackCacheTemporaryObject(`account:${userId}`);
       throw new NotFoundException('user not found');
     }
 
@@ -145,9 +138,7 @@ export class PostService {
     const exitingPost = await this.prismaService.post.findUnique({
       where: { id: postId },
     });
-
     if (!exitingPost) {
-      await this.customCache.fallBackCacheTemporaryObject(`account:${userId}`);
       throw new NotFoundException('Post is not found');
     }
 
